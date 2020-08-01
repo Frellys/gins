@@ -1,5 +1,4 @@
 (function () {
-    // test
     let dt = new Date();
     let ts =
         (dt.getFullYear().toString()) +
