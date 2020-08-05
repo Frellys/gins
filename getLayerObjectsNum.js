@@ -28,20 +28,6 @@ window.addEventListener('load', async function () {
             let labels = document.querySelectorAll('.dataLayersDiv label');
             for (let i = 0; i < labels.length; i++) {
                 for (let j = 0; j < layerObjectsNumArr.length; j++) {
-                    //if (labels[i].innerText[0] !== ' ') {
-                    //    if (labels[i].innerText == layerObjectsNumArr[j].name) {
-                    //        labels[i].innerText = layerObjectsNumArr[j].name + ' [' + layerObjectsNumArr[j].num + ']';
-                    //        //layerObjectsNumArr.splice(j, 1);
-                    //        break;
-                    //    }
-                    //}
-                    //else {
-                    //    if (labels[i].innerText == ' ' + layerObjectsNumArr[j].name) {
-                    //        labels[i].innerText = ' ' + layerObjectsNumArr[j].name + ' [' + layerObjectsNumArr[j].num + ']';
-                    //        //layerObjectsNumArr.splice(j, 1);
-                    //        break;
-                    //    }
-                    //}
                     if (labels[i].innerText == ' ' + layerObjectsNumArr[j].name) {
                         labels[i].innerText = ' ' + layerObjectsNumArr[j].name + ' [' + layerObjectsNumArr[j].num + ']';
                         break;
