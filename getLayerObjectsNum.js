@@ -1,8 +1,8 @@
-﻿// variables
+// variables
 let layerObjectsNumArr = [];
 let layerObjectsNumFlag = false;
 // main
-window.addEventListener('load', async function () {
+window.addEventListener('load', function () {
     let types = [];
     for (let i = 0; i < map.layers.length; i++) {
         if (map.layers[i].protocol && map.layers[i].protocol.featureType) {
@@ -19,7 +19,7 @@ window.addEventListener('load', async function () {
     xhttp.send(JSON.stringify({
         types: types.join(',')
     }));
-    xhttp.onreadystatechange = async function () {
+    xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let num = this.responseText.split(',');
             for (let i = 0; i < layerObjectsNumArr.length; i++) {
