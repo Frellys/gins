@@ -5,10 +5,19 @@
     insert script block before closing </body> tag
     -->
     <script>
-        document.querySelectorAll('.cnt-wrp.bannersnet:last-child > div').forEach(function (el, idx) {
+        document.querySelectorAll('.cnt-wrp.bannersnet:last-child > div').forEach(function (el) {
             el.style.display = 'inline-block';
             el.querySelector('a > img').style.maxWidth = 'unset';
         });
     </script>
+    <style>
+        .cnt-wrp.bannersnet:last-child > div {
+            display: inline-block;
+        }
+
+            .cnt-wrp.bannersnet:last-child > div > a > img {
+                max-width: unset;
+            }
+    </style>
 </body>
 </html>
