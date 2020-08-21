@@ -6,7 +6,7 @@
     box-shadow: 0 0 0.5vmin rgba(50, 50, 50, 0.25);
 }
 
-    #exportWindow > a#closeBtn {
+    #exportWindow > #closeBtn {
         float: right;
         color: #323232;
         font-family: monospace;

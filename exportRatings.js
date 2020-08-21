@@ -1,4 +1,6 @@
 ﻿window.addEventListener('load', function () {
+    // vars
+    let dt = new Date();
     // create list element
     let li = document.createElement('li');
     document.querySelector('ul.settings-menu > li:nth-child(2) > ul').appendChild(li);
@@ -46,7 +48,6 @@
         inpTo.id = 'inpTo';
         inpTo.type = 'date';
         toWtap.appendChild(inpTo);
-        let dt = new Date();
         inpTo.value =
             dt.getFullYear() + '-' +
             ((dt.getMonth() + 1).toString().length < 2 ? '0' + (dt.getMonth() + 1) : (dt.getMonth() + 1)) + '-' +

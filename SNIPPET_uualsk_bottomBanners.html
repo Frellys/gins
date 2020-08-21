@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!--
+    insert script block before closing </body> tag
+    -->
+    <script>
+        document.querySelectorAll('.cnt-wrp.bannersnet:last-child > div').forEach(function (el, idx) {
+            el.style.display = 'inline-block';
+            el.querySelector('a > img').style.maxWidth = 'unset';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>title</title>
+    <!--<meta charset="UTF-8">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+            display: table-cell;
+            height: 100vh;
+            width: 100vw;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div id="exportWindow">
+        <a id="closeBtn">закрыть</a>
+        <h1>экспорт&nbsp;рейтингов</h1>
+        <div>
+            <label for="inpFrom">с:</label>
+            <input id="inpFrom" type="date">
+        </div>
+        <div>
+            <label for="inpTo">по:</label>
+            <input id="inpTo" type="date">
+        </div>
+        <button>экспорт</button>
+        <style>
+            #exportWindow {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: 0 auto 0 auto;
+                width: fit-content;
+                padding: 2vmin;
+                background-color: whitesmoke;
+                border: 1px solid #323232;
+                box-shadow: 0 0 0.5vmin rgba(50, 50, 50, 0.25);
+                font-family: monospace;
+            }
+
+                #exportWindow > #closeBtn {
+                    float: right;
+                    color: #323232;
+                    font-family: monospace;
+                    cursor: pointer;
+                }
+                #exportWindow > div {
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                #exportWindow > div > label {
+                    display: inline-block;
+                    width: 4ch;
+                }
+
+                #exportWindow > div > input {
+                    line-height: normal;
+                    margin: 0 0 1vmin 0;
+                }
+        </style>
+        <script>
+        </script>
+    </div>
+</body>
+</html>
