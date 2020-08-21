@@ -64,6 +64,23 @@
                     line-height: normal;
                     margin: 0 0 1vmin 0;
                 }
+
+                    #exportWindow > div.dateRow > input#delta {
+                        padding: 0.25vmin 0.5vmin;
+                        width: 4ch;
+                        background-color: transparent;
+                        color: #323232;
+                        font-family: monospace;
+                        outline: none;
+                        border: none;
+                        border-bottom: 1px solid #323232;
+                    }
+
+                        #exportWindow > div.dateRow > input#delta::-webkit-inner-spin-button,
+                        #exportWindow > div.dateRow > input#delta::-webkit-outer-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
         </style>
         <script>
             // close button
@@ -97,6 +114,10 @@
                     to.value = toDate.toISOString().split('T')[0];
                 }
             }
+            // listen for delta change
+            delta.addEventListener('input', function () {
+                alert(this.value);
+            }, false);
             // debug
             console.log(toDate);
             console.log(fromDate);
