@@ -34,7 +34,7 @@
             <label for="inpTo">по:</label>
             <input id="inpTo" type="date">
         </div>
-        <button>экспорт</button>
+        <button id="exportBtn">экспорт</button>
         <style>
             #exportWindow {
                 position: absolute;
@@ -142,7 +142,6 @@
             chain.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.chainActive = !window.chainActive;
-                console.log(window.chainActive);
                 if (window.chainActive) {
                     fromDate = new Date(to.value);
                     fromDate.setDate(fromDate.getDate() - delta.value);
@@ -157,6 +156,13 @@
                     document.querySelector('#exportWindow > div.dateRow > label[for="delta"]').style.opacity = 0.5;
                     delta.style.opacity = 0.5;
                 }
+            }, false);
+            // export button
+            let exportBtn = document.querySelector('#exportWindow > button#exportBtn');
+            exportBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log(fr.value);
+                console.log(to.value);
             }, false);
         </script>
     </div>
