@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>title</title>
-    <!--<meta charset="UTF-8">-->
+    <title>exportRatings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         html {
@@ -69,6 +68,7 @@
                     margin-left: 2ch;
                     outline: none;
                     font-family: monospace;
+                    cursor: pointer;
                 }
 
                 #exportWindow > div.dateRow > input {
@@ -96,7 +96,7 @@
         <script>
             // close button
             document.querySelector('#exportWindow > #closeBtn').addEventListener('click', function () {
-                document.querySelector('#exportWindow').remove();
+                document.querySelector('#exportWindow').style.display = 'none';
             }, false);
             // set delta
             let delta = document.querySelector('#exportWindow > div.dateRow > input#delta');
@@ -114,25 +114,52 @@
             to.addEventListener('input', dateHandle, false);
             fr.addEventListener('input', dateHandle, false);
             function dateHandle() {
-                if (this.id == 'inpTo') {
-                    fromDate = new Date(this.value);
-                    fromDate.setDate(fromDate.getDate() - delta.value);
-                    fr.value = fromDate.toISOString().split('T')[0];
-                }
-                else {
-                    toDate = new Date(this.value);
-                    toDate.setDate(toDate.getDate() + delta.value);
-                    to.value = toDate.toISOString().split('T')[0];
+                if (window.chainActive) {
+                    if (this.id == 'inpTo') {
+                        fromDate = new Date(this.value);
+                        fromDate.setDate(fromDate.getDate() - delta.value);
+                        fr.value = fromDate.toISOString().split('T')[0];
+                    }
+                    else {
+                        toDate = new Date(this.value);
+                        toDate.setDate(toDate.getDate() + delta.value);
+                        to.value = toDate.toISOString().split('T')[0];
+                    }
                 }
             }
             // listen for delta change
             delta.addEventListener('input', function () {
-                console.log(this.value);
+                if (!chain.disabled) {
+                    fromDate = new Date(to.value);
+                    fromDate.setDate(fromDate.getDate() - delta.value);
+                    fr.value = fromDate.toISOString().split('T')[0];
+                }
             }, false);
             // chain button
+            let chain = document.querySelector('#exportWindow > div.dateRow > button#chain');
+            if (typeof window.chainActive == 'undefined') window.chainActive = true;
+            chain.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.chainActive = !window.chainActive;
+                console.log(window.chainActive);
+                if (window.chainActive) {
+                    fromDate = new Date(to.value);
+                    fromDate.setDate(fromDate.getDate() - delta.value);
+                    fr.value = fromDate.toISOString().split('T')[0];
+                    // style
+                    chain.style.opacity = 1.0;
+                    document.querySelector('#exportWindow > div.dateRow > label[for="delta"]').style.opacity = 1.0;
+                    delta.style.opacity = 1.0;
+                }
+                else {
+                    chain.style.opacity = 0.5;
+                    document.querySelector('#exportWindow > div.dateRow > label[for="delta"]').style.opacity = 0.5;
+                    delta.style.opacity = 0.5;
+                }
+            }, false);
             // debug
-            console.log(toDate);
-            console.log(fromDate);
+            //console.log(toDate);
+            //console.log(fromDate);
         </script>
     </div>
 </body>
