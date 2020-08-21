@@ -27,6 +27,8 @@
         <div class="dateRow">
             <label for="inpFrom">с:</label>
             <input id="inpFrom" type="date">
+            <label for="delta">&nbsp;&nbsp;&#916;=</label>
+            <input id="delta" type="number">
         </div>
         <div class="dateRow">
             <label for="inpTo">по:</label>
@@ -64,21 +66,39 @@
                 }
         </style>
         <script>
-            // vars
-            let curDate = new Date();
-            let fromDate = new Date();
-            fromDate.setDate(curDate.getDate() - 30);
             // close button
             document.querySelector('#exportWindow > #closeBtn').addEventListener('click', function () {
                 document.querySelector('#exportWindow').remove();
             }, false);
-            // set dates
-            let fr = document.querySelector('#exportWindow > div.dateRow > input#inpFrom');
-            fr.value = fromDate.toISOString().split('T')[0];
+            // set delta
+            let delta = document.querySelector('#exportWindow > div.dateRow > input#delta');
+            delta.value = 30;
+            // set current date
             let to = document.querySelector('#exportWindow > div.dateRow > input#inpTo');
-            to.value = curDate.toISOString().split('T')[0];
+            let toDate = new Date();
+            to.value = toDate.toISOString().split('T')[0];
+            // set from date
+            let fr = document.querySelector('#exportWindow > div.dateRow > input#inpFrom');
+            let fromDate = new Date();
+            fromDate.setDate(toDate.getDate() - delta.value);
+            fr.value = fromDate.toISOString().split('T')[0];
+            // listen for date change
+            to.addEventListener('input', dateHandle, false);
+            fr.addEventListener('input', dateHandle, false);
+            function dateHandle() {
+                if (this.id == 'inpTo') {
+                    fromDate = new Date(this.value);
+                    fromDate.setDate(fromDate.getDate() - delta.value);
+                    fr.value = fromDate.toISOString().split('T')[0];
+                }
+                else {
+                    toDate = new Date(this.value);
+                    toDate.setDate(toDate.getDate() + delta.value);
+                    to.value = toDate.toISOString().split('T')[0];
+                }
+            }
             // debug
-            console.log(curDate);
+            console.log(toDate);
             console.log(fromDate);
         </script>
     </div>
