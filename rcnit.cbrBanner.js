@@ -1,6 +1,6 @@
 window.addEventListener('load', function () {
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
+    xhttp.addEventListener('readystatechange', function () {
         if (this.readyState == 4 && this.status == 200) {
             let resp = JSON.parse(this.responseText);
             let asideRT = document.querySelector('aside.rt');
@@ -21,7 +21,8 @@ window.addEventListener('load', function () {
             if (parseFloat(resp.Valute.GBP.Value) < parseFloat(resp.Valute.GBP.Previous)) gbpInd = '&#8595;';
             if (parseFloat(resp.Valute.GBP.Value) == parseFloat(resp.Valute.GBP.Previous)) gbpInd = '=';
             // output
-            currencyBlock.innerHTML = 'USD(&#36;): ' + usdInd + parseFloat(resp.Valute.USD.Value).toFixed(4) + ' (' + resp.Valute.USD.Previous + ')';
+            currencyBlock.innerHTML = '';
+            currencyBlock.innerHTML += 'USD(&#36;): ' + usdInd + parseFloat(resp.Valute.USD.Value).toFixed(4) + ' (' + resp.Valute.USD.Previous + ')';
             currencyBlock.innerHTML += '<hr style="margin: 5px 0; border-top: 1px solid #949693;">';
             currencyBlock.innerHTML += 'EUR(&#8364;): ' + eurInd + parseFloat(resp.Valute.EUR.Value).toFixed(4) + ' (' + resp.Valute.EUR.Previous + ')';
             currencyBlock.innerHTML += '<hr style="margin: 5px 0; border-top: 1px solid #949693;">';
@@ -32,7 +33,7 @@ window.addEventListener('load', function () {
             // append
             asideRT.prepend(currencyBlock);
         }
-    };
+    }, false);
     xhttp.open('GET', 'https://www.cbr-xml-daily.ru/daily_json.js', true);
     xhttp.send();
-}, false);
+}, { once: true });
