@@ -1,4 +1,4 @@
-window.addEventListener('load', function () {
+п»їwindow.addEventListener('load', function () {
     // load exportWindow
     let xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', function () {
@@ -23,7 +23,7 @@ window.addEventListener('load', function () {
             let li = document.createElement('li');
             document.querySelector('ul.settings-menu > li:nth-child(2) > ul').appendChild(li);
             let a = document.createElement('a');
-            a.innerHTML = 'рейтинги';
+            a.innerHTML = 'Р РµР№С‚РёРЅРіРё';
             a.style.cursor = 'pointer';
             li.appendChild(a);
             a.addEventListener('click', function (e) {
@@ -35,4 +35,3 @@ window.addEventListener('load', function () {
     xhr.open('GET', '/Scripts/SAS/exportRatingsWindow.html', true);
     xhr.send();
 }, false);
-// check
