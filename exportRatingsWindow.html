@@ -22,7 +22,7 @@
 <body>
     <style>
         #exportWindow {
-            position: absolute;
+            /*position: absolute;
             left: 0;
             right: 0;
             margin: 0 auto 0 auto;
@@ -31,13 +31,31 @@
             background-color: whitesmoke;
             border: 1px solid #323232;
             box-shadow: 0 0 0.5vmin rgba(50, 50, 50, 0.25);
+            font-family: monospace;*/
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: fit-content;
+            height: 90vh;
+            padding: 2vmin;
+            background-color: whitesmoke;
+            border: 1px solid #323232;
+            box-shadow: 0 0 0.5vmin rgba(50, 50, 50, 0.25);
             font-family: monospace;
         }
 
             #exportWindow > #closeBtn {
-                float: right;
+                /*float: right;
+                color: #323232;
+                cursor: pointer;*/
                 color: #323232;
                 cursor: pointer;
+                align-self: flex-end;
             }
 
             #exportWindow > h1 {
@@ -78,6 +96,16 @@
                         -webkit-appearance: none;
                         margin: 0;
                     }
+
+            #exportWindow > div#layersWrap {
+                overflow-y: auto;
+                height: 10vh;
+                flex: 1;
+            }
+
+            #exportWindow > button#exportBtn {
+                align-self: center;
+            }
     </style>
     <div id="exportWindow">
         <a id="closeBtn">закрыть</a>
@@ -93,7 +121,7 @@
             <label for="inpTo">по:</label>
             <input id="inpTo" type="date">
         </div>
-        <!--<div></div>-->
+        <div id="layersWrap"></div>
         <button id="exportBtn">экспорт</button>
     </div>
     <script>
@@ -163,13 +191,15 @@
         // layers list
         createLayersList();
         function createLayersList() {
-            //let res = await fetch('/Feature/exportRatings_getLayers');
-            //let data = await res.json();
-            //console.log(data);
             let xhr = new XMLHttpRequest();
             xhr.addEventListener('readystatechange', function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(JSON.parse(this.responseText));
+                    let layersWrap = document.querySelector('#exportWindow > div#layersWrap');
+                    JSON.parse(this.responseText).forEach(function (el) {
+                        let div = document.createElement('div');
+                        div.innerHTML = el.name;
+                        layersWrap.appendChild(div);
+                    });
                 }
             }, false);
             xhr.open('GET', '/Feature/exportRatings_getLayers', true);
