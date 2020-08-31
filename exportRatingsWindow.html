@@ -93,6 +93,7 @@
             <label for="inpTo">по:</label>
             <input id="inpTo" type="date">
         </div>
+        <!--<div></div>-->
         <button id="exportBtn">экспорт</button>
     </div>
     <script>
@@ -159,19 +160,36 @@
                 delta.style.opacity = 0.5;
             }
         }, false);
+        // layers list
+        createLayersList();
+        function createLayersList() {
+            //let res = await fetch('/Feature/exportRatings_getLayers');
+            //let data = await res.json();
+            //console.log(data);
+            let xhr = new XMLHttpRequest();
+            xhr.addEventListener('readystatechange', function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(JSON.parse(this.responseText));
+                }
+            }, false);
+            xhr.open('GET', '/Feature/exportRatings_getLayers', true);
+            xhr.send();
+        }
         // export button
         let exportBtn = document.querySelector('#exportWindow > button#exportBtn');
         exportBtn.addEventListener('click', function (e) {
             e.preventDefault();
             console.log(fr.value);
             console.log(to.value);
-            let xhr = new XMLHttpRequest();
-            xhr.addEventListener('readystatechange', function () {
-                if (this.readyState == 4 && this.status == 200) {
-                }
-            }, false);
-            xhr.open('GET', 'LINK HERE', true);
-            xhr.send();
+            //let xhr = new XMLHttpRequest();
+            //xhr.addEventListener('readystatechange', function () {
+            //    if (this.readyState == 4 && this.status == 200) {
+            //        //console.log(this.responseText);
+            //        console.log(JSON.parse(this.responseText));
+            //    }
+            //}, false);
+            //xhr.open('POST', '/Feature/exportRatings_getLayers', true);
+            //xhr.send();
         }, false);
     </script>
 </body>
