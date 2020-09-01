@@ -99,22 +99,18 @@
                     overflow-y: auto;
                     flex: 1 1 50%;
                     background-color: rgba(25, 25, 25, 0.05);
-                    /*padding: 1vmin;*/
                 }
 
                 #exportWindow > div#exportSettings > div#layersWrap {
                     margin-right: 1vmin;
                 }
 
-                    #exportWindow > div#exportSettings > div#layersWrap > div {
+                    #exportWindow > div#exportSettings > div#layersWrap > label {
                         padding: 2px 1vmin;
+                        display: block;
                     }
 
-                        #exportWindow > div#exportSettings > div#layersWrap > div > label {
-                            display: block;
-                        }
-
-                        #exportWindow > div#exportSettings > div#layersWrap > div:not(:last-child) {
+                        #exportWindow > div#exportSettings > div#layersWrap > label:not(:last-child) {
                             border-bottom: 1px solid #323232;
                         }
 
@@ -235,16 +231,15 @@
                 if (this.readyState == 4 && this.status == 200) {
                     let layersWrap = document.querySelector('#exportWindow > div#exportSettings > div#layersWrap');
                     JSON.parse(this.responseText).forEach(function (el) {
-                        let div = document.createElement('div');
-                        layersWrap.appendChild(div);
-                        let chk = document.createElement('input');
-                        chk.id = el.id.toString();
-                        chk.type = 'checkbox';
-                        div.appendChild(chk);
-                        let lbl = document.createElement('label');
-                        lbl.htmlFor = el.id.toString();
-                        lbl.innerHTML = '&nbsp;' + el.name;
-                        div.appendChild(lbl);
+                        let label = document.createElement('label');
+                        layersWrap.appendChild(label);
+                        let input = document.createElement('input');
+                        input.id = el.id.toString();
+                        input.type = 'checkbox';
+                        label.appendChild(input);
+                        let span = document.createElement('span');
+                        span.innerHTML = '&nbsp;' + el.name;
+                        label.appendChild(span);
                     });
                 }
             }, false);
