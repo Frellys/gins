@@ -99,12 +99,24 @@
                     overflow-y: auto;
                     flex: 1 1 50%;
                     background-color: rgba(25, 25, 25, 0.05);
-                    padding: 1vmin;
+                    /*padding: 1vmin;*/
                 }
 
                 #exportWindow > div#exportSettings > div#layersWrap {
                     margin-right: 1vmin;
                 }
+
+                    #exportWindow > div#exportSettings > div#layersWrap > div {
+                        padding: 2px 1vmin;
+                    }
+
+                        #exportWindow > div#exportSettings > div#layersWrap > div > label {
+                            display: block;
+                        }
+
+                        #exportWindow > div#exportSettings > div#layersWrap > div:not(:last-child) {
+                            border-bottom: 1px solid #323232;
+                        }
 
                     #exportWindow > div#exportSettings > div#layersWrap::-webkit-scrollbar,
                     #exportWindow > div#exportSettings > div#usersWrap::-webkit-scrollbar {
@@ -231,7 +243,7 @@
                         div.appendChild(chk);
                         let lbl = document.createElement('label');
                         lbl.htmlFor = el.id.toString();
-                        lbl.innerHTML = el.name;
+                        lbl.innerHTML = '&nbsp;' + el.name;
                         div.appendChild(lbl);
                     });
                 }
