@@ -161,18 +161,18 @@
     </div>
     <script>
         // close button
-        document.querySelector('#exportWindow > #closeBtn').addEventListener('click', function () {
+        document.querySelector('#closeBtn').addEventListener('click', function () {
             document.querySelector('#exportWindow').style.display = 'none';
         }, false);
         // set delta
-        let delta = document.querySelector('#exportWindow > div.dateRow > input#delta');
+        let delta = document.querySelector('#delta');
         delta.value = 30;
         // set current date
-        let to = document.querySelector('#exportWindow > div.dateRow > input#inpTo');
+        let to = document.querySelector('#inpTo');
         let toDate = new Date();
         to.value = toDate.toISOString().split('T')[0];
         // set from date
-        let fr = document.querySelector('#exportWindow > div.dateRow > input#inpFrom');
+        let fr = document.querySelector('#inpFrom');
         let fromDate = new Date();
         fromDate.setDate(toDate.getDate() - delta.value);
         fr.value = fromDate.toISOString().split('T')[0];
@@ -202,7 +202,7 @@
             }
         }, false);
         // chain button
-        let chain = document.querySelector('#exportWindow > div.dateRow > button#chain');
+        let chain = document.querySelector('#chain');
         if (typeof window.chainActive == 'undefined') window.chainActive = true;
         chain.addEventListener('click', function (e) {
             e.preventDefault();
@@ -214,12 +214,12 @@
             }
             if (window.chainActive) {
                 chain.style.opacity = 1.0;
-                document.querySelector('#exportWindow > div.dateRow > label[for="delta"]').style.opacity = 1.0;
+                document.querySelector('div.dateRow > label[for="delta"]').style.opacity = 1.0;
                 delta.style.opacity = 1.0;
             }
             else {
                 chain.style.opacity = 0.5;
-                document.querySelector('#exportWindow > div.dateRow > label[for="delta"]').style.opacity = 0.5;
+                document.querySelector('div.dateRow > label[for="delta"]').style.opacity = 0.5;
                 delta.style.opacity = 0.5;
             }
         }, false);
@@ -229,7 +229,7 @@
             let xhr = new XMLHttpRequest();
             xhr.addEventListener('readystatechange', function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    let layersWrap = document.querySelector('#exportWindow > div#exportSettings > div#layersWrap');
+                    let layersWrap = document.querySelector('#layersWrap');
                     JSON.parse(this.responseText).forEach(function (el) {
                         let label = document.createElement('label');
                         layersWrap.appendChild(label);
@@ -247,20 +247,18 @@
             xhr.send();
         }
         // export button
-        let exportBtn = document.querySelector('#exportWindow > button#exportBtn');
+        let exportBtn = document.querySelector('#exportBtn');
         exportBtn.addEventListener('click', function (e) {
             e.preventDefault();
             console.log(fr.value);
             console.log(to.value);
-            //let xhr = new XMLHttpRequest();
-            //xhr.addEventListener('readystatechange', function () {
-            //    if (this.readyState == 4 && this.status == 200) {
-            //        //console.log(this.responseText);
-            //        console.log(JSON.parse(this.responseText));
-            //    }
-            //}, false);
-            //xhr.open('POST', '/Feature/exportRatings_getLayers', true);
-            //xhr.send();
+            let al = '';
+            document.querySelectorAll('#layersWrap > label > input').forEach(function (el) {
+                if (el.checked) {
+                    al += el.id + '\n';
+                }
+            });
+            alert(al);
         }, false);
     </script>
 </body>
