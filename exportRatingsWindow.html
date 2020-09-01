@@ -97,11 +97,23 @@
                         margin: 0;
                     }
 
-            #exportWindow > div#layersWrap {
-                overflow-y: auto;
-                height: 10vh;
+            #exportWindow > div#exportSettings {
                 flex: 1;
+                display: flex;
+                flex-direction: row;
+                min-height: 0;
             }
+
+                #exportWindow > div#exportSettings > div#layersWrap,
+                #exportWindow > div#exportSettings > div#usersWrap {
+                    /*display: inline-block;
+                    width: 50%;
+                    overflow-y: auto;*/
+                    display: inline-block;
+                    width: 50%;
+                    overflow-y: auto;
+                    flex: 1 1 auto;
+                }
 
             #exportWindow > button#exportBtn {
                 align-self: center;
@@ -121,7 +133,10 @@
             <label for="inpTo">по:</label>
             <input id="inpTo" type="date">
         </div>
-        <div id="layersWrap"></div>
+        <div id="exportSettings">
+            <div id="layersWrap"></div>
+            <div id="usersWrap">{пользователи}</div>
+        </div>
         <button id="exportBtn">экспорт</button>
     </div>
     <script>
@@ -194,7 +209,7 @@
             let xhr = new XMLHttpRequest();
             xhr.addEventListener('readystatechange', function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    let layersWrap = document.querySelector('#exportWindow > div#layersWrap');
+                    let layersWrap = document.querySelector('#exportWindow > div#exportSettings > div#layersWrap');
                     JSON.parse(this.responseText).forEach(function (el) {
                         let div = document.createElement('div');
                         div.innerHTML = el.name;
