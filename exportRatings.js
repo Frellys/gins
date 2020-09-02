@@ -28,7 +28,7 @@
             li.appendChild(a);
             a.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector('body > div#exportWindow').style.display = 'block';
+                document.querySelector('#exportWindow').style.display = 'flex';
             }, false);
         }
     }, false);
