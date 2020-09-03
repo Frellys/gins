@@ -31,7 +31,8 @@
             top: 0;
             bottom: 0;
             margin: auto;
-            width: fit-content;
+            /*width: fit-content;*/
+            width: 80%;
             /*height: 90vh;*/
             max-height: 100%;
             padding: 1vmin 2vmin;
@@ -159,7 +160,7 @@
         <div id="exportSettings">
             <div id="layersWrap">
                 <div id="controls" style="position: sticky; top: 0; background-color: thistle;">
-                    <input id="filter" type="text" placeholder="фильтр" onkeypress="">
+                    <input id="filter" type="text" placeholder="фильтр">
                     <button id="selectAll" onclick="btnSelectAll();">выбрать: все</button>
                     <button id="invert" onclick="btnInvert();">инвертировать</button>
                 </div>
@@ -291,8 +292,53 @@
             alert(al);
         }, false);
         // input filter
-        function inputFilter() {
-        }
+        //console.log(document.querySelector('filter'));
+        document.querySelector('#filter').addEventListener('keyup', function (e) {
+            //document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+            //    console.log(el.querySelector('span').innerText);
+            //});
+            //console.log(e);
+            //console.log(this.value);
+            //if (this.value) {
+            //    document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+            //        if (el.querySelector('span').innerText.includes(this.value.toString())) {
+            //            el.style.display = 'block';
+            //        }
+            //        else {
+            //            el.style.display = 'none';
+            //        }
+            //    });
+            //}
+            //else {
+            //    document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+            //        el.style.display = 'block';
+            //    });
+            //}
+            let txt = document.querySelector('#filter').value;
+            //console.log(txt);
+            if (txt) {
+                document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+                    if (el.querySelector('span').innerText.includes(txt)) {
+                        el.style.display = 'block';
+                    }
+                    else {
+                        el.style.display = 'none';
+                    }
+                });
+            }
+            else {
+                document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+                    el.style.display = 'block';
+                });
+            }
+        }, false);
+        //function inputFilter(e) {
+        //    console.log(e);
+        //    document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+        //        if (!el.querySelector('span').innerText.includes()) {
+        //        }
+        //    });
+        //}
         // btn select all
         function btnSelectAll() {
             document.querySelectorAll('#layersWrap > label').forEach(function (el) {
