@@ -22,6 +22,7 @@
 <body>
     <style>
         #exportWindow {
+            all: initial;
             position: absolute;
             display: flex;
             flex-direction: column;
@@ -31,8 +32,9 @@
             bottom: 0;
             margin: auto;
             width: fit-content;
-            height: 90vh;
-            padding: 2vmin;
+            /*height: 90vh;*/
+            max-height: 100%;
+            padding: 1vmin 2vmin;
             background-color: whitesmoke;
             border: 1px solid #323232;
             box-shadow: 0 0 0.5vmin rgba(50, 50, 50, 0.25);
@@ -155,7 +157,13 @@
             <input id="inpTo" type="date">
         </div>
         <div id="exportSettings">
-            <div id="layersWrap"></div>
+            <div id="layersWrap">
+                <div id="controls" style="position: sticky; top: 0; background-color: thistle;">
+                    <input id="filter" type="text" placeholder="фильтр" onkeypress="">
+                    <button id="selectAll" onclick="btnSelectAll();">выбрать: все</button>
+                    <button id="invert" onclick="btnInvert();">инвертировать</button>
+                </div>
+            </div>
             <div id="usersWrap">{пользователи}</div>
         </div>
         <button id="exportBtn">экспорт</button>
@@ -282,6 +290,23 @@
             });
             alert(al);
         }, false);
+        // input filter
+        function inputFilter() {
+        }
+        // btn select all
+        function btnSelectAll() {
+            document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+                if (!el.querySelector('input').checked) {
+                    el.querySelector('input').checked = true;
+                }
+            });
+        }
+        // btn invert
+        function btnInvert() {
+            document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+                el.querySelector('input').checked = !el.querySelector('input').checked;
+            });
+        }
     </script>
 </body>
 </html>
