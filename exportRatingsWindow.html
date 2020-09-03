@@ -255,28 +255,6 @@
             xhr.open('GET', '/Feature/exportRatings_getLayers', true);
             xhr.send();
         }
-        //createLayersList();
-        //function createLayersList() {
-        //    let xhr = new XMLHttpRequest();
-        //    xhr.addEventListener('readystatechange', function () {
-        //        if (this.readyState == 4 && this.status == 200) {
-        //            let layersWrap = document.querySelector('#layersWrap');
-        //            JSON.parse(this.responseText).forEach(function (el) {
-        //                let label = document.createElement('label');
-        //                layersWrap.appendChild(label);
-        //                let input = document.createElement('input');
-        //                input.id = el.id.toString();
-        //                input.type = 'checkbox';
-        //                label.appendChild(input);
-        //                let span = document.createElement('span');
-        //                span.innerHTML = '&nbsp;' + el.name;
-        //                label.appendChild(span);
-        //            });
-        //        }
-        //    }, false);
-        //    xhr.open('GET', '/Feature/exportRatings_getLayers', true);
-        //    xhr.send();
-        //}
         // export button
         let exportBtn = document.querySelector('#exportBtn');
         exportBtn.addEventListener('click', function (e) {
@@ -297,12 +275,6 @@
             if (txt) {
                 document.querySelectorAll('#layersWrap > label').forEach(function (el) {
                     el.style.display = el.querySelector('span').innerText.toLowerCase().includes(txt.toLowerCase()) ? 'block' : 'none';
-                    //if (el.querySelector('span').innerText.toLowerCase().includes(txt.toLowerCase())) {
-                    //    el.style.display = 'block';
-                    //}
-                    //else {
-                    //    el.style.display = 'none';
-                    //}
                 });
             }
             else {
