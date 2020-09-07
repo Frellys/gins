@@ -9,7 +9,7 @@
             let exportStyle = html.querySelector('body > style');
             document.body.appendChild(exportStyle);
             // create export window
-            let exportWindow = html.querySelector('body > div#exportWindow');
+            let exportWindow = html.querySelector('body > #exportWindow');
             exportWindow.style.display = 'none';
             document.body.appendChild(exportWindow);
             // create export script
