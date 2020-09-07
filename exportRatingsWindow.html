@@ -31,9 +31,7 @@
             top: 0;
             bottom: 0;
             margin: auto;
-            /*width: fit-content;*/
             width: 80%;
-            /*height: 90vh;*/
             max-height: 100%;
             padding: 1vmin 2vmin;
             background-color: whitesmoke;
@@ -88,7 +86,7 @@
                         margin: 0;
                     }
 
-            #exportWindow > div#exportSettings {
+            #exportWindow > #exportSettings {
                 flex: 1;
                 display: flex;
                 flex-direction: row;
@@ -97,48 +95,48 @@
                 border-top: 1px solid rgba(50, 50, 50, 0.25);
             }
 
-                #exportWindow > div#exportSettings > div#layersWrap,
-                #exportWindow > div#exportSettings > div#usersWrap {
+                #exportWindow > #exportSettings > #layersWrap,
+                #exportWindow > #exportSettings > #usersWrap {
                     display: inline-block;
                     overflow-y: auto;
                     flex: 1 1 50%;
                     background-color: rgba(25, 25, 25, 0.05);
                 }
 
-                #exportWindow > div#exportSettings > div#layersWrap {
+                #exportWindow > #exportSettings > #layersWrap {
                     margin-right: 1vmin;
                 }
 
-                    #exportWindow > div#exportSettings > div#layersWrap > label {
+                    #exportWindow > #exportSettings > #layersWrap > label {
                         padding: 2px 1vmin;
                         display: block;
                     }
 
-                        #exportWindow > div#exportSettings > div#layersWrap > label:not(:last-child) {
+                        #exportWindow > #exportSettings > #layersWrap > label:not(:last-child) {
                             border-bottom: 1px solid #323232;
                         }
 
-                    #exportWindow > div#exportSettings > div#layersWrap::-webkit-scrollbar,
-                    #exportWindow > div#exportSettings > div#usersWrap::-webkit-scrollbar {
+                    #exportWindow > #exportSettings > #layersWrap::-webkit-scrollbar,
+                    #exportWindow > #exportSettings > #usersWrap::-webkit-scrollbar {
                         width: 1vmin;
                     }
 
-                    #exportWindow > div#exportSettings > div#layersWrap::-webkit-scrollbar-thumb,
-                    #exportWindow > div#exportSettings > div#usersWrap::-webkit-scrollbar-thumb {
+                    #exportWindow > #exportSettings > #layersWrap::-webkit-scrollbar-thumb,
+                    #exportWindow > #exportSettings > #usersWrap::-webkit-scrollbar-thumb {
                         background-color: rgba(50, 50, 50, 0.25);
                     }
 
-                        #exportWindow > div#exportSettings > div#layersWrap::-webkit-scrollbar-thumb:hover,
-                        #exportWindow > div#exportSettings > div#usersWrap::-webkit-scrollbar-thumb:hover {
+                        #exportWindow > #exportSettings > #layersWrap::-webkit-scrollbar-thumb:hover,
+                        #exportWindow > #exportSettings > #usersWrap::-webkit-scrollbar-thumb:hover {
                             background-color: rgba(50, 50, 50, 0.5);
                         }
 
-                    #exportWindow > div#exportSettings > div#layersWrap::-webkit-scrollbar-track,
-                    #exportWindow > div#exportSettings > div#usersWrap::-webkit-scrollbar-track {
+                    #exportWindow > #exportSettings > #layersWrap::-webkit-scrollbar-track,
+                    #exportWindow > #exportSettings > #usersWrap::-webkit-scrollbar-track {
                         background-color: rgba(50, 50, 50, 0.1);
                     }
 
-            #exportWindow > button#exportBtn {
+            #exportWindow > #exportBtn {
                 margin-top: 2vmin;
                 align-self: center;
             }
