@@ -170,71 +170,71 @@
         <button id="exportBtn">экспорт</button>
     </div>
     <script>
-        // close button
-        document.querySelector('#closeBtn').addEventListener('click', function () {
-            document.querySelector('#exportWindow').style.display = 'none';
-        }, false);
-        // set delta
-        let delta = document.querySelector('#delta');
-        delta.value = 30;
-        // set current date
-        let to = document.querySelector('#inpTo');
-        let toDate = new Date();
-        to.value = toDate.toISOString().split('T')[0];
-        // set from date
-        let fr = document.querySelector('#inpFrom');
-        let fromDate = new Date();
-        fromDate.setDate(toDate.getDate() - delta.value);
-        fr.value = fromDate.toISOString().split('T')[0];
-        // listen for date change
-        to.addEventListener('input', dateHandle, false);
-        fr.addEventListener('input', dateHandle, false);
-        function dateHandle() {
-            if (window.chainActive) {
-                if (this.id == 'inpTo') {
-                    fromDate = new Date(this.value);
+        {
+            // close button
+            document.querySelector('#closeBtn').addEventListener('click', function () {
+                document.querySelector('#exportWindow').style.display = 'none';
+            }, false);
+            // set delta
+            let delta = document.querySelector('#delta');
+            delta.value = 30;
+            // set current date
+            let to = document.querySelector('#inpTo');
+            let toDate = new Date();
+            to.value = toDate.toISOString().split('T')[0];
+            // set from date
+            let fr = document.querySelector('#inpFrom');
+            let fromDate = new Date();
+            fromDate.setDate(toDate.getDate() - delta.value);
+            fr.value = fromDate.toISOString().split('T')[0];
+            // listen for date change
+            to.addEventListener('input', dateHandle, false);
+            fr.addEventListener('input', dateHandle, false);
+            function dateHandle() {
+                if (window.chainActive) {
+                    if (this.id == 'inpTo') {
+                        fromDate = new Date(this.value);
+                        fromDate.setDate(fromDate.getDate() - delta.value);
+                        fr.value = fromDate.toISOString().split('T')[0];
+                    }
+                    else {
+                        toDate = new Date(this.value);
+                        toDate.setDate(toDate.getDate() + delta.value);
+                        to.value = toDate.toISOString().split('T')[0];
+                    }
+                }
+            }
+            // listen for delta change
+            delta.addEventListener('input', function () {
+                if (!chain.disabled) {
+                    fromDate = new Date(to.value);
                     fromDate.setDate(fromDate.getDate() - delta.value);
                     fr.value = fromDate.toISOString().split('T')[0];
                 }
-                else {
-                    toDate = new Date(this.value);
-                    toDate.setDate(toDate.getDate() + delta.value);
-                    to.value = toDate.toISOString().split('T')[0];
+            }, false);
+            // chain button
+            let chain = document.querySelector('#chain');
+            if (typeof window.chainActive == 'undefined') window.chainActive = true;
+            chain.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.chainActive = !window.chainActive;
+                if (window.chainActive) {
+                    fromDate = new Date(to.value);
+                    fromDate.setDate(fromDate.getDate() - delta.value);
+                    fr.value = fromDate.toISOString().split('T')[0];
                 }
-            }
-        }
-        // listen for delta change
-        delta.addEventListener('input', function () {
-            if (!chain.disabled) {
-                fromDate = new Date(to.value);
-                fromDate.setDate(fromDate.getDate() - delta.value);
-                fr.value = fromDate.toISOString().split('T')[0];
-            }
-        }, false);
-        // chain button
-        let chain = document.querySelector('#chain');
-        if (typeof window.chainActive == 'undefined') window.chainActive = true;
-        chain.addEventListener('click', function (e) {
-            e.preventDefault();
-            window.chainActive = !window.chainActive;
-            if (window.chainActive) {
-                fromDate = new Date(to.value);
-                fromDate.setDate(fromDate.getDate() - delta.value);
-                fr.value = fromDate.toISOString().split('T')[0];
-            }
-            if (window.chainActive) {
-                chain.style.opacity = 1.0;
-                document.querySelector('div.dateRow > label[for="delta"]').style.opacity = 1.0;
-                delta.style.opacity = 1.0;
-            }
-            else {
-                chain.style.opacity = 0.5;
-                document.querySelector('div.dateRow > label[for="delta"]').style.opacity = 0.5;
-                delta.style.opacity = 0.5;
-            }
-        }, false);
-        // layers list
-        {
+                if (window.chainActive) {
+                    chain.style.opacity = 1.0;
+                    document.querySelector('div.dateRow > label[for="delta"]').style.opacity = 1.0;
+                    delta.style.opacity = 1.0;
+                }
+                else {
+                    chain.style.opacity = 0.5;
+                    document.querySelector('div.dateRow > label[for="delta"]').style.opacity = 0.5;
+                    delta.style.opacity = 0.5;
+                }
+            }, false);
+            // layers list
             let xhr = new XMLHttpRequest();
             xhr.addEventListener('readystatechange', function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -254,48 +254,48 @@
             }, false);
             xhr.open('GET', '/Feature/exportRatings_getLayers', true);
             xhr.send();
-        }
-        // export button
-        let exportBtn = document.querySelector('#exportBtn');
-        exportBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log(fr.value);
-            console.log(to.value);
-            let al = '';
-            document.querySelectorAll('#layersWrap > label > input').forEach(function (el) {
-                if (el.checked) {
-                    al += el.id + '\n';
+            // export button
+            let exportBtn = document.querySelector('#exportBtn');
+            exportBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log(fr.value);
+                console.log(to.value);
+                let al = '';
+                document.querySelectorAll('#layersWrap > label > input').forEach(function (el) {
+                    if (el.checked) {
+                        al += el.id + '\n';
+                    }
+                });
+                alert(al);
+            }, false);
+            // input filter
+            document.querySelector('#filter').addEventListener('keyup', function (e) {
+                let txt = document.querySelector('#filter').value;
+                if (txt) {
+                    document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+                        el.style.display = el.querySelector('span').innerText.toLowerCase().includes(txt.toLowerCase()) ? 'block' : 'none';
+                    });
                 }
-            });
-            alert(al);
-        }, false);
-        // input filter
-        document.querySelector('#filter').addEventListener('keyup', function (e) {
-            let txt = document.querySelector('#filter').value;
-            if (txt) {
+                else {
+                    document.querySelectorAll('#layersWrap > label').forEach(function (el) {
+                        el.style.display = 'block';
+                    });
+                }
+            }, false);
+            // btn select all
+            function btnSelectAll() {
                 document.querySelectorAll('#layersWrap > label').forEach(function (el) {
-                    el.style.display = el.querySelector('span').innerText.toLowerCase().includes(txt.toLowerCase()) ? 'block' : 'none';
+                    if (!el.querySelector('input').checked) {
+                        el.querySelector('input').checked = true;
+                    }
                 });
             }
-            else {
+            // btn invert
+            function btnInvert() {
                 document.querySelectorAll('#layersWrap > label').forEach(function (el) {
-                    el.style.display = 'block';
+                    el.querySelector('input').checked = !el.querySelector('input').checked;
                 });
             }
-        }, false);
-        // btn select all
-        function btnSelectAll() {
-            document.querySelectorAll('#layersWrap > label').forEach(function (el) {
-                if (!el.querySelector('input').checked) {
-                    el.querySelector('input').checked = true;
-                }
-            });
-        }
-        // btn invert
-        function btnInvert() {
-            document.querySelectorAll('#layersWrap > label').forEach(function (el) {
-                el.querySelector('input').checked = !el.querySelector('input').checked;
-            });
         }
     </script>
 </body>
