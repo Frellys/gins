@@ -27,7 +27,8 @@ namespace get_SUIS_dir_volume
             string configPath = System.IO.Path.Combine(Path, "web.config");
             string dbName = File.ReadAllText(configPath)
                 .Split(new string[] { "Database=" }, StringSplitOptions.None)[1]
-                .Split(new char[] { '"' }, StringSplitOptions.None)[0];
+                .Split(new char[] { '"' }, StringSplitOptions.None)[0]
+                .Replace(";", "");
             return dbName;
         }
     }
