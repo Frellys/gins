@@ -14,8 +14,8 @@ warningLabel.style.color = 'white';
 warningLabel.style.font = 'normal 1.6vmin Georgia';
 warningLabel.style.backgroundColor = 'rgba(50, 50, 50, 0.9)';
 // CHECK IF CAPSLOCK ENABLED ON PASSWORD FIELD
-inpPswdField.addEventListener('keyup', function (event) {
-    if (event.getModifierState('CapsLock')) {
+inpPswdField.addEventListener('keyup', function (e) {
+    if (e.getModifierState('CapsLock')) {
         if (!document.getElementById('warningCL')) {
             warningLabel.style.top = inpPswdField.getBoundingClientRect().top + inpPswdField.offsetHeight + 'px';
             warningLabel.style.left = inpPswdField.getBoundingClientRect().left + 'px';
