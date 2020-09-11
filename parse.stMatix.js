@@ -2,7 +2,7 @@
     let dt = new Date();
     let ts =
         (dt.getFullYear().toString()) +
-        (dt.getMonth().toString().length < 2 ? '0' + dt.getMonth().toString() : dt.getMonth().toString()) +
+        ((dt.getMonth() + 1).toString().length < 2 ? '0' + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString()) +
         (dt.getDate().toString().length < 2 ? '0' + dt.getDate().toString() : dt.getDate().toString()) +
         (dt.getHours().toString().length < 2 ? '0' + dt.getHours().toString() : dt.getHours().toString()) +
         (dt.getMinutes().toString().length < 2 ? '0' + dt.getMinutes().toString() : dt.getMinutes().toString()) +
