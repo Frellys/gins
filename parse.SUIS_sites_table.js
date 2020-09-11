@@ -8,6 +8,13 @@
             status: ''
         });
     });
-    console.log(sites);
-    copy(sites);
+    if (typeof console.table == 'function') {
+        console.table(sites, ['link', 'name']);
+        copy(sites);
+        let size = '(' + parseInt(new Blob([JSON.stringify(sites)]).size / 1024) + ' KB' + ')';
+        alert('sites ' + size + ' copied to clipboard');
+    }
+    else {
+        console.log(sites);
+    }
 }
