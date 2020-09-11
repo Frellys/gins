@@ -22,6 +22,9 @@ namespace get_SUIS_dir_volume
             //Size = new DirectoryInfo(System.IO.Path.Combine(path, "App_Data")).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
         }
 
+        /// <summary>
+        /// returns (string)DBname from {path}/web.config
+        /// </summary>
         private string GetDBname()
         {
             string configPath = System.IO.Path.Combine(Path, "web.config");
