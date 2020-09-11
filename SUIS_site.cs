@@ -11,7 +11,7 @@ namespace get_SUIS_dir_volume
         public string Name { get; }
         public string Path { get; }
         public string DBname { get; }
-        public long Size_Bt{ get; }
+        public long Size_Bt { get; }
         public long Size_Kb { get => Size_Bt / 1024; }
         public long Size_Mb { get => Size_Kb / 1024; }
         public long Size_Gb { get => Size_Mb / 1024; }
