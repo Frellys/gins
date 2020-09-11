@@ -13,6 +13,12 @@ namespace get_SUIS_dir_volume
         public string DBname { get; }
         public long Size { get; }
 
+        /// <summary>
+        /// Retrieves SUIS site data
+        /// </summary>
+        /// <param name="path">
+        /// absolute path to the site folder
+        /// </param>
         public SUIS_site(string path)
         {
             Path = path;
