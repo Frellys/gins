@@ -11,7 +11,10 @@ namespace get_SUIS_dir_volume
         public string Name { get; }
         public string Path { get; }
         public string DBname { get; }
-        public long Size { get; }
+        public long Size_Bt{ get; }
+        public long Size_Kb { get => Size_Bt / 1024; }
+        public long Size_Mb { get => Size_Kb / 1024; }
+        public long Size_Gb { get => Size_Mb / 1024; }
 
         /// <summary>
         /// Retrieves SUIS site data
@@ -24,7 +27,7 @@ namespace get_SUIS_dir_volume
             Path = path;
             Name = path.Split(new char[] { '\\' }, StringSplitOptions.None).Last();
             DBname = GetDBname();
-            Size = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+            Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
             //Size = new DirectoryInfo(System.IO.Path.Combine(path, "App_Data")).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
         }
 
