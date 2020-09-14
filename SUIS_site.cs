@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace get_SUIS_dir_volume
+namespace backupSites
 {
     class SUIS_site
     {
-        public string Path { get; }
-        public string FName { get; }
-        public string DBname { get; }
+        public string Abs_path { get; }
+        public string Dir_name { get; }
+        public string DB_name { get; }
+        public string Site_name { get; }
         public decimal Size_Bt { get; }
         public decimal Size_Kb { get => Math.Round(Size_Bt / 1024, 0); }
         public decimal Size_Mb { get => Math.Round(Size_Kb / 1024, 0); }
@@ -24,11 +25,11 @@ namespace get_SUIS_dir_volume
         /// </param>
         public SUIS_site(string path)
         {
-            Path = path;
-            FName = path.Split(new char[] { '\\' }, StringSplitOptions.None).Last();
-            DBname = GetDBname();
+            Abs_path = path;
+            Dir_name = path.Split(new char[] { '\\' }, StringSplitOptions.None).Last();
+            DB_name = GetDBname();
+            Site_name = "";
             Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
-            //Size = new DirectoryInfo(System.IO.Path.Combine(path, "App_Data")).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace get_SUIS_dir_volume
         /// </summary>
         private string GetDBname()
         {
-            string configPath = System.IO.Path.Combine(Path, "web.config");
+            string configPath = Path.Combine(Abs_path, "web.config");
             string dbName = File.ReadAllText(configPath)
                 .Split(new string[] { "Database=" }, StringSplitOptions.None)[1]
                 .Split(new char[] { '"' }, StringSplitOptions.None)[0];
