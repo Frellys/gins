@@ -52,7 +52,6 @@ namespace backupSites
         /// <summary>
         /// returns (string)Site_name from PostgreSQL
         /// </summary>
-        /// <returns></returns>
         private string Query_getSiteName()
         {
             string res = string.Empty;
