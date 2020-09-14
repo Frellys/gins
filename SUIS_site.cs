@@ -56,14 +56,14 @@ namespace backupSites
         private string Query_getSiteName()
         {
             string res = string.Empty;
-            using (NpgsqlConnection connection = new NpgsqlConnection(Core.PG_connStr))
+            using (NpgsqlConnection connection = new NpgsqlConnection(Core.PG_connStr.Replace("{DB_name}", DB_name)))
             {
                 string query = "SELECT \"Value\" FROM \"public\".\"sd4_StringSetting\" WHERE id = (SELECT id FROM \"public\".\"sd4_SettingBase\" WHERE \"Name\" = 'SiteName')";
                 NpgsqlCommand command = new NpgsqlCommand(query, connection);
                 connection.Open();
                 res = command.ExecuteScalar().ToString();
             }
-            if (string.IsNullOrEmpty(res)) throw new NpgsqlException("empty SiteName");
+            if (string.IsNullOrEmpty(res)) throw new NpgsqlException("SiteName IsNullOrEmpty");
             return res;
         }
     }
