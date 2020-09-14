@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,12 +29,12 @@ namespace backupSites
             Abs_path = path;
             Dir_name = path.Split(new char[] { '\\' }, StringSplitOptions.None).Last();
             DB_name = GetDBname();
-            Site_name = "";
+            Site_name = Query_getSiteName();
             Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
         }
 
         /// <summary>
-        /// returns (string)DBname from {path}/web.config
+        /// returns (string)DB_name from {path}/web.config
         /// </summary>
         private string GetDBname()
         {
@@ -46,6 +47,24 @@ namespace backupSites
                 dbName = dbName.Split(new char[] { ';' }, StringSplitOptions.None)[0];
             }
             return dbName;
+        }
+
+        /// <summary>
+        /// returns (string)Site_name from PostgreSQL
+        /// </summary>
+        /// <returns></returns>
+        private string Query_getSiteName()
+        {
+            string res = string.Empty;
+            using (NpgsqlConnection connection = new NpgsqlConnection(Core.PG_connStr))
+            {
+                string query = "SELECT \"Value\" FROM \"public\".\"sd4_StringSetting\" WHERE id = (SELECT id FROM \"public\".\"sd4_SettingBase\" WHERE \"Name\" = 'SiteName')";
+                NpgsqlCommand command = new NpgsqlCommand(query, connection);
+                connection.Open();
+                res = command.ExecuteScalar().ToString();
+            }
+            if (string.IsNullOrEmpty(res)) throw new NpgsqlException("empty SiteName");
+            return res;
         }
     }
 }
