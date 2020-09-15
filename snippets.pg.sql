@@ -30,3 +30,14 @@ WHERE id = (
 	SELECT id FROM "public"."sd4_SettingBase"
 	WHERE "Name" = 'SiteName'
 )
+-- OLD
+--SELECT "Path", "FileSize" FROM public."sd4_DiskFile"
+--SELECT "Article" FROM public."sd4_PublicationItem" WHERE "Article" LIKE '%href="%'
+--SELECT * FROM public."sd4_PublicationItem" WHERE "Title" LIKE '%Инструкция%'
+--DELETE FROM public."sd4_BlockNewLink" WHERE "id" = 87
+--SELECT "id" FROM public."sd4_PublicationItem"
+--SELECT "Article" FROM public."sd4_PublicationItem" WHERE "id" = '109'
+--SELECT COUNT("id") FROM public."sd4_PublicationItem" WHERE "Article" LIKE '%src="%' OR "Article" LIKE '%href="%'
+--SELECT "id" FROM public."sd4_PublicationItem" WHERE "Article" LIKE '%src=%' AND "Article" NOT LIKE '%src="%'
+--SELECT "id" FROM public."sd4_PublicationItem" WHERE "Article" LIKE '%src="data:image%'
+--SELECT "Article" FROM public."sd4_PublicationItem" WHERE "id" = '2722'
