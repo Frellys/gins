@@ -80,13 +80,13 @@ namespace backupSites
                 {
                     string[] bkp_Dirs = Directory.GetDirectories(Path.Combine(bkp, "App_Data"), "*", SearchOption.AllDirectories);
                     string[] bkp_Files = Directory.GetFiles(Path.Combine(bkp, "App_Data"), "*", SearchOption.AllDirectories);
-                    Console.WriteLine("bkp_Dirs:  " + bkp_Dirs.Length);
-                    Console.WriteLine("bkp_Files: " + bkp_Files.Length);
+                    //Console.WriteLine("bkp_Dirs:  " + bkp_Dirs.Length);
+                    //Console.WriteLine("bkp_Files: " + bkp_Files.Length);
                     string cur_AppData = Path.Combine(Abs_path, "App_Data");
                     string[] cur_Dirs = Directory.GetDirectories(cur_AppData, "*", SearchOption.AllDirectories);
                     string[] cur_Files = Directory.GetFiles(cur_AppData, "*", SearchOption.AllDirectories);
-                    Console.WriteLine("cur_Dirs:  " + cur_Dirs.Length);
-                    Console.WriteLine("cur_Files: " + cur_Files.Length);
+                    //Console.WriteLine("cur_Dirs:  " + cur_Dirs.Length);
+                    //Console.WriteLine("cur_Files: " + cur_Files.Length);
                     // backup
                     foreach (string dir in cur_Dirs)
                     {
@@ -105,12 +105,23 @@ namespace backupSites
                         }
                     }
                     // restore
-                    //foreach (string dir in bkp_Dirs)
-                    //{
-                    //}
-                    //foreach (string file in bkp_Files)
-                    //{
-                    //}
+                    foreach (string dir in bkp_Dirs)
+                    {
+                        string temp_Dir = dir.Replace(Path.Combine(backUps_Path, Dir_name), Abs_path);
+                        if (!Directory.Exists(temp_Dir))
+                        {
+                            Console.WriteLine(temp_Dir);
+                        }
+                    }
+                    foreach (string file in bkp_Files)
+                    {
+                        string temp_File = file.Replace(Path.Combine(backUps_Path, Dir_name), Abs_path);
+                        if (!File.Exists(temp_File))
+                        {
+                            File.Copy(file, temp_File);
+                            //Console.WriteLine(temp_File);
+                        }
+                    }
                 }
             }
         }
