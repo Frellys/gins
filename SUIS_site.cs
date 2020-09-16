@@ -73,13 +73,12 @@ namespace backupSites
         private void CompareAppData()
         {
             string[] backUps = Directory.GetDirectories(@"D:\backup_SUIS", "*", SearchOption.TopDirectoryOnly);
-            for (int i = 0; i < backUps.Length; i++)
+            foreach (string bkp in backUps)
             {
-                backUps[i] = Path.GetFileName(backUps[i]);
-            }
-            if (backUps.Contains(Dir_name))
-            {
-                Console.WriteLine("yeee");
+                if (Path.GetFileName(bkp) == Dir_name)
+                {
+                    Console.WriteLine("yee");
+                }
             }
             //foreach (FileInfo f in new DirectoryInfo(Abs_path).EnumerateFiles("*", SearchOption.TopDirectoryOnly))
             //{
