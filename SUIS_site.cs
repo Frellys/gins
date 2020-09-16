@@ -87,6 +87,7 @@ namespace backupSites
                     string[] cur_Files = Directory.GetFiles(cur_AppData, "*", SearchOption.AllDirectories);
                     Console.WriteLine("cur_Dirs:  " + cur_Dirs.Length);
                     Console.WriteLine("cur_Files: " + cur_Files.Length);
+                    // backup
                     foreach (string dir in cur_Dirs)
                     {
                         string temp_Dir = dir.Replace(Abs_path, Path.Combine(backUps_Path, Dir_name));
@@ -103,26 +104,15 @@ namespace backupSites
                             File.Copy(file, temp_File);
                         }
                     }
-                    // test
+                    // restore
+                    //foreach (string dir in bkp_Dirs)
+                    //{
+                    //}
                     //foreach (string file in bkp_Files)
                     //{
-                    //    string temp_File = file.Replace(backUps_Path, @"C:\Hosting\region74");
-                    //    if (!File.Exists(temp_File))
-                    //    {
-                    //        //File.Copy(file, temp_File);
-                    //        Console.WriteLine(temp_File);
-                    //    }
-                    //}
-                    //foreach (string b in bkp_Files)
-                    //{
-                    //    Console.WriteLine(b);
                     //}
                 }
             }
-            //foreach (FileInfo f in new DirectoryInfo(Abs_path).EnumerateFiles(" * ", SearchOption.TopDirectoryOnly))
-            //{
-            //    Console.WriteLine(f.Name);
-            //}
         }
     }
 }
