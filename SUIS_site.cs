@@ -31,6 +31,7 @@ namespace backupSites
             DB_name = GetDBname();
             Site_name = Query_getSiteName();
             Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+            CompareAppData();
         }
 
         /// <summary>
@@ -64,6 +65,26 @@ namespace backupSites
             }
             if (string.IsNullOrEmpty(res)) throw new NpgsqlException("SiteName IsNullOrEmpty");
             return res;
+        }
+
+        /// <summary>
+        /// saves new {path}/AppData/ if needed and restores missing files
+        /// </summary>
+        private void CompareAppData()
+        {
+            string[] backUps = Directory.GetDirectories(@"D:\backup_SUIS", "*", SearchOption.TopDirectoryOnly);
+            for (int i = 0; i < backUps.Length; i++)
+            {
+                backUps[i] = Path.GetFileName(backUps[i]);
+            }
+            if (backUps.Contains(Dir_name))
+            {
+                Console.WriteLine("yeee");
+            }
+            //foreach (FileInfo f in new DirectoryInfo(Abs_path).EnumerateFiles("*", SearchOption.TopDirectoryOnly))
+            //{
+            //    Console.WriteLine(f.Name);
+            //}
         }
     }
 }
