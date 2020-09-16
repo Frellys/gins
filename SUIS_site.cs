@@ -72,12 +72,41 @@ namespace backupSites
         /// </summary>
         private void CompareAppData()
         {
-            string[] backUps = Directory.GetDirectories(@"D:\backup_SUIS", "*", SearchOption.TopDirectoryOnly);
+            string backUps_Path = @"D:\backup_SUIS";
+            string[] backUps = Directory.GetDirectories(backUps_Path, "*", SearchOption.TopDirectoryOnly);
             foreach (string bkp in backUps)
             {
                 if (Path.GetFileName(bkp) == Dir_name)
                 {
-                    Console.WriteLine("yee");
+                    string[] bkp_Dirs = Directory.GetDirectories(Path.Combine(bkp, "App_Data"), "*", SearchOption.AllDirectories);
+                    string[] bkp_Files = Directory.GetFiles(Path.Combine(bkp, "App_Data"), "*", SearchOption.AllDirectories);
+                    Console.WriteLine("bkp_Dirs:  " + bkp_Dirs.Length);
+                    Console.WriteLine("bkp_Files: " + bkp_Files.Length);
+                    string cur_AppData = Path.Combine(Abs_path, "App_Data");
+                    string[] cur_Dirs = Directory.GetDirectories(cur_AppData, "*", SearchOption.AllDirectories);
+                    string[] cur_Files = Directory.GetFiles(cur_AppData, "*", SearchOption.AllDirectories);
+                    Console.WriteLine("cur_Dirs:  " + cur_Dirs.Length);
+                    Console.WriteLine("cur_Files: " + cur_Files.Length);
+                    foreach (string dir in cur_Dirs)
+                    {
+                        string temp_Dir = dir.Replace(Abs_path, Path.Combine(backUps_Path, Dir_name));
+                        if (!Directory.Exists(temp_Dir))
+                        {
+                            Directory.CreateDirectory(temp_Dir);
+                        }
+                    }
+                    foreach (string file in cur_Files)
+                    {
+                        string temp_File = file.Replace(Abs_path, Path.Combine(backUps_Path, Dir_name));
+                        if (!File.Exists(temp_File))
+                        {
+                            Console.WriteLine(temp_File);
+                        }
+                    }
+                    //foreach (string b in bkp_Files)
+                    //{
+                    //    Console.WriteLine(b);
+                    //}
                 }
             }
             //foreach (FileInfo f in new DirectoryInfo(Abs_path).EnumerateFiles("*", SearchOption.TopDirectoryOnly))
