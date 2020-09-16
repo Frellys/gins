@@ -100,16 +100,26 @@ namespace backupSites
                         string temp_File = file.Replace(Abs_path, Path.Combine(backUps_Path, Dir_name));
                         if (!File.Exists(temp_File))
                         {
-                            Console.WriteLine(temp_File);
+                            File.Copy(file, temp_File);
                         }
                     }
+                    // test
+                    //foreach (string file in bkp_Files)
+                    //{
+                    //    string temp_File = file.Replace(backUps_Path, @"C:\Hosting\region74");
+                    //    if (!File.Exists(temp_File))
+                    //    {
+                    //        //File.Copy(file, temp_File);
+                    //        Console.WriteLine(temp_File);
+                    //    }
+                    //}
                     //foreach (string b in bkp_Files)
                     //{
                     //    Console.WriteLine(b);
                     //}
                 }
             }
-            //foreach (FileInfo f in new DirectoryInfo(Abs_path).EnumerateFiles("*", SearchOption.TopDirectoryOnly))
+            //foreach (FileInfo f in new DirectoryInfo(Abs_path).EnumerateFiles(" * ", SearchOption.TopDirectoryOnly))
             //{
             //    Console.WriteLine(f.Name);
             //}
