@@ -86,8 +86,6 @@ namespace backupSites
                         .GetFiles(Path.Combine(bkp, "App_Data"), "*", SearchOption.AllDirectories)
                         .Where(el => !el.Contains("Lucene"))
                         .ToArray();
-                    //bkp_Dirs = bkp_Dirs.Where(el => !el.Contains("Lucene")).ToArray();
-                    //bkp_Files = bkp_Files.Where(el => !el.Contains("Lucene")).ToArray();
                     Array.Sort(bkp_Dirs);
                     Array.Sort(bkp_Files);
                     Console.WriteLine("bkp_Dirs:  " + bkp_Dirs.Length);
@@ -101,8 +99,6 @@ namespace backupSites
                         .GetFiles(cur_AppData, "*", SearchOption.AllDirectories)
                         .Where(el => !el.Contains("Lucene"))
                         .ToArray();
-                    //cur_Dirs = cur_Dirs.Where(el => !el.Contains("Lucene")).ToArray();
-                    //cur_Files = cur_Files.Where(el => !el.Contains("Lucene")).ToArray();
                     Array.Sort(cur_Dirs);
                     Array.Sort(cur_Files);
                     Console.WriteLine("cur_Dirs:  " + cur_Dirs.Length);
@@ -131,7 +127,6 @@ namespace backupSites
                         if (!Directory.Exists(temp_Dir))
                         {
                             Directory.CreateDirectory(temp_Dir);
-                            //Console.WriteLine(temp_Dir);
                         }
                     }
                     foreach (string file in bkp_Files)
@@ -140,7 +135,6 @@ namespace backupSites
                         if (!File.Exists(temp_File))
                         {
                             File.Copy(file, temp_File);
-                            //Console.WriteLine(temp_File);
                         }
                     }
                 }
