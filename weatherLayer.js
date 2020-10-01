@@ -4,8 +4,8 @@
             layer.events.register('loadend', layer, function () {
                 let weatherLayer = layer;
                 for (let i = 0; i < weatherList.length; i++) {
-                    let xhttp = new XMLHttpRequest();
-                    xhttp.addEventListener('readystatechange', function () {
+                    let xhr = new XMLHttpRequest();
+                    xhr.addEventListener('readystatechange', function () {
                         if (this.readyState == 4 && this.status == 200) {
                             weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
                             let lon, lat, data = JSON.parse(this.response);
@@ -37,8 +37,8 @@
                             weatherLayer.redraw();
                         }
                     }, false);
-                    xhttp.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + weatherList[i].id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
-                    xhttp.send();
+                    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + weatherList[i].id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
+                    xhr.send();
                 }
             });
         }
