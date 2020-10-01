@@ -6,44 +6,35 @@
                 for (let i = 0; i < weatherList.length; i++) {
                     let xhttp = new XMLHttpRequest();
                     xhttp.addEventListener('readystatechange', function () {
-                        switch (this.readyState) {
-                            case 4: {
-                                weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
-                                let lon, lat, data = JSON.parse(this.response);
-                                for (let ind = 0; ind < weatherList.length; ind++) {
-                                    if (data.id == weatherList[ind].id) {
-                                        weatherList[ind].hasOwnProperty('lon') ? lon = weatherList[ind].lon : lon = data.coord.lon;
-                                        weatherList[ind].hasOwnProperty('lat') ? lat = weatherList[ind].lat : lat = data.coord.lat;
-                                        weatherList.splice(ind, 1);
-                                    }
+                        if (this.readyState == 4 && this.status == 200) {
+                            weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
+                            let lon, lat, data = JSON.parse(this.response);
+                            for (let ind = 0; ind < weatherList.length; ind++) {
+                                if (data.id == weatherList[ind].id) {
+                                    weatherList[ind].hasOwnProperty('lon') ? lon = weatherList[ind].lon : lon = data.coord.lon;
+                                    weatherList[ind].hasOwnProperty('lat') ? lat = weatherList[ind].lat : lat = data.coord.lat;
+                                    weatherList.splice(ind, 1);
                                 }
-                                let point = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
-                                let obj = weatherLayer.features[weatherLayer.features.length - 1];
-                                obj.attributes.x = point.lon;
-                                obj.attributes.y = point.lat;
-                                obj.geometry.x = obj.attributes.x;
-                                obj.geometry.y = obj.attributes.y;
-                                obj.geometry.bounds.left = obj.geometry.x;
-                                obj.geometry.bounds.right = obj.geometry.x;
-                                obj.geometry.bounds.top = obj.geometry.y;
-                                obj.geometry.bounds.bottom = obj.geometry.y;
-                                obj.data = data;
-                                if (!obj.style) obj.style = clone(weatherLayer.styleMap.styles.default.defaultStyle);
-                                obj.style.externalGraphic = 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
-                                obj.style.graphicHeight = screen.height * 3.9 / 100;
-                                obj.style.label = (data.main.temp - 273.15).toFixed(1) + '°';
-                                obj.style.fontSize = screen.height * 1.0 / 100;
-                                obj.style.fontFamily = 'Arial';
-                                obj.style.fontWeight = '700';
-                                weatherLayer.redraw();
-                                break;
                             }
-                            case 200: {
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
+                            let point = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+                            let obj = weatherLayer.features[weatherLayer.features.length - 1];
+                            obj.attributes.x = point.lon;
+                            obj.attributes.y = point.lat;
+                            obj.geometry.x = obj.attributes.x;
+                            obj.geometry.y = obj.attributes.y;
+                            obj.geometry.bounds.left = obj.geometry.x;
+                            obj.geometry.bounds.right = obj.geometry.x;
+                            obj.geometry.bounds.top = obj.geometry.y;
+                            obj.geometry.bounds.bottom = obj.geometry.y;
+                            obj.data = data;
+                            if (!obj.style) obj.style = clone(weatherLayer.styleMap.styles.default.defaultStyle);
+                            obj.style.externalGraphic = 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
+                            obj.style.graphicHeight = screen.height * 3.9 / 100;
+                            obj.style.label = (data.main.temp - 273.15).toFixed(1) + '°';
+                            obj.style.fontSize = screen.height * 1.0 / 100;
+                            obj.style.fontFamily = 'Arial';
+                            obj.style.fontWeight = '700';
+                            weatherLayer.redraw();
                         }
                     }, false);
                     xhttp.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + weatherList[i].id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
