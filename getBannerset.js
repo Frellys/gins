@@ -1,4 +1,4 @@
-function getBannerset() {
+window.addEventListener('load', function () {
     let xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -6,4 +6,4 @@ function getBannerset() {
     }, false);
     xhr.open('GET', '', true);
     xhr.send();
-}
+}, { once: true });
