@@ -9,7 +9,7 @@
                     xhttp.send();
                     xhttp.onreadystatechange = function () {
                         switch (this.readyState) {
-                            case 4:
+                            case 4: {
                                 weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
                                 let lon, lat, data = JSON.parse(this.response);
                                 for (let ind = 0; ind < weatherList.length; ind++) {
@@ -39,8 +39,13 @@
                                 obj.style.fontWeight = '700';
                                 weatherLayer.redraw();
                                 break;
-                            case 200: break;
-                            default: break;
+                            }
+                            case 200: {
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
                         }
                     };
                 }
