@@ -5,9 +5,7 @@
                 let weatherLayer = layer;
                 for (let i = 0; i < weatherList.length; i++) {
                     let xhttp = new XMLHttpRequest();
-                    xhttp.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + weatherList[i].id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
-                    xhttp.send();
-                    xhttp.onreadystatechange = function () {
+                    xhttp.addEventListener('readystatechange', function () {
                         switch (this.readyState) {
                             case 4: {
                                 weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
@@ -47,7 +45,9 @@
                                 break;
                             }
                         }
-                    };
+                    }, false);
+                    xhttp.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + weatherList[i].id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
+                    xhttp.send();
                 }
             });
         }
