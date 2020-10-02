@@ -52,8 +52,9 @@ function setSubmitTo(str) {
             submit.setAttribute('disabled', 'true');
             submit.style.opacity = '0.5';
             break;
-        default:
+        default: {
             break;
+        }
     }
 }
 
