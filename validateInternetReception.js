@@ -44,14 +44,16 @@ window.addEventListener('DOMContentLoaded', function () {
 function setSubmitTo(str) {
     let submit = document.querySelector('#addform input.submit');
     switch (str) {
-        case 'enabled':
+        case 'enabled': {
             submit.removeAttribute('disabled');
             submit.style.opacity = '';
             break;
-        case 'disabled':
+        }
+        case 'disabled': {
             submit.setAttribute('disabled', 'true');
             submit.style.opacity = '0.5';
             break;
+        }
         default: {
             break;
         }
