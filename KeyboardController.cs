@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace torMacro
 {
     static class KeyboardController
     {
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         // arrows
         public const byte VK_LEFT = 0x25;
         public const byte VK_UP = 0x26;
@@ -56,6 +59,12 @@ namespace torMacro
         /// <param name="interval">time in milliseconds between pressing and releasing buttons</param>
         public static void Press(string[] keys, int interval = 100)
         {
+            foreach (string k in keys)
+            {
+                Console.WriteLine(k);
+            }
+            Console.WriteLine(VK_F1);
+            Console.WriteLine(typeof(KeyboardController).GetField("VK_F1").GetValue(typeof(KeyboardController)));
         }
     }
 }
