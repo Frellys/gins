@@ -29,6 +29,10 @@ namespace torMacro
         public const byte VK_7 = 0x37;
         public const byte VK_8 = 0x38;
         public const byte VK_9 = 0x39;
+        // keys
+        public const byte KEY_K = 0x4B;
+        public const byte KEY_T = 0x54;
+        public const byte KEY_V = 0x56;
         // functrion keys
         public const byte VK_F1 = 0x70;
         public const byte VK_F2 = 0x71;
@@ -55,22 +59,46 @@ namespace torMacro
         public const byte VK_F23 = 0x86;
         public const byte VK_F24 = 0x87;
         // specials
+        public const byte VK_ESCAPE = 0x1B;
+        public const byte VK_LCONTROL = 0xA2;
+        public const byte VK_LSHIFT = 0xA0;
         public const byte VK_LWIN = 0x5B;
+        public const byte VK_RETURN = 0x0D;
+        public const byte VK_TAB = 0x09;
         /// <summary>
         /// Emulates keyboard input
         /// </summary>
         /// <param name="keys">array of keys, which will be pressed in direct order and released in reverse</param>
         /// <param name="interval">time in milliseconds between pressing and releasing buttons</param>
-        public static void Press(string[] keys, int interval = 100)
+        //public static void Press(string[] keys, int interval = 100)
+        //{
+        //    for (int k = 0; k < keys.Length; k++)
+        //    {
+        //        keybd_event((byte)typeof(KeyboardController).GetField(keys[k]).GetValue(null), 0x45, 0, (UIntPtr)0);
+        //    }
+        //    Thread.Sleep(interval);
+        //    for (int k = keys.Length; k > 0; k--)
+        //    {
+        //        keybd_event((byte)typeof(KeyboardController).GetField(keys[k - 1]).GetValue(null), EVT_KEYUP, 0, (UIntPtr)0);
+        //    }
+        //}
+        public static void Press(string[] keys)
         {
+            //for (int k = 0; k < keys.Length; k++)
+            //{
+            //    keybd_event((byte)typeof(KeyboardController).GetField(keys[k]).GetValue(null), 0x45, 0, (UIntPtr)0);
+            //}
+            //for (int k = keys.Length; k > 0; k--)
+            //{
+            //    keybd_event((byte)typeof(KeyboardController).GetField(keys[k - 1]).GetValue(null), EVT_KEYUP, 0, (UIntPtr)0);
+            //}
             for (int k = 0; k < keys.Length; k++)
             {
-                keybd_event((byte)typeof(KeyboardController).GetField(keys[k]).GetValue(null), 0x45, 0, (UIntPtr)0);
+                keybd_event((byte)typeof(KeyboardController).GetField(keys[k]).GetValue(typeof(KeyboardController)), 0x45, 0, (UIntPtr)0);
             }
-            Thread.Sleep(interval);
-            for (int k = 0; k < keys.Length; k++)
+            for (int k = keys.Length; k > 0; k--)
             {
-                keybd_event((byte)typeof(KeyboardController).GetField(keys[keys.Length - 1 - k]).GetValue(null), EVT_KEYUP, 0, (UIntPtr)0);
+                keybd_event((byte)typeof(KeyboardController).GetField(keys[k - 1]).GetValue(typeof(KeyboardController)), EVT_KEYUP, 0, (UIntPtr)0);
             }
         }
     }
