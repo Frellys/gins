@@ -13,26 +13,49 @@ namespace torMacro
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         // keyup
         public const int EVT_KEYUP = 0x02;
+        private static Dictionary<string, byte> keys = new Dictionary<string, byte>
+        {
+            // arrows
+            { "VK_LEFT", 0x25 },
+            { "VK_UP", 0x26 },
+            { "VK_RIGHT", 0x27 },
+            { "VK_DOWN", 0x28 },
+            // numbers
+            { "VK_0", 0x30 },
+            { "VK_1", 0x31 },
+            { "VK_2", 0x32 },
+            { "VK_3", 0x33 },
+            { "VK_4", 0x34 },
+            { "VK_5", 0x35 },
+            { "VK_6", 0x36 },
+            { "VK_7", 0x37 },
+            { "VK_8", 0x38 },
+            { "VK_9", 0x39 },
+            // keys
+            { "KEY_K", 0x4B },
+            { "KEY_T", 0x54 },
+            { "KEY_V", 0x56 },
+        };
         // arrows
-        public const byte VK_LEFT = 0x25;
-        public const byte VK_UP = 0x26;
-        public const byte VK_RIGHT = 0x27;
-        public const byte VK_DOWN = 0x28;
+        //public const byte VK_LEFT = 0x25;
+        //public const byte VK_UP = 0x26;
+        //public const byte VK_RIGHT = 0x27;
+        //public const byte VK_DOWN = 0x28;
         // numbers
-        public const byte VK_0 = 0x30;
-        public const byte VK_1 = 0x31;
-        public const byte VK_2 = 0x32;
-        public const byte VK_3 = 0x33;
-        public const byte VK_4 = 0x34;
-        public const byte VK_5 = 0x35;
-        public const byte VK_6 = 0x36;
-        public const byte VK_7 = 0x37;
-        public const byte VK_8 = 0x38;
-        public const byte VK_9 = 0x39;
+        //public const byte VK_0 = 0x30;
+        //public const byte VK_1 = 0x31;
+        //public const byte VK_2 = 0x32;
+        //public const byte VK_3 = 0x33;
+        //public const byte VK_4 = 0x34;
+        //public const byte VK_5 = 0x35;
+        //public const byte VK_6 = 0x36;
+        //public const byte VK_7 = 0x37;
+        //public const byte VK_8 = 0x38;
+        //public const byte VK_9 = 0x39;
         // keys
-        public const byte KEY_K = 0x4B;
-        public const byte KEY_T = 0x54;
-        public const byte KEY_V = 0x56;
+        //public const byte KEY_K = 0x4B;
+        //public const byte KEY_T = 0x54;
+        //public const byte KEY_V = 0x56;
         // functrion keys
         public const byte VK_F1 = 0x70;
         public const byte VK_F2 = 0x71;
