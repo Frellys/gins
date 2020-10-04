@@ -29,7 +29,7 @@ namespace torMacro
         /// </summary>
         /// <param name="keys">array of keys, which will be pressed in direct order and released in reverse</param>
         /// <param name="interval">time in milliseconds between pressing and releasing buttons</param>
-        public static void Press(char[] keys, int interval = 100)
+        public static void Press(string[] keys, int interval = 100)
         {
         }
     }
