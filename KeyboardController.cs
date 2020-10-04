@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace torMacro
 {
@@ -11,6 +11,8 @@ namespace torMacro
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        // keyup
+        public const int EVT_KEYUP = 0x02;
         // arrows
         public const byte VK_LEFT = 0x25;
         public const byte VK_UP = 0x26;
@@ -52,6 +54,8 @@ namespace torMacro
         public const byte VK_F22 = 0x85;
         public const byte VK_F23 = 0x86;
         public const byte VK_F24 = 0x87;
+        // specials
+        public const byte VK_LWIN = 0x5B;
         /// <summary>
         /// Emulates keyboard input
         /// </summary>
@@ -59,12 +63,15 @@ namespace torMacro
         /// <param name="interval">time in milliseconds between pressing and releasing buttons</param>
         public static void Press(string[] keys, int interval = 100)
         {
-            foreach (string k in keys)
+            for (int k = 0; k < keys.Length; k++)
             {
-                Console.WriteLine(k);
+                keybd_event((byte)typeof(KeyboardController).GetField(keys[k]).GetValue(null), 0x45, 0, (UIntPtr)0);
             }
-            Console.WriteLine(VK_F1);
-            Console.WriteLine(typeof(KeyboardController).GetField("VK_F1").GetValue(typeof(KeyboardController)));
+            Thread.Sleep(interval);
+            for (int k = 0; k < keys.Length; k++)
+            {
+                keybd_event((byte)typeof(KeyboardController).GetField(keys[keys.Length - 1 - k]).GetValue(null), EVT_KEYUP, 0, (UIntPtr)0);
+            }
         }
     }
 }
