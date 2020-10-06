@@ -15,6 +15,9 @@ namespace torMacro
         public const uint EVT_KEYUP = 0x2;
         private static Dictionary<string, byte> Keyboard = new Dictionary<string, byte>
         {
+            // mouse
+            { "VK_LBUTTON", 0x01 },
+            { "VK_RBUTTON", 0x02 },
             // nav
             { "VK_PRIOR", 0x21 },
             { "VK_NEXT", 0x22 },
