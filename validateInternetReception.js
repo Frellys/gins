@@ -18,28 +18,11 @@ window.addEventListener('DOMContentLoaded', function () {
         document.getElementById(el).addEventListener('input', function () {
             if (this.type != 'checkbox') {
                 reqFields[this.id].isFilled = this.value ? true : false;
-                updateSubmitRequirements();
-                //if (this.value) {
-                //    reqFields[this.id].isFilled = true;
-                //    updateSubmitRequirements();
-                //}
-                //else {
-                //    reqFields[this.id].isFilled = false;
-                //    updateSubmitRequirements();
-                //}
             }
             else {
                 reqFields[this.id].isFilled = this.checked ? true : false;
-                updateSubmitRequirements();
-                //if (this.checked) {
-                //    reqFields[this.id].isFilled = true;
-                //    updateSubmitRequirements();
-                //}
-                //else {
-                //    reqFields[this.id].isFilled = false;
-                //    updateSubmitRequirements();
-                //}
             }
+            updateSubmitRequirements();
         }, false);
     });
     let ext = [
