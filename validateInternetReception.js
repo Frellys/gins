@@ -38,7 +38,30 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }, false);
     });
-    document.querySelector('input#Attach_filebox').setAttribute('accept', '.jpg,.jpeg,.gif,.png,.tif,.txt,.rtf,.doc,.docx,.xls,.xlsx,.pdf,.ppt,.pptx,.pps,.ppsx,.odt,.ods,.odp,.rar,.zip');
+    let ext = [
+        '.doc',
+        '.docx',
+        '.gif',
+        '.jpg',
+        '.jpeg',
+        '.odp',
+        '.ods',
+        '.odt',
+        '.pdf',
+        '.png',
+        '.pps',
+        '.ppsx',
+        '.ppt',
+        '.pptx',
+        '.rar',
+        '.rtf',
+        '.tif',
+        '.txt',
+        '.xls',
+        '.xlsx',
+        '.zip'
+    ];
+    document.querySelector('input#Attach_filebox').setAttribute('accept', ext.join(','));
 }, { once: true });
 
 function setSubmitTo(str) {
