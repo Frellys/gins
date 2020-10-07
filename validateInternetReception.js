@@ -74,7 +74,7 @@ function updateSubmitRequirements() {
     if (document.getElementById('submitRequirements')) {
         let subReq = document.getElementById('submitRequirements');
         let cnt = '';
-        Object.keys(reqFields).forEach(function (el, idx, arr) {
+        Object.keys(reqFields).forEach(function (el) {
             if (!reqFields[el].isFilled) {
                 cnt += '<div>' + reqFields[el].text + '</div>';
             }
@@ -92,7 +92,7 @@ function updateSubmitRequirements() {
         let subReq = document.createElement('div');
         subReq.id = 'submitRequirements';
         subReq.innerText = '';
-        Object.keys(reqFields).forEach(function (el, idx, arr) {
+        Object.keys(reqFields).forEach(function (el) {
             subReq.innerHTML += '<div>' + reqFields[el].text + '</div>';
         });
         document.getElementById('addform').appendChild(subReq);
