@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }, false);
     });
-    console.log(reqFields);
+    document.querySelector('input#Attach_filebox').setAttribute('accept', '.jpg,.jpeg,.gif,.png,.tif,.txt,.rtf,.doc,.docx,.xls,.xlsx,.pdf,.ppt,.pptx,.pps,.ppsx,.odt,.ods,.odp,.rar,.zip');
 }, { once: true });
 
 function setSubmitTo(str) {
