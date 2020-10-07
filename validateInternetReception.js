@@ -17,24 +17,28 @@ window.addEventListener('DOMContentLoaded', function () {
         }
         document.getElementById(el).addEventListener('input', function () {
             if (this.type != 'checkbox') {
-                if (this.value) {
-                    reqFields[this.id].isFilled = true;
-                    updateSubmitRequirements();
-                }
-                else {
-                    reqFields[this.id].isFilled = false;
-                    updateSubmitRequirements();
-                }
+                reqFields[this.id].isFilled = this.value ? true : false;
+                updateSubmitRequirements();
+                //if (this.value) {
+                //    reqFields[this.id].isFilled = true;
+                //    updateSubmitRequirements();
+                //}
+                //else {
+                //    reqFields[this.id].isFilled = false;
+                //    updateSubmitRequirements();
+                //}
             }
             else {
-                if (this.checked) {
-                    reqFields[this.id].isFilled = true;
-                    updateSubmitRequirements();
-                }
-                else {
-                    reqFields[this.id].isFilled = false;
-                    updateSubmitRequirements();
-                }
+                reqFields[this.id].isFilled = this.checked ? true : false;
+                updateSubmitRequirements();
+                //if (this.checked) {
+                //    reqFields[this.id].isFilled = true;
+                //    updateSubmitRequirements();
+                //}
+                //else {
+                //    reqFields[this.id].isFilled = false;
+                //    updateSubmitRequirements();
+                //}
             }
         }, false);
     });
