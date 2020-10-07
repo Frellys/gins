@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     setSubmitTo('disabled');
     updateSubmitRequirements();
-    Object.keys(reqFields).forEach(function (el, idx, arr) {
+    Object.keys(reqFields).forEach(function (el) {
         reqFields[el] = {
             id: el,
             text: reqFields[el].text,
