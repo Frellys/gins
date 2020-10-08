@@ -102,11 +102,15 @@ namespace torMacro
             { "VK_F24", 0x87 },
             // specials
             { "VK_ESCAPE", 0x1B },
-            { "VK_LCONTROL", 0xA2 },
             { "VK_LSHIFT", 0xA0 },
+            { "VK_RSHIFT", 0xA1 },
+            { "VK_LCONTROL", 0xA2 },
+            { "VK_RCONTROL", 0xA3 },
             { "VK_LWIN", 0x5B },
-            { "VK_RETURN", 0x0D },
+            { "VK_RWIN", 0x5C },
+            { "VK_BACK", 0x08 },
             { "VK_TAB", 0x09 },
+            { "VK_RETURN", 0x0D },
             // browser
             { "VK_BROWSER_BACK", 0xA6 },
             { "VK_BROWSER_FORWARD", 0xA7 },
