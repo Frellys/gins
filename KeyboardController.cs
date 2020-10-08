@@ -64,6 +64,17 @@ namespace torMacro
             { "KEY_X", 0x58 },
             { "KEY_Y", 0x59 },
             { "KEY_Z", 0x5A },
+            // numpad
+            { "VK_NUMPAD0", 0x60 },
+            { "VK_NUMPAD1", 0x61 },
+            { "VK_NUMPAD2", 0x62 },
+            { "VK_NUMPAD3", 0x63 },
+            { "VK_NUMPAD4", 0x64 },
+            { "VK_NUMPAD5", 0x65 },
+            { "VK_NUMPAD6", 0x66 },
+            { "VK_NUMPAD7", 0x67 },
+            { "VK_NUMPAD8", 0x68 },
+            { "VK_NUMPAD9", 0x69 },
             // functrion keys
             { "VK_F1", 0x70 },
             { "VK_F2", 0x71 },
