@@ -42,7 +42,12 @@ namespace torMacro
             // keys
             { "KEY_K", 0x4B },
             { "KEY_T", 0x54 },
+            { "KEY_U", 0x55 },
             { "KEY_V", 0x56 },
+            { "KEY_W", 0x57 },
+            { "KEY_X", 0x58 },
+            { "KEY_Y", 0x59 },
+            { "KEY_Z", 0x5A },
             // functrion keys
             { "VK_F1", 0x70 },
             { "VK_F2", 0x71 },
