@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 
 namespace torMacro
@@ -85,7 +83,8 @@ namespace torMacro
         /// Emulates keyboard input
         /// </summary>
         /// <param name="keys">array of keys, which will be pressed in direct order and released in reverse</param>
-        public static void Press(string[] keys)
+        /// <param name="delay">delay after pressing keys</param>
+        public static void Press(string[] keys, int delay)
         {
             for (int k = 0; k < keys.Length; k++)
             {
@@ -95,6 +94,10 @@ namespace torMacro
             for (int k = keys.Length; k > 0; k--)
             {
                 keybd_event(Keyboard[keys[k - 1]], 0x45, EVT_KEYUP, (UIntPtr)0);
+            }
+            if (delay != 0)
+            {
+                Thread.Sleep(delay);
             }
         }
     }
