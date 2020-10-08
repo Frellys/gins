@@ -39,6 +39,11 @@ namespace torMacro
             { "VK_9", 0x39 },
             // keys
             { "KEY_K", 0x4B },
+            { "KEY_O", 0x4F },
+            { "KEY_P", 0x50 },
+            { "KEY_Q", 0x51 },
+            { "KEY_R", 0x52 },
+            { "KEY_S", 0x53 },
             { "KEY_T", 0x54 },
             { "KEY_U", 0x55 },
             { "KEY_V", 0x56 },
