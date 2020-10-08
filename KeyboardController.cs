@@ -106,7 +106,15 @@ namespace torMacro
             { "VK_LSHIFT", 0xA0 },
             { "VK_LWIN", 0x5B },
             { "VK_RETURN", 0x0D },
-            { "VK_TAB", 0x09 }
+            { "VK_TAB", 0x09 },
+            // browser
+            { "VK_BROWSER_BACK", 0xA6 },
+            { "VK_BROWSER_FORWARD", 0xA7 },
+            { "VK_BROWSER_REFRESH", 0xA8 },
+            { "VK_BROWSER_STOP", 0xA9 },
+            { "VK_BROWSER_SEARCH", 0xAA },
+            { "VK_BROWSER_FAVORITES", 0xAB },
+            { "VK_BROWSER_HOME", 0xAC }
         };
         /// <summary>
         /// Emulates keyboard input
