@@ -49,6 +49,7 @@ window.addEventListener('DOMContentLoaded', function () {
         '.zip'
     ];
     document.querySelector('input#Attach_filebox').setAttribute('accept', ext.join(','));
+    document.querySelector('input#Attach_filebox').removeAttribute('multiple');
     document.querySelector('input#Attach_filebox').addEventListener('input', function (e) {
         if (e.target.files[0].type == '') {
             this.value = '';
