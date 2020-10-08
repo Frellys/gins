@@ -50,7 +50,9 @@ window.addEventListener('DOMContentLoaded', function () {
     ];
     document.querySelector('input#Attach_filebox').setAttribute('accept', ext.join(','));
     document.querySelector('input#Attach_filebox').addEventListener('input', function (e) {
-        console.log(e.target.files);
+        if (e.target.files[0].type == '') {
+            this.value = '';
+        }
     }, false);
 }, { once: true });
 
