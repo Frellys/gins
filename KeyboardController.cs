@@ -84,7 +84,7 @@ namespace torMacro
         /// </summary>
         /// <param name="keys">array of keys, which will be pressed in direct order and released in reverse</param>
         /// <param name="delay">delay after pressing keys</param>
-        public static void Press(string[] keys, int delay)
+        public static void Press(string[] keys, int delay = 0)
         {
             for (int k = 0; k < keys.Length; k++)
             {
