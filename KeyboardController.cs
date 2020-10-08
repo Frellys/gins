@@ -114,7 +114,11 @@ namespace torMacro
             { "VK_BROWSER_STOP", 0xA9 },
             { "VK_BROWSER_SEARCH", 0xAA },
             { "VK_BROWSER_FAVORITES", 0xAB },
-            { "VK_BROWSER_HOME", 0xAC }
+            { "VK_BROWSER_HOME", 0xAC },
+            // volume
+            { "VK_VOLUME_MUTE", 0xAD },
+            { "VK_VOLUME_DOWN", 0xAE },
+            { "VK_VOLUME_UP", 0xAF }
         };
         /// <summary>
         /// Emulates keyboard input
