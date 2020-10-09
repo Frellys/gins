@@ -128,7 +128,12 @@ namespace torMacro
             { "VK_MEDIA_NEXT_TRACK", 0xB0 },
             { "VK_MEDIA_PREV_TRACK", 0xB1 },
             { "VK_MEDIA_STOP", 0xB2 },
-            { "VK_MEDIA_PLAY_PAUSE", 0xB3 }
+            { "VK_MEDIA_PLAY_PAUSE", 0xB3 },
+            // launch
+            { "VK_LAUNCH_MAIL", 0xB4 },
+            { "VK_LAUNCH_MEDIA_SELECT", 0xB5 },
+            { "VK_LAUNCH_APP1", 0xB6 },
+            { "VK_LAUNCH_APP2", 0xB7 }
         };
         /// <summary>
         /// Emulates keyboard input
