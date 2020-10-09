@@ -10,7 +10,8 @@ namespace torMacro
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         // keyup
-        public const uint EVT_KEYUP = 0x2;
+        private const uint EVT_KEYUP = 0x2;
+        // keyboard
         private static Dictionary<string, byte> Keyboard = new Dictionary<string, byte>
         {
             // mouse
@@ -122,7 +123,12 @@ namespace torMacro
             // volume
             { "VK_VOLUME_MUTE", 0xAD },
             { "VK_VOLUME_DOWN", 0xAE },
-            { "VK_VOLUME_UP", 0xAF }
+            { "VK_VOLUME_UP", 0xAF },
+            // media
+            { "VK_MEDIA_NEXT_TRACK", 0xB0 },
+            { "VK_MEDIA_PREV_TRACK", 0xB1 },
+            { "VK_MEDIA_STOP", 0xB2 },
+            { "VK_MEDIA_PLAY_PAUSE", 0xB3 }
         };
         /// <summary>
         /// Emulates keyboard input
