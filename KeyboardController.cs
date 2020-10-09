@@ -107,6 +107,8 @@ namespace torMacro
             { "VK_RSHIFT", 0xA1 },
             { "VK_LCONTROL", 0xA2 },
             { "VK_RCONTROL", 0xA3 },
+            { "VK_LMENU", 0xA4 },
+            { "VK_RMENU", 0xA5 },
             { "VK_LWIN", 0x5B },
             { "VK_RWIN", 0x5C },
             { "VK_BACK", 0x08 },
