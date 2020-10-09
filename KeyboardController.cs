@@ -76,6 +76,13 @@ namespace torMacro
             { "VK_NUMPAD7", 0x67 },
             { "VK_NUMPAD8", 0x68 },
             { "VK_NUMPAD9", 0x69 },
+            // math operations
+            { "VK_MULTIPLY", 0x6A },
+            { "VK_ADD", 0x6B },
+            { "VK_SEPARATOR", 0x6C },
+            { "VK_SUBTRACT", 0x6D },
+            { "VK_DECIMAL", 0x6E },
+            { "VK_DIVIDE", 0x6F },
             // functrion keys
             { "VK_F1", 0x70 },
             { "VK_F2", 0x71 },
