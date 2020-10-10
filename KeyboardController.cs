@@ -10,9 +10,9 @@ namespace torMacro
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         // keyup
-        private const uint EVT_KEYUP = 0x2;
+        private static readonly uint EVT_KEYUP = 0x2;
         // keyboard
-        private static Dictionary<string, byte> Keyboard = new Dictionary<string, byte>
+        private static readonly Dictionary<string, byte> Keyboard = new Dictionary<string, byte>
         {
             // mouse
             { "VK_LBUTTON", 0x01 },
