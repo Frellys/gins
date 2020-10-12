@@ -9,7 +9,7 @@ namespace torMacro
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
-        // keyup
+        private static readonly uint EVT_KEYDOWN = 0;
         private static readonly uint EVT_KEYUP = 0x2;
         // keyboard
         private static readonly Dictionary<string, byte> Keyboard = new Dictionary<string, byte>
@@ -153,7 +153,7 @@ namespace torMacro
         {
             for (int k = 0; k < keys.Length; k++)
             {
-                keybd_event(Keyboard[keys[k]], 0x45, 0, (UIntPtr)0);
+                keybd_event(Keyboard[keys[k]], 0x45, EVT_KEYDOWN, (UIntPtr)0);
             }
             Thread.Sleep(100);
             for (int k = keys.Length; k > 0; k--)
