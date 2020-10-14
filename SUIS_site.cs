@@ -24,13 +24,19 @@ namespace backupSites
         /// <param name="path">
         /// absolute path to the site folder
         /// </param>
-        public SUIS_site(string path)
+        public SUIS_site(string path, bool require = false)
         {
             Abs_path = path;
             Dir_name = path.Split(new char[] { '\\' }, StringSplitOptions.None).Last();
-            DB_name = GetDBname();
-            Site_name = Query_getSiteName();
-            Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+            //DB_name = GetDBname();
+            //Site_name = Query_getSiteName();
+            //Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+            if (require)
+            {
+                DB_name = GetDBname();
+                Site_name = Query_getSiteName();
+                Size_Bt = new DirectoryInfo(path).EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+            }
             CompareAppData();
         }
 
