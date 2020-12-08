@@ -1,27 +1,27 @@
-[+bin+ck] chelsport.eps74.ru
-[+bin+ck] chel.deti.eps74.ru
-[+bin+ck] chesma.eps74.ru
-[+bin+ck] chelarhiv.eps74.ru
+[+bin+ck+rs] chelsport.eps74.ru
+[+bin+ck+rs] chel.deti.eps74.ru
+[+bin+ck+rs] chesma.eps74.ru
+[+bin+ck+rs] chelarhiv.eps74.ru
 [>>> UPD] kcso20.eps74.ru
-[+bin+ck] kurchatov74.ru
-[+bin+ck] mob.gov74.ru
-[+bin+ck] szn74.ru
-[+bin+ck] u-uralsk.eps74.ru
-[+bin+ck] kcso30.eps74.ru
-[+bin+ck] kcso34.eps74.ru
-[+bin+ck] kcso38.eps74.ru
+[+bin+ck+rs] kurchatov74.ru
+[+bin+ck+rs] mob.gov74.ru
+[+bin+ck+rs] szn74.ru
+[+bin+ck+rs] u-uralsk.eps74.ru
+[+bin+ck+rs] kcso30.eps74.ru
+[+bin+ck+rs] kcso34.eps74.ru
+[+bin+ck+rs] kcso38.eps74.ru
 [>>> UPD] kcso39.eps74.ru
-[+bin+ck] kcso6.eps74.ru
-[+bin+ck] maukskoe.eps74.ru
-[+bin+ck] mbuz-ds6.eps74.ru
-[+bin+ck] mindortrans74.ru
+[+bin+ck+rs] kcso6.eps74.ru
+[+bin+ck+rs] maukskoe.eps74.ru
+[+bin+ck+rs] mbuz-ds6.eps74.ru
+[+bin+ck+rs] mindortrans74.ru
 mineco174.eps74.ru
-[+bin+ck] minkult74.eps74.ru
-[+bin+ck] minstroy74.eps74.ru
-[+bin+ck] pe.verhneuralsk.ru
-[+bin+ck] sp.verhneuralsk.ru
+[+bin+ck+rs] minkult74.eps74.ru
+[+bin+ck+rs] minstroy74.eps74.ru
+[+bin+ck+rs] pe.verhneuralsk.ru
+[+bin+ck+rs] sp.verhneuralsk.ru
 [>>> UPD] uokunashak.eps74.ru
 [>>> UPD] uszn34.eps74.ru
 [>>> UPD] uszn35.eps74.ru
-[+bin+ck] uszn46.eps74.ru
-[+bin+ck] lenadmin74.eps74.ru
+[+bin+ck+rs] uszn46.eps74.ru
+[+bin+ck+rs] lenadmin74.eps74.ru
