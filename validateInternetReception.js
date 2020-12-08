@@ -1,5 +1,6 @@
 ﻿let reqFields;
 window.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('form#addform').setAttribute('autocomplete', 'off');
     reqFields = {
         'Title': { text: '- Необходимо заполнить Ф.И.О.' },
         'Email': { text: '- Необходимо заполнить E-mail' },
@@ -16,12 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
             isFilled: false
         }
         document.getElementById(el).addEventListener('input', function () {
-            if (this.type != 'checkbox') {
-                reqFields[this.id].isFilled = this.value ? true : false;
-            }
-            else {
-                reqFields[this.id].isFilled = this.checked ? true : false;
-            }
+            reqFields[this.id].isFilled = !!(this[(this.type == 'checkbox') ? 'checked' : 'value']);
             updateSubmitRequirements();
         }, false);
     });
