@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', function () {
             id: el,
             text: reqFields[el].text,
             isFilled: false
-        }
+        };
         document.getElementById(el).addEventListener('input', function () {
             reqFields[this.id].isFilled = !!(this[(this.type == 'checkbox') ? 'checked' : 'value']);
             updateSubmitRequirements();
@@ -81,14 +81,8 @@ function updateSubmitRequirements() {
                 cnt += '<div>' + reqFields[el].text + '</div>';
             }
         });
-        if (cnt != '') {
-            setSubmitTo('disabled');
-            subReq.innerHTML = cnt;
-        }
-        else {
-            setSubmitTo('enabled');
-            subReq.innerHTML = '';
-        }
+        setSubmitTo((cnt == '') ? 'enabled' : 'disabled');
+        subReq.innerHTML = cnt;
     }
     else {
         let subReq = document.createElement('div');
