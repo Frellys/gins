@@ -1,5 +1,12 @@
-// test me with:
-// navigator.serviceWorker.register('Scripts/SAS/sw.js').then(() => { console.log('yeee'); });
 self.addEventListener('install', function (e) {
-    console.log('sw');
+    console.log('sw-evt: install');
+    console.log(e);
+}, false);
+
+self.addEventListener('fetch', function (e) {
+    console.log(e);
+}, false);
+
+self.addEventListener('message', function (msg) {
+    console.log(msg);
 }, false);
