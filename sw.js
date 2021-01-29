@@ -3,7 +3,11 @@ self.addEventListener('install', function (e) {
     console.log(e);
     e.waitUntil(caches.open('v1').then(function (cache) {
         return cache.addAll([
-            '/favicon.ico'
+            '/favicon.ico',
+            '/Content/images/logo.png',
+            '/Content/images/mapchel.png',
+            '/Scripts/SAS/chckCapsLock.js',
+            '/Scripts/SAS/img/SAS_warning.png'
         ]);
     }));
 }, false);
