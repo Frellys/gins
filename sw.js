@@ -6,7 +6,7 @@ self.addEventListener('install', function (e) {
             '/favicon.ico',
             '/Content/images/logo.png',
             '/Content/images/mapchel.png',
-            '/Scripts/SAS/chckCapsLock.js',
+            '/Scripts/SAS/checkCapsLock.js',
             '/Scripts/SAS/img/SAS_warning.png'
         ]);
     }));
