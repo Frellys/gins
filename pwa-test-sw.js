@@ -3,8 +3,7 @@ self.addEventListener('install', function (e) {
     console.log('evt-install');
     e.waitUntil(caches.open('gins').then(function (cache) {
         return cache.addAll([
-            '/',
-            '/pwa-test-icon.png'
+            'pwa-test-icon.png'
         ]);
     }));
 });
