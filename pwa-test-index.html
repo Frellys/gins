@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>pwa-test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="pwa-test.webmanifest">
+    <style>
+        html {
+            user-select: none;
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            display: table-cell;
+            height: 100vh;
+            width: 100vw;
+            vertical-align: middle;
+        }
+            body > div {
+                margin: 0 auto;
+                width: min-content;
+                font-size: 15vmin;
+                font-family: monospace;
+                color: #323232;
+            }
+    </style>
+</head>
+<body>
+    <div>sometext</div>
+    <script>
+        navigator.serviceWorker.register('pwa-test-sw.js');
+    </script>
+</body>
+</html>
