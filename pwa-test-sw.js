@@ -1,7 +1,7 @@
 console.log('sww');
 self.addEventListener('install', function (e) {
     console.log('evt-install');
-    e.waitUntil(caches.open('v1').then(function (cache) {
+    e.waitUntil(caches.open('gins').then(function (cache) {
         return cache.addAll([
             '/pwa-test-icon.png'
         ]);
