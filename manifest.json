@@ -9,7 +9,8 @@
       "type": "image/png"
     }
   ],
-  "start_url": "pwa-test-index.html",
+  "lang": "en-US",
+  "start_url": "/pwa-test-index.html",
   "display": "fullscreen",
   "theme_color": "#323232",
   "background_color": "whitesmoke"
