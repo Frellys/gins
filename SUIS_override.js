@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', function () {
+﻿window.addEventListener('DOMContentLoaded', function () {
     // remove static width from tables
     document.querySelectorAll('div.content table').forEach(function (table) {
         table.style.width = 'auto';
@@ -17,5 +17,18 @@ window.addEventListener('DOMContentLoaded', function () {
                 img.style.maxWidth = 'unset';
             });
         });
+    }
+    // remove grants list
+    if (window.location.pathname.startsWith('/cms')) {
+        if (document.querySelector('div.page > div#header > h5').innerText.split(', ').pop().split('!')[0] != 'devel') {
+            document.querySelectorAll('a[href="/cms/Grants/List"]').forEach(function (a) { a.parentNode.remove(); });
+        }
+    }
+    // leave grants list
+    if (window.location.pathname == '/cms/Grants/List') {
+        if (document.querySelector('div.page > div#header > h5').innerText.split(', ').pop().split('!')[0] != 'devel') {
+            alert('Недостаточно прав');
+            window.history.back();
+        }
     }
 }, { once: true });
