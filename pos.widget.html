@@ -305,4 +305,9 @@
     displayWindowSize();
     let resizeListener = window.addEventListener('resize', displayWindowSize);
     Widget('https://pos.gosuslugi.ru/form', someId);
+    // custom override
+    document.querySelectorAll('button.pos-banner-btn_2').forEach(function (btn) {
+        btn.style.width = 'auto';
+        btn.style.padding = '0 0.5vmin';
+    });
 </script>
