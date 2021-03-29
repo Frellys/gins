@@ -13,6 +13,13 @@ window.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('#mp_wrap > .select > .row > input').forEach(function (inp) {
         inp.addEventListener('change', function (e) {
             mpState = e.target.id;
+            // reformat current coords
+            let mp = map.controls.find(function (el) { return el.displayClass == 'olControlMousePosition'; });
+            if (mp) {
+                let p = map.getLonLatFromPixel(mp.lastXy);
+                let t = new OpenLayers.LonLat(p.lon, p.lat).transform(new OpenLayers.Projection('EPSG:900913'), new OpenLayers.Projection('EPSG:4326'));
+                document.querySelector('#mp_wrap > .coords').innerHTML = mp.formatOutput(t);
+            }
         }, false);
     });
 }, { once: true });
