@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>mapCats</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            user-select: none;
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            display: table-cell;
+            height: 100vh;
+            width: 100vw;
+            vertical-align: middle;
+        }
+
+        #wrap {
+            background-color: rgba(50, 50, 50, 0.1);
+            width: min-content;
+            margin: 0 auto;
+            padding: 2.5vmin;
+            font-family: monospace;
+            color: #323232;
+        }
+
+            #wrap > #fields {
+                display: flex;
+                flex-direction: row;
+            }
+
+                #wrap > #fields > #cats,
+                #wrap > #fields > #layers {
+                    background-color: rgba(245, 245, 245, 0.75);
+                    border: 2px solid rgba(50, 50, 50, 0.25);
+                    width: 30ch;
+                    max-height: 20vh;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    margin-bottom: 1ch;
+                    padding: 0.5ch 0;
+                }
+
+                    #wrap > #fields > #cats > .cat {
+                        padding: 0.25ch 1ch;
+                    }
+
+                        #wrap > #fields > #cats > .cat > label {
+                            cursor: pointer;
+                        }
+
+                        #wrap > #fields > #cats > .cat > span {
+                            display: none;
+                        }
+
+                        #wrap > #fields > #cats > .cat:hover {
+                            background-color: rgba(50, 50, 50, 0.1);
+                        }
+
+                            #wrap > #fields > #cats > .cat:hover > span {
+                                display: inline-block;
+                                padding: 0 1ch;
+                                background-color: maroon;
+                                color: whitesmoke;
+                                cursor: pointer;
+                            }
+
+                #wrap > #fields > #layers {
+                    margin-left: 1ch;
+                }
+
+                    #wrap > #fields > #layers > .layer {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                    }
+
+                        #wrap > #fields > #layers > .layer > label {
+                            cursor: pointer;
+                        }
+
+            #wrap > #plus {
+                width: 30ch;
+                padding: 0.5ch 0;
+                text-align: center;
+                font-size: 1em;
+                background-color: maroon;
+                border: 2px solid maroon;
+                color: whitesmoke;
+                cursor: pointer;
+            }
+
+            #wrap > form {
+                justify-content: center;
+                width: 30ch;
+                border: 2px solid maroon;
+            }
+
+                #wrap > form > input[type="text"] {
+                    padding: 0.5ch;
+                    outline: none;
+                    outline-offset: unset;
+                    border: none;
+                    margin: 0;
+                    flex: 1;
+                }
+
+                #wrap > form > input[type="submit"] {
+                    border: none;
+                    background-color: maroon;
+                    color: whitesmoke;
+                }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <h1>mapCats</h1>
+        <div id="fields">
+            <div id="cats">
+                <div id="0" class="cat">
+                    <label>cat_0</label>
+                    <span>удалить</span>
+                </div>
+                <div id="1" class="cat">
+                    <label>cat_1</label>
+                    <span>удалить</span>
+                </div>
+                <div id="2" class="cat">
+                    <label>cat_2</label>
+                    <span>удалить</span>
+                </div>
+                <div id="3" class="cat">
+                    <label>cat_3</label>
+                    <span>удалить</span>
+                </div>
+                <div id="4" class="cat">
+                    <label>cat_4</label>
+                    <span>удалить</span>
+                </div>
+                <div id="5" class="cat">
+                    <label>cat_5</label>
+                    <span>удалить</span>
+                </div>
+                <div id="6" class="cat">
+                    <label>cat_6</label>
+                    <span>удалить</span>
+                </div>
+                <div id="7" class="cat">
+                    <label>cat_7</label>
+                    <span>удалить</span>
+                </div>
+                <div id="8" class="cat">
+                    <label>cat_8</label>
+                    <span>удалить</span>
+                </div>
+                <div id="9" class="cat">
+                    <label>cat_9</label>
+                    <span>удалить</span>
+                </div>
+                <div id="10" class="cat">
+                    <label>cat_10</label>
+                    <span>удалить</span>
+                </div>
+                <div id="11" class="cat">
+                    <label>cat_11</label>
+                    <span>удалить</span>
+                </div>
+                <div id="12" class="cat">
+                    <label>cat_12</label>
+                    <span>удалить</span>
+                </div>
+                <div id="13" class="cat">
+                    <label>cat_13</label>
+                    <span>удалить</span>
+                </div>
+            </div>
+            <div id="layers">
+                <div class="layer">
+                    <input id="l0" type="checkbox" value="layer_0">
+                    <label for="l0">layer_0</label>
+                </div>
+                <div class="layer">
+                    <input id="l1" type="checkbox" value="layer_1">
+                    <label for="l1">layer_1</label>
+                </div>
+                <div class="layer">
+                    <input id="l2" type="checkbox" value="layer_2">
+                    <label for="l2">layer_2</label>
+                </div>
+                <div class="layer">
+                    <input id="l3" type="checkbox" value="layer_3">
+                    <label for="l3">layer_3</label>
+                </div>
+                <div class="layer">
+                    <input id="l4" type="checkbox" value="layer_4">
+                    <label for="l4">layer_4</label>
+                </div>
+                <div class="layer">
+                    <input id="l5" type="checkbox" value="layer_5">
+                    <label for="l5">layer_5</label>
+                </div>
+                <div class="layer">
+                    <input id="l6" type="checkbox" value="layer_6">
+                    <label for="l6">layer_6</label>
+                </div>
+                <div class="layer">
+                    <input id="l7" type="checkbox" value="layer_7">
+                    <label for="l7">layer_7</label>
+                </div>
+                <div class="layer">
+                    <input id="l8" type="checkbox" value="layer_8">
+                    <label for="l8">layer_8</label>
+                </div>
+                <div class="layer">
+                    <input id="l9" type="checkbox" value="layer_9">
+                    <label for="l9">layer_9</label>
+                </div>
+                <div class="layer">
+                    <input id="l10" type="checkbox" value="layer_10">
+                    <label for="l10">layer_10</label>
+                </div>
+                <div class="layer">
+                    <input id="l11" type="checkbox" value="layer_11">
+                    <label for="l11">layer_11</label>
+                </div>
+                <div class="layer">
+                    <input id="l12" type="checkbox" value="layer_12">
+                    <label for="l12">layer_12</label>
+                </div>
+                <div class="layer">
+                    <input id="l13" type="checkbox" value="layer_13">
+                    <label for="l13">layer_13</label>
+                </div>
+                <div class="layer">
+                    <input id="l14" type="checkbox" value="layer_14">
+                    <label for="l14">layer_14</label>
+                </div>
+                <div class="layer">
+                    <input id="l15" type="checkbox" value="layer_15">
+                    <label for="l15">layer_15</label>
+                </div>
+            </div>
+        </div>
+        <div id="plus" style="display: block;">+</div>
+        <form style="display: none;">
+            <input type="text">
+            <input type="submit" value="+">
+        </form>
+    </div>
+    <script>
+        let plus = document.querySelector('#wrap > #plus');
+        let form = document.querySelector('#wrap > form');
+        let input = form.querySelector('input');
+        // add plus/input switch
+        plus.addEventListener('click', function () {
+            plus.style.display = 'none';
+            form.style.display = 'flex';
+            input.focus();
+        }, false);
+        input.addEventListener('blur', function () {
+            plus.style.display = 'block';
+            form.style.display = 'none';
+        }, false);
+        // add /selectCat listeners
+        Array.from(document.querySelectorAll('#wrap > #fields > #cats > .cat > label')).forEach(function (cat) {
+            cat.addEventListener('click', function () { alert('/selectCat_' + cat.parentNode.id + '\nyeeee'); }, false);
+        });
+        // add /deleteCat listeners
+        Array.from(document.querySelectorAll('#wrap > #fields > #cats > .cat > span')).forEach(function (span) {
+            span.addEventListener('click', function () { confirm('/deleteCat_' + span.parentNode.id + '\nare you sure about that?'); }, false);
+        });
+    </script>
+</body>
+</html>
