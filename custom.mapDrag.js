@@ -1,14 +1,7 @@
 class Mouse {
-    static buttons = [
-        'LMB',
-        'WHEEL',
-        'RMB',
-        'BROWSER_BACK',
-        'BROWSER_FORWARD'
-    ];
     static isPressed = {
         LMB: false,
-        WMB: false,
+        WHEEL: false,
         RMB: false
     };
     static pos = {
@@ -16,20 +9,21 @@ class Mouse {
         y: 0
     };
     static pressHandler = function (e) {
-        Mouse.isPressed[['LMB', 'WMB', 'RMB'][e.button]] = (e.type == 'mousedown');
+        Mouse.isPressed[['LMB', 'WHEEL', 'RMB'][e.button]] = (e.type == 'mousedown');
     };
 };
-document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-window.addEventListener('mousemove', function (e) {
-    if (Mouse.isPressed.RMB) {
-        let cur_center = map.getPixelFromLonLat(map.getCenter());
-        map.setCenter(map.getLonLatFromPixel({
-            x: cur_center.x - (e.x - Mouse.pos.x),
-            y: cur_center.y - (e.y - Mouse.pos.y)
-        }));
+document.addEventListener('mousemove', function (e) {
+    if (e.ctrlKey) {
+        if (document.activeElement == document.body) {
+            let cur_center = map.getPixelFromLonLat(map.getCenter());
+            map.setCenter(map.getLonLatFromPixel({
+                x: cur_center.x - (e.x - Mouse.pos.x),
+                y: cur_center.y - (e.y - Mouse.pos.y)
+            }));
+        }
     }
     Mouse.pos.x = e.x;
     Mouse.pos.y = e.y;
 }, false);
-window.addEventListener('mousedown', Mouse.pressHandler);
-window.addEventListener('mouseup', Mouse.pressHandler);
+document.addEventListener('mousedown', Mouse.pressHandler, false);
+document.addEventListener('mouseup', Mouse.pressHandler, false);
