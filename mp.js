@@ -1,5 +1,15 @@
-﻿let mpState = 'mp0';
+﻿/**
+ * mp states:
+ * mp0 - DD°MM'SS.s
+ * mp1 - DD.dddddd°
+ * mp2 - DD°MM.mmm
+ */
+let mpState = 'mp0';
 window.addEventListener('DOMContentLoaded', function () {
+    // default styles
+    document.querySelectorAll('#coords_display > div').forEach(function (div) {
+        div.style.display = 'none';
+    });
     // display container on first mousemove
     document.querySelector('#map_container').addEventListener('mousemove', function () {
         document.querySelector('#mp_wrap').style.display = 'block';
