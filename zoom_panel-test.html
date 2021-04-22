@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .suck_it_resetCss {
+        ﻿.suck_it_resetCss {
             margin: initial;
             padding: initial;
             border: initial;
@@ -21,10 +21,10 @@
             height: min-content;
             position: absolute;
             bottom: 12rem;
-            right: 1rem;
+            right: 0.5rem;
             display: flex;
             flex-direction: column;
-            row-gap: 0.2rem;
+            row-gap: 0.25rem;
         }
 
             div#zoom_panel > svg {
@@ -34,7 +34,6 @@
                 background-color: whitesmoke;
                 border: 2px solid #323232;
                 border-radius: 10%;
-                shape-rendering: optimizeSpeed;
                 width: 2rem;
                 height: 2rem;
                 cursor: pointer;
@@ -54,37 +53,110 @@
                     pointer-events: none;
                 }
 
-                div#zoom_panel > svg > line {
+                div#zoom_panel > svg > path {
+                    fill: none;
                     stroke-width: 0.5rem;
+                }
+
+        div#main_panel {
+            user-select: none;
+            width: min-content;
+            height: min-content;
+            position: absolute;
+            top: 2rem;
+            left: 0.2rem;
+            column-gap: 0.2rem;
+            right: 50%;
+            display: flex;
+            flex-direction: row;
+        }
+
+            div#main_panel > svg {
+                display: block;
+                stroke: #323232;
+                stroke-linejoin: round;
+                background-color: whitesmoke;
+                border: 2px solid #323232;
+                border-radius: 10%;
+                width: calc(1.75rem + 4px);
+                height: calc(1.75rem + 4px);
+                cursor: pointer;
+            }
+
+                div#main_panel > svg * {
+                    pointer-events: none;
+                }
+
+                div#main_panel > svg:hover {
+                    stroke: whitesmoke;
+                    background-color: #323232;
+                }
+
+                div#main_panel > svg:active {
+                    stroke: whitesmoke;
+                    background-color: rgba(50, 50, 50, 0.75);
+                }
+
+                div#main_panel > svg > path {
+                    fill: none;
+                    stroke-width: 0.5rem;
+                }
+
+                    div#main_panel > svg > path.fill {
+                        fill: #323232;
+                    }
+
+                div#main_panel > svg:hover > path.fill {
+                    fill: whitesmoke;
+                }
+
+                div#main_panel > svg:active > path.fill {
+                    fill: whitesmoke;
                 }
     </style>
 </head>
 <body>
     <div id="zoom_panel" class="suck_it_resetCss">
-        <svg id="zoomIn" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg id="zoomIn" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             <path class="suck_it_resetCss" d="M20,50 L80,50 M50,20 L50,80" />
         </svg>
-        <svg id="zoomOut" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg id="zoomOut" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             <path class="suck_it_resetCss" d="M20,50 L80,50" />
         </svg>
     </div>
     <div id="main_panel" class="suck_it_resetCss">
-        <svg id="fullscreen" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg class="suck_it_resetCss fullscreen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             <path class="suck_it_resetCss" d="M60,20 L80,20 L80,40 M20,60 L20,80 L40,80" />
         </svg>
-        <svg id="print" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg class="suck_it_resetCss print" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             <path class="suck_it_resetCss" d="M25,20 L60,20 L75,35 L75,80 L25,80 Z" />
             <path class="suck_it_resetCss fill" d="M60,20 L60,35 L75,35" />
             <path class="suck_it_resetCss" d="M35,65 L65,65" />
             <path class="suck_it_resetCss" d="M35,50 L65,50" />
         </svg>
-        <svg id="ruler" class="suck_it_resetCss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path class="suck_it_resetCss" d="M20,65 L65,20 L80,35 L35,80 Z" />
-            <path class="suck_it_resetCss" d="M30,50 L40,60" />
-            <path class="suck_it_resetCss" d="M40,40 L50,50" />
-            <path class="suck_it_resetCss" d="M50,30 L60,40" />
-        </svg>
     </div>
+    <!--/Scripts/SAS/controls/fullscreen.js-->
+    <script>
+        let isFullscreen = false;
+        document.querySelector('#main_panel > .fullscreen').addEventListener('click', function () {
+            if (isFullscreen) {
+                document.exitFullscreen();
+            }
+            else {
+                document.documentElement.requestFullscreen();
+            }
+        }, false);
+        window.addEventListener('resize', function () {
+            isFullscreen = (window.innerWidth == screen.width && window.innerHeight == screen.height);
+        }, false);
+    </script>
+    <!--/Scripts/SAS/controls/print.js-->
+    <script>
+        document.querySelector('#main_panel > .print').addEventListener('click', function () {
+            window.print();
+        }, false);
+    </script>
+    <!--/Scripts/SAS/controls/zoom_panel.js-->
     <script>
         document.querySelectorAll('#zoom_panel > svg').forEach(function (div) {
             div.addEventListener('click', function (e) {
