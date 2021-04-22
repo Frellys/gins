@@ -156,6 +156,41 @@
             window.print();
         }, false);
     </script>
+    <style>
+        @media print {
+            .map-print-comment-container {
+                display: block;
+            }
+
+            .map-print-comment {
+                display: none;
+            }
+
+            .map-print-button {
+                display: none;
+            }
+
+            #zoom_panel,
+            #main_panel,
+            #map-toolbar,
+            .map-button,
+            #coords_display,
+            .olControlLayerSwitcher,
+            #legendHidden,
+            #Legend_container {
+                display: none !important;
+            }
+
+            .olControlAttribution > a > img {
+                display: none;
+            }
+
+            .olControlAttribution > a > span {
+                color: #323232 !important;
+                text-shadow: 0 0 0.05em #323232;
+            }
+        }
+    </style>
     <!--/Scripts/SAS/controls/zoom_panel.js-->
     <script>
         document.querySelectorAll('#zoom_panel > svg').forEach(function (div) {
