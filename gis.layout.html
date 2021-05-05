@@ -29,6 +29,7 @@
             width: 100vw;
             height: calc(100vh - 3rem);
         }
+
             .map .ol-zoom,
             .map .ol-rotate,
             .map .ol-attribution {
@@ -39,7 +40,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
+            width: 100vw;
             height: 3rem;
             background-color: #323232;
         }
@@ -146,14 +147,23 @@
             height: calc(100vh - 3rem);
         }
 
+            aside > div > *:not(:last-child) {
+                border-bottom: 2px solid rgba(50, 50, 50, 0.5);
+            }
+
             aside > div > .gis-search > input {
                 all: unset;
                 background-color: whitesmoke;
-                width: 100%;
+                width: calc(100% - 2rem);
                 padding: 0.25rem 1rem;
                 font-family: monospace;
                 font-size: 1.8rem;
                 color: rgba(50, 50, 50, 0.75);
+            }
+
+            aside > div > .gis-dateInterval > div {
+                font-family: monospace;
+                padding: 0.25rem 0 0.25rem 1rem;
             }
 
             aside > div > .gis-layers {
@@ -182,6 +192,7 @@
                 align-items: center;
                 gap: 1rem;
                 padding-left: 1rem;
+                cursor: pointer;
             }
 
                 aside > div > .gis-account:hover,
@@ -218,10 +229,16 @@
             <div class="gis-search">
                 <input type="text" placeholder="search">
             </div>
-            <!--<div class="gis-dateInterval">
-                <div class="gis-dateFrom"></div>
-                <div class="gis-dateTill"></div>
-            </div>-->
+            <div class="gis-dateInterval">
+                <div class="gis-dateFrom">
+                    <span>from:</span>
+                    <input id="date-from" type="date" data-date-inline-picker="true">
+                </div>
+                <div class="gis-dateTill">
+                    <span>till:</span>
+                    <input id="date-till" type="date" data-date-inline-picker="true">
+                </div>
+            </div>
             <div class="gis-layers">
                 <label for="layer0" class="gis-layer-label">
                     <input id="layer0" type="checkbox">
@@ -258,6 +275,14 @@
                 <label for="layer8" class="gis-layer-label">
                     <input id="layer8" type="checkbox">
                     <span>layer8</span>
+                </label>
+                <label for="layer9" class="gis-layer-label">
+                    <input id="layer9" type="checkbox">
+                    <span>layer9</span>
+                </label>
+                <label for="layer10" class="gis-layer-label">
+                    <input id="layer10" type="checkbox">
+                    <span>layer10</span>
                 </label>
             </div>
             <div class="gis-account">
@@ -303,6 +328,16 @@
                 <path class="gis-bg" d="M0 0h24v24H0z" />
                 <path class="gis-ug" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
             </svg>
+            <script>
+                let gisSearch = document.querySelector('.gis-search > input');
+                document.querySelector('.gis-search-icon').addEventListener('click', function () {
+                    aside.setAttribute('isVisible', 'true');
+                    //gisSearch.focus();
+                    window.setTimeout(function () {
+                        gisSearch.focus();
+                    }, 550);
+                }, false);
+            </script>
             <!--MENU-->
             <svg class="gis-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path class="gis-bg" d="M0 0h24v24H0z" />
