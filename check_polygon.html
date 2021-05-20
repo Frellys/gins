@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            user-select: none;
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #323232;
+            display: table-cell;
+            height: 100vh;
+            width: 100vw;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let pts = [];
+        let cnv = document.createElement('canvas');
+        cnv.width = screen.width;
+        cnv.height = screen.height;
+        cnv.isActive = false;
+        cnv.onclick = function (e) {
+            cnv.isActive = true;
+            pts.push({
+                x: e.x,
+                y: e.y
+            });
+            drawPolyline();
+        };
+        cnv.onmousemove = function (e) {
+            if (cnv.isActive && pts.length) {
+                ctx.clearRect(0, 0, cnv.width, cnv.height);
+                drawPolyline();
+                ctx.beginPath();
+                ctx.moveTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+                ctx.lineTo(e.x, e.y);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffc120';
+                ctx.stroke();
+            }
+        };
+        cnv.ondblclick = function () {
+            cnv.isActive = false;
+        };
+        document.body.appendChild(cnv);
+        let ctx = cnv.getContext('2d');
+        function drawPolyline() {
+            pts.forEach(function (p, pdx) {
+                if (pdx) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[pdx - 1].x, pts[pdx - 1].y);
+                    ctx.lineTo(p.x, p.y);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = '#ffc120';
+                    ctx.stroke();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
