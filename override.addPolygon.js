@@ -32,15 +32,16 @@
     }(this.lines);
     /**
      * checks if polygon is correct
+     * @param {number[][]} lines
+     * @param {boolean} selfIntersecting
      * @returns {boolean}
      */
-    this.isCorrect = function (lns, intrs) {
-        return (lns.length >= 3) && (intrs == false);
+    this.isCorrect = function (lines, selfIntersecting) {
+        return (lines.length >= 3) && (selfIntersecting == false);
     }(this.lines, this.selfIntersecting);
 };
 /**
- * set development status
- * run test case
+ * test case
  */
 if (window.inDevelopment = true) {
     let poly = new ovrPolygon({
