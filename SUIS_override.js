@@ -1,4 +1,8 @@
 ﻿window.addEventListener('DOMContentLoaded', function () {
+    // rewrite url
+    if (window.location.search.includes('\'')) {
+        window.location.search.replace('\'', '%27');
+    }
     // remove static width from tables
     document.querySelectorAll('div.content table').forEach(function (table) {
         table.style.width = 'auto';
@@ -30,25 +34,5 @@
             alert('Недостаточно прав');
             window.history.back();
         }
-    }
-    // notification
-    if (window.localStorage.getItem('notification') !== 'true') {
-        let xhr = new XMLHttpRequest();
-        xhr.addEventListener('readystatechange', function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let notification = new DOMParser().parseFromString(this.responseText, 'text/html').querySelector('.maintenance-wrap');
-                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                document.body.prepend(notification);
-                window.old_overflow = document.documentElement.style.overflow;
-                document.documentElement.style.overflow = 'hidden';
-                document.querySelector('.maintenance-agree').addEventListener('click', function () {
-                    document.documentElement.style.overflow = window.old_overflow;
-                    document.querySelector('.maintenance-wrap').remove();
-                    window.localStorage.setItem('notification', 'true');
-                }, false);
-            }
-        }, false);
-        xhr.open('GET', 'https://mitis74.eps74.ru/override/notification.html', true);
-        xhr.send();
     }
 }, { once: true });
