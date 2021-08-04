@@ -78,6 +78,12 @@ UI.explorer.layers = new function () {
                 UI.explorer.layers.list.appendChild(wrap);
                 // update
                 layer.refToNewExplorer = wrap;
+                /*
+                 * added
+                 * this.refToNewExplorer.querySelector('input').checked = a
+                 * to ol.js
+                 * func.apply... mb?
+                 */
             }
         });
     }, false);
