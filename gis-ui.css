@@ -1,0 +1,80 @@
+﻿body {
+    overflow: hidden;
+}
+#map-toolbar {
+    display: none;
+}
+
+.gis-ui {
+    height: 100vh;
+    width: 100vw;
+}
+
+.gis-ui-bgTemplate {
+    height: 100%;
+    width: 100%;
+    background-color: lavenderblush;
+}
+
+.gis-ui-explorer {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: var(--gis-ui-explorer-width);
+    background-color: whitesmoke;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: auto;
+}
+
+.gis-ui[explorerIsVisible="true"] .gis-ui-explorer {
+    left: var(--gis-ui-explorer-width);
+}
+
+.gis-ui[explorerIsVisible="false"] .gis-ui-explorer {
+    left: 0;
+}
+
+.gis-ui[explorerIsVisible="true"] #map {
+    width: calc(100vw - var(--gis-ui-explorer-width));
+}
+
+.gis-ui[explorerIsVisible="false"] #map {
+    width: 100vw;
+}
+
+.gis-ui[riserIsVisible="true"] #map {
+    height: calc(100vh - var(--gis-ui-riser-height));
+}
+
+.gis-ui[riserIsVisible="false"] #map {
+    height: 100vh;
+}
+
+.gis-ui-riser {
+    position: absolute;
+    right: 0;
+    height: var(--gis-ui-riser-height);
+    background-color: lightcoral;
+}
+
+.gis-ui[riserIsVisible="true"] .gis-ui-riser {
+    bottom: 0;
+}
+
+.gis-ui[riserIsVisible="false"] .gis-ui-riser {
+    bottom: calc(0 - var(--gis-ui-riser-height));
+}
+
+.gis-ui[explorerIsVisible="true"] .gis-ui-riser {
+    width: calc(100vw - var(--gis-ui-explorer-width));
+}
+
+.gis-ui[explorerIsVisible="false"] .gis-ui-riser {
+    width: 100vw;
+}
