@@ -1,6 +1,7 @@
 ﻿body {
     overflow: hidden;
 }
+
 #map-toolbar {
     display: none;
 }
@@ -10,19 +11,65 @@
     width: 100vw;
 }
 
+    .gis-ui .gis-ui-explorer .gis-ui-resizer {
+        height: 100vh;
+        width: 0.5rem;
+        flex-direction: column;
+    }
+
+    .gis-ui .gis-ui-riser .gis-ui-resizer {
+        height: 0.5rem;
+        flex-direction: row;
+    }
+
+    .gis-ui .gis-ui-explorer .gis-ui-resizer,
+    .gis-ui .gis-ui-riser .gis-ui-resizer {
+        background-color: rgba(50, 50, 50, 0.25);
+        display: flex;
+        justify-content: center;
+    }
+
+    .gis-ui[explorerIsVisible="true"] .gis-ui-riser .gis-ui-resizer {
+        width: calc(100vw - var(--gis-ui-explorer-width));
+    }
+
+    .gis-ui[explorerIsVisible="false"] .gis-ui-riser .gis-ui-resizer {
+        width: 100vw;
+    }
+
+    .gis-ui[stateAlternate="true"] .gis-ui-explorer:hover .gis-ui-resizer,
+    .gis-ui[stateAlternate="true"] .gis-ui-riser:hover .gis-ui-resizer {
+        background-color: rgba(50, 50, 50, 0.5);
+    }
+
+    .gis-ui[stateAlternate="true"] .gis-ui-explorer:hover .gis-ui-resizer {
+        cursor: grab;
+    }
+
+    .gis-ui[stateAlternate="true"] .gis-ui-riser:hover .gis-ui-resizer {
+        cursor: grab;
+    }
+
 .gis-ui-bgTemplate {
     height: 100%;
     width: 100%;
     background-color: lavenderblush;
 }
 
-.gis-ui-explorer {
+.gis-ui .gis-ui-explorer {
+    display: flex;
+    flex-direction: row;
     position: absolute;
     top: 0;
     height: 100vh;
     width: var(--gis-ui-explorer-width);
-    background-color: whitesmoke;
+    background-color: lavender;
 }
+
+    .gis-ui .gis-ui-explorer .gis-ui-explorer-container {
+        height: 100vh;
+        width: calc(var(--gis-ui-explorer-width) - 0.5rem);
+    }
 
 #map {
     position: absolute;
@@ -30,14 +77,15 @@
     right: 0;
     bottom: auto;
     left: auto;
+    z-index: 0 !important;
 }
 
 .gis-ui[explorerIsVisible="true"] .gis-ui-explorer {
-    left: var(--gis-ui-explorer-width);
+    left: 0;
 }
 
 .gis-ui[explorerIsVisible="false"] .gis-ui-explorer {
-    left: 0;
+    left: calc(0 - var(--gis-ui-explorer-width));
 }
 
 .gis-ui[explorerIsVisible="true"] #map {
@@ -60,7 +108,7 @@
     position: absolute;
     right: 0;
     height: var(--gis-ui-riser-height);
-    background-color: lightcoral;
+    background-color: ghostwhite;
 }
 
 .gis-ui[riserIsVisible="true"] .gis-ui-riser {
