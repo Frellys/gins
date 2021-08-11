@@ -1,8 +1,8 @@
-if (window.location.origin === 'https://crm.onf.ru') {
+ï»¿if (window.location.origin === 'https://crm.onf.ru') {
     (new MutationObserver(function (ml, observer) {
         let span = document.querySelector('#editClaim > div:first-child > div:first-child > div:first-child > span:nth-child(2) > span:nth-child(2)');
         if (span) {
-            let isTaken = span.innerHTML.startsWith('Âçÿòü');
+            let isTaken = span.innerHTML.startsWith('Ð’Ð·ÑÑ‚ÑŒ');
             if (!isTaken) {
                 let linkWraps = document.querySelectorAll('#toPrint > div:nth-child(5) > div > div > div:nth-child(3) > div');
                 let hasLinks = linkWraps[0].querySelector(':scope > a');
