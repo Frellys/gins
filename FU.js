@@ -1,82 +1,52 @@
 ﻿const FU = new function () {
-    return document.querySelector('.FU');
-};
-
-FU.header = new function () {
-    return FU.querySelector('.FU-wrp > header');
-};
-
-FU.main = new function () {
-    //return FU.querySelector('.FU-wrp > main');
-    return FU.querySelector('.FU-wrp > div#main');
-};
-
-FU.main.layers = new function () {
-    return FU.main.querySelector('.layers');
-};
-FU.main.layers.list = new function () {
-    return FU.main.layers.querySelector('.mdc-list');
-};
-window.addEventListener('load', function () {
-    console.log(map);
-    map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer, index) {
-        let li = document.createElement('li');
-        li.classList.add('mdc-list-item');
-        if (!index) {
-            li.setAttribute('tabindex', '0');
+    let obj = document.querySelector('.FU');
+    obj.data = {
+        isVisible: true
+    };
+    obj.switchState = function () {
+        if (FU.data.isVisible) {
+            FU.wrap.style.height = 'auto';
+            FU.wrap.main.style.display = 'none';
         }
-        FU.main.layers.list.appendChild(li);
-        let form = document.createElement('div');
-        form.classList.add('mdc-form-field');
-        li.appendChild(form);
-        let checkbox = document.createElement('div');
-        checkbox.classList.add('mdc-checkbox');
-        checkbox.classList.add('mdc-checkbox--touch');
-        form.appendChild(checkbox);
-        let input = document.createElement('input');
-        input.classList.add('mdc-checkbox__native-control');
-        input.type = 'checkbox';
-        input.id = `layer${layer.id.toString().split('_').pop()}`;
-        //input.setAttribute('data-indeterminate', 'true');
-        checkbox.appendChild(input);
-        let bg = document.createElement('div');
-        bg.classList.add('mdc-checkbox__background');
-        checkbox.appendChild(bg);
-        //let svg = document.createElement('svg');
-        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.classList.add('mdc-checkbox__checkmark');
-        svg.setAttribute('viewbox', '0 0 24 24');
-        bg.appendChild(svg);
-        //let path = document.createElement('path');
-        let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.classList.add('mdc-checkbox__checkmark-path');
-        path.setAttribute('fill', 'none');
-        //path.style.fill = 'none';
-        path.setAttribute('d', 'M1.73,12.91 8.1,19.28 22.79,4.59');
-        svg.appendChild(path);
-        let mixedmark = document.createElement('div');
-        mixedmark.classList.add('mdc-checkbox__mixedmark');
-        bg.appendChild(mixedmark);
-        let ripple = document.createElement('div');
-        ripple.classList.add('mdc-checkbox__ripple');
-        checkbox.appendChild(ripple);
-        let label = document.createElement('label');
-        label.setAttribute('for', input.id);
-        label.innerHTML = layer.name;
-        form.appendChild(label);
-        //let text = document.createElement('span');
-        //text.classList.add('mdc-list-item__text');
-        //text.innerHTML = layer.name;
-        //li.appendChild(text);
+        else {
+            FU.wrap.style.height = '100vh';
+            FU.wrap.main.style.display = 'flex';
+        }
+        FU.data.isVisible = !FU.data.isVisible;
+    };
+    return obj;
+    //return document.querySelector('.FU');
+};
+FU.map = new function () { return FU.querySelector(':scope > #map'); };
+FU.wrap = new function () { return FU.querySelector(':scope > .FU-wrp'); };
+FU.wrap.header = new function () { return FU.wrap.querySelector(':scope > header'); };
+FU.wrap.main = new function () { return FU.wrap.querySelector(':scope > main'); };
+FU.wrap.main.nav = new function () { return FU.wrap.main.querySelector(':scope > nav'); };
+FU.wrap.main.content = new function () { return FU.wrap.main.querySelector(':scope > .FU-cnt'); };
+FU.wrap.main.content.search = new function () { return FU.wrap.main.content.querySelector(':scope > .search'); };
+FU.wrap.main.content.layers = new function () { return FU.wrap.main.content.querySelector(':scope > .layers'); };
+window.addEventListener('load', function () {
+    //let template = document.querySelector('#FU-layer-template').content.cloneNode(true);
+    map.layers.forEach(function (layer, idx) {
+        if (layer.displayInLayerSwitcher) {
+            let template = document.querySelector('#FU-layer-template').content.cloneNode(true);
+            let input = template.querySelector('input');
+            input.id += layer.id.split('_').pop();
+            input.checked = layer.getVisibility();
+            input.oninput = function () {
+                console.log(this.id);
+            };
+            let label = template.querySelector('label');
+            label.setAttribute('for', input.id);
+            label.innerHTML = layer.name;
+            FU.wrap.main.content.layers.appendChild(template);
+        }
     });
 }, false);
-
-window.addEventListener('load', function () {
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100vh';
-    document.body.style.width = '100vw';
-    document.querySelector('#map-toolbar').remove();
-    document.querySelector('#coords_display').style.display = 'none';
-    // theme
-    document.documentElement.style.setProperty('--mdc-theme-background', 'whitesmoke');
+window.addEventListener('keyup', function (e) {
+    if (e.key === 'Escape') { FU.switchState(); }
 }, false);
+FU.wrap.header.querySelector(':scope > svg#menu').addEventListener('click', function () {
+    FU.switchState();
+}, false);
+console.log(FU);
