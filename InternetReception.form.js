@@ -1,4 +1,7 @@
-﻿window.addEventListener('load', function () {
+﻿let reqInputs;
+let reqInputsLabel;
+let submit;
+window.addEventListener('load', function () {
     if (window.location.pathname === '/') {
         window.location.pathname = '/Home';
     }
@@ -12,7 +15,16 @@
         if (this.readyState === 4 && this.status === 200) {
             let doc = new DOMParser().parseFromString(this.response, 'text/html');
             main.appendChild(doc.body.querySelector('form'));
-            document.body.querySelector('#submit').addEventListener('click', sendMail, false);
+            reqInputs = Array.from(document.body.querySelectorAll('fieldset[data-req=true] input'));
+            reqInputsLabel = document.body.querySelector('#reqInputsLabel');
+            submit = document.body.querySelector('#submit');
+            reqInputs.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    //reqInputsLabel.dataset.display = !(submit.dataset.active = checkReq());
+                    submit.dataset.active = checkReq();
+                }, false);
+            });
+            submit.addEventListener('click', sendMail, false);
         }
     };
     xhr.open('GET', `/form/${params['form']}.html`, true);
