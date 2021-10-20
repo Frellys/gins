@@ -7,6 +7,34 @@
         this.selectors = document.body.querySelectorAll('#select > div');
         this.sections = document.body.querySelectorAll('#section > div');
     };
+    this.countLayerObjects = function (l) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Feature/countLayerObjects', true);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                l.lnode.querySelector('.counter').innerHTML = `[${this.response}]`;
+            }
+        };
+        xhr.send(JSON.stringify({
+            lname: l.options.protocol.format.featureType
+        }));
+    };
+    this.popup = new function () {
+        this.node = false;
+        this.create = function ({ head, body }) {
+            this.node = App.templates.popup.cloneNode(true);
+            this.node.style.display = 'flex';
+            if (head) {
+            }
+            this.node.querySelector('.b').innerHTML = body;
+            document.body.appendChild(this.node);
+        };
+        this.remove = function () {
+            this.node.remove();
+            this.node = false;
+        };
+    };
 };
 /*
  * selectors
@@ -28,7 +56,7 @@ window.addEventListener('DOMContentLoaded', function () {
     let layers = document.querySelector('#layers');
     map.layers.forEach(function (layer, ldx) {
         if (layer.displayInLayerSwitcher) {
-            let lnode = App.templates.layer.cloneNode(true);
+            let lnode = layer.lnode = App.templates.layer.cloneNode(true);
             let input = lnode.querySelector('input[type="checkbox"]');
             input.value = ldx;
             if (layer.getVisibility()) {
@@ -37,7 +65,20 @@ window.addEventListener('DOMContentLoaded', function () {
             input.addEventListener('change', function () {
                 map.layers[this.value].setVisibility(this.checked);
             }, false);
+            let icon = lnode.querySelector('.icon');
+            if (layer.protocol) {
+                icon.src = layer.protocol.ICON_PATH;
+            }
+            else {
+                icon.remove();
+            }
             lnode.querySelector('.title').innerHTML = layer.name;
+            if (layer.options.protocol) {
+                App.countLayerObjects(layer);
+            }
+            else {
+                layer.lnode.querySelector('.counter').remove();
+            }
             layers.appendChild(lnode);
         }
     });
