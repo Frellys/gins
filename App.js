@@ -1,5 +1,5 @@
 ﻿let App = new function () {
-    this.params = (window.location.search.length) ? Object.fromEntries(window.location.search.substring(1).split('&').map(p => p.split('='))) : false;
+    this.params = (window.location.search.length) ? Object.fromEntries(window.location.search.substring(1).split('&').map(p => p.split('='))) : {};
     this.templates = Object.fromEntries(Array.from(document.querySelectorAll('templates > *')).map(function (t) {
         return [t.className, t.content.querySelector(':scope > *:first-child')];
     }));
@@ -30,29 +30,31 @@
          * @param {object} param0 - head:text, body:html
          */
         this.create = function ({ head, body }) {
-            if (this.node) {
+            if (App.popup.node) {
                 App.popup.remove();
             }
-            this.node = App.templates.popup.cloneNode(true);
-            this.node.style.display = 'flex';
+            App.popup.node = App.templates.popup.cloneNode(true);
+            App.popup.node.style.display = 'flex';
             if (head) {
                 alert(head);
             }
-            this.node.querySelector('.b').innerHTML = body;
-            document.body.appendChild(this.node);
-            this.node.querySelector('.h').addEventListener('mousedown', function (e) {
+            App.popup.node.querySelector('.b').innerHTML = body;
+            App.popup.node.querySelector('.h').addEventListener('mousedown', function (e) {
                 App.mouse.drag.node = App.popup.node;
                 App.mouse.drag.bounds = App.popup.node.getBoundingClientRect();
                 App.mouse.drag.delta.x = App.mouse.drag.bounds.x - e.x;
                 App.mouse.drag.delta.y = App.mouse.drag.bounds.y - e.y;
             }, false);
+            document.body.appendChild(App.popup.node);
         };
         /**
          * popup destructor
          */
         this.remove = function () {
-            this.node.remove();
-            this.node = false;
+            if (App.popup.node) {
+                App.popup.node.remove();
+                App.popup.node = false;
+            }
         };
     };
     this.mouse = new function () {
@@ -95,33 +97,63 @@
             }
             App.mouse.LMB_PRESSED = true;
         }, false);
-        document.body.addEventListener('mouseup', function () {
+        this.reset = function () {
             App.mouse.LMB_PRESSED = false;
             App.mouse.drag.node = false;
             App.mouse.drag.bounds = false;
-        }, false);
-        document.body.addEventListener('mouseleave', function () {
-            App.mouse.LMB_PRESSED = false;
-            App.mouse.drag.node = false;
-            App.mouse.drag.bounds = false;
-        }, false);
+        };
+        document.body.addEventListener('mouseup', this.reset, false);
+        document.body.addEventListener('mouseleave', this.reset, false);
     };
-    //this.additionalLayers = {};
-    //this.setRosreestr = function (points = [{ x: 7390612.981762847, y: 6838318.77504723 }]) {
-    //    this.additionalLayers.rosreestr = new OpenLayers.Layer.Markers('Rosreestr');
-    //    map.addLayer(this.additionalLayers.rosreestr);
-    //    this.additionalLayers.rosreestr.redraw();
-    //    let size = new OpenLayers.Size(21, 25);
-    //    let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-    //    let icon = new OpenLayers.Icon('http://localhost:7573/Content/images/icons/map_icon_illegal_car_parking.png?637704224009054528', size, offset);
-    //    points.forEach((p) => {
-    //        let pt = new OpenLayers.LonLat(p.y, p.x).transform(new OpenLayers.Projection("EPSG:900913"), map.getProjectionObject());
-    //        this.additionalLayers.rosreestr.addMarker(new OpenLayers.Marker(pt, icon), icon);
-    //    });
-    //    this.additionalLayers.rosreestr.setZIndex(1001);
-    //    this.additionalLayers.rosreestr.redraw();
-    //};
+    this.contextMenu = new function () {
+        this.node = false;
+        this.create = function (e) {
+            e.preventDefault();
+            if (App.contextMenu.node) {
+                App.contextMenu.remove();
+            }
+            App.contextMenu.node = App.templates.contextMenu.cloneNode(true);
+            App.contextMenu.node.style.display = 'flex';
+            App.contextMenu.node.style.left = `${e.x}px`;
+            App.contextMenu.node.style.top = `${e.y}px`;
+            document.body.appendChild(App.contextMenu.node);
+        };
+        this.remove = function () {
+            if (App.contextMenu.node) {
+                App.contextMenu.node.remove();
+                App.contextMenu.node = false;
+            }
+        };
+    };
+    this.additionalLayers = {};
+    this.setRosreestr = function (points) {
+        this.additionalLayers.rosreestr = new OpenLayers.Layer.Markers('Rosreestr');
+        map.addLayer(this.additionalLayers.rosreestr);
+        this.additionalLayers.rosreestr.redraw();
+        let size = new OpenLayers.Size(21, 25);
+        let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+        let icon = new OpenLayers.Icon('http://localhost:7573/Content/images/icons/map_icon_illegal_car_parking.png', size, offset);
+        points.forEach((p) => {
+            let pt = new OpenLayers.LonLat(p[1], p[0]).transform(new OpenLayers.Projection("EPSG:900913"), map.getProjectionObject());
+            this.additionalLayers.rosreestr.addMarker(new OpenLayers.Marker(pt, icon), icon);
+        });
+        this.additionalLayers.rosreestr.setZIndex(1001);
+        this.additionalLayers.rosreestr.redraw();
+    };
 };
+/*
+ * set app
+ */
+window.addEventListener('DOMContentLoaded', function () {
+    let action = new function () {
+        this.zoom = (p) => map.zoomTo(p);
+    };
+    Object.keys(action).forEach(function (a) {
+        if (a in App.params) {
+            action[a](App.params[a]);
+        }
+    });
+}, false);
 /*
  * selectors
  */
@@ -188,3 +220,12 @@ window.addEventListener('DOMContentLoaded', function () {
         maps.appendChild(cat);
     });
 }, { once: true });
+/*
+ * set contextmenu
+ */
+window.addEventListener('contextmenu', App.contextMenu.create, false);
+window.addEventListener('mousedown', function (e) {
+    if (App.contextMenu.node) {
+        App.contextMenu.remove();
+    }
+}, false);
