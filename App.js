@@ -125,21 +125,6 @@
             }
         };
     };
-    this.additionalLayers = {};
-    this.setRosreestr = function (points) {
-        this.additionalLayers.rosreestr = new OpenLayers.Layer.Markers('Rosreestr');
-        map.addLayer(this.additionalLayers.rosreestr);
-        this.additionalLayers.rosreestr.redraw();
-        let size = new OpenLayers.Size(21, 25);
-        let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-        let icon = new OpenLayers.Icon('http://localhost:7573/Content/images/icons/map_icon_illegal_car_parking.png', size, offset);
-        points.forEach((p) => {
-            let pt = new OpenLayers.LonLat(p[1], p[0]).transform(new OpenLayers.Projection("EPSG:900913"), map.getProjectionObject());
-            this.additionalLayers.rosreestr.addMarker(new OpenLayers.Marker(pt, icon), icon);
-        });
-        this.additionalLayers.rosreestr.setZIndex(1001);
-        this.additionalLayers.rosreestr.redraw();
-    };
 };
 /*
  * set app
@@ -223,9 +208,9 @@ window.addEventListener('DOMContentLoaded', function () {
 /*
  * set contextmenu
  */
-window.addEventListener('contextmenu', App.contextMenu.create, false);
-window.addEventListener('mousedown', function (e) {
-    if (App.contextMenu.node) {
-        App.contextMenu.remove();
-    }
-}, false);
+//window.addEventListener('contextmenu', App.contextMenu.create, false);
+//window.addEventListener('mousedown', function (e) {
+//    if (App.contextMenu.node) {
+//        App.contextMenu.remove();
+//    }
+//}, false);
