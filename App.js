@@ -7,6 +7,7 @@
         this.selectors = document.body.querySelectorAll('#select > div');
         this.sections = document.body.querySelectorAll('#section > div');
     };
+    this.model = false; // check bottom line of Index.cshtml =)
     this.countLayerObjects = function (l) {
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/Feature/countLayerObjects', true);
@@ -125,6 +126,65 @@
             }
         };
     };
+    this.additionalLayers = {};
+    this.setRosreestr = function (points) {
+        this.additionalLayers.rosreestr = new OpenLayers.Layer.Markers('Rosreestr');
+        map.addLayer(this.additionalLayers.rosreestr);
+        this.additionalLayers.rosreestr.redraw();
+        let size = new OpenLayers.Size(21, 25);
+        let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+        let icon = new OpenLayers.Icon('http://localhost:7573/Content/images/icons/map_icon_illegal_car_parking.png', size, offset);
+        points.forEach((p) => {
+            let pt = new OpenLayers.LonLat(p[1], p[0]).transform(new OpenLayers.Projection("EPSG:900913"), map.getProjectionObject());
+            this.additionalLayers.rosreestr.addMarker(new OpenLayers.Marker(pt, icon), icon);
+        });
+        this.additionalLayers.rosreestr.setZIndex(1001);
+        this.additionalLayers.rosreestr.redraw();
+    };
+    this.setLayers = function () {
+        let layers = document.querySelector('#layers');
+        map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer, ldx) {
+            let lnode = layer.lnode = App.templates.layer.cloneNode(true);
+            let input = lnode.querySelector('input[type="checkbox"]');
+            input.value = ldx;
+            if (layer.getVisibility()) {
+                input.setAttribute('checked', true);
+            }
+            input.addEventListener('change', function () {
+                map.layers[this.value].setVisibility(this.checked);
+            }, false);
+            lnode.querySelector('.title').innerHTML = layer.name;
+            if (layer.options.protocol) {
+                App.countLayerObjects(layer);
+            }
+            else {
+                layer.lnode.querySelector('.counter').remove();
+            }
+            layers.appendChild(lnode);
+        });
+        /**
+         * icons
+         * layer.styleMap does not exist during window 'DOMContentLoaded' and 'load' events
+         * so we wait until OSM is loaded
+         */
+        map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer) {
+            let lnode = layer.lnode;
+            let icon = lnode.querySelector('.icon');
+            if (layer.protocol) {
+                icon.src = layer.protocol.ICON_PATH;
+                icon.style.display = 'block';
+            }
+            else {
+                let graphics = App.templates.layerIcon.cloneNode(true);
+                graphics.setAttribute('class', 'icon');
+                if (layer.styleMap) {
+                    console.log(layer.styleMap.styles.default.defaultStyle.strokeColor);
+                    graphics.setAttribute('fill', layer.styleMap.styles.default.defaultStyle.strokeColor);
+                }
+                lnode.replaceChild(graphics, icon);
+            }
+        });
+    };
 };
 /*
  * set app
@@ -155,42 +215,64 @@ window.addEventListener('DOMContentLoaded', function () {
 /*
  * set layers
  */
-window.addEventListener('DOMContentLoaded', function () {
-    let layers = document.querySelector('#layers');
-    map.layers.forEach(function (layer, ldx) {
-        if (layer.displayInLayerSwitcher) {
-            let lnode = layer.lnode = App.templates.layer.cloneNode(true);
-            let input = lnode.querySelector('input[type="checkbox"]');
-            input.value = ldx;
-            if (layer.getVisibility()) {
-                input.setAttribute('checked', true);
-            }
-            input.addEventListener('change', function () {
-                map.layers[this.value].setVisibility(this.checked);
-            }, false);
-            let icon = lnode.querySelector('.icon');
-            if (layer.protocol) {
-                icon.src = layer.protocol.ICON_PATH;
-            }
-            else {
-                icon.remove();
-            }
-            lnode.querySelector('.title').innerHTML = layer.name;
-            if (layer.options.protocol) {
-                App.countLayerObjects(layer);
-            }
-            else {
-                layer.lnode.querySelector('.counter').remove();
-            }
-            layers.appendChild(lnode);
-        }
-    });
-}, { once: true });
+//window.addEventListener('DOMContentLoaded', function () {
+//    let layers = document.querySelector('#layers');
+//    map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer, ldx) {
+//        let lnode = layer.lnode = App.templates.layer.cloneNode(true);
+//        let input = lnode.querySelector('input[type="checkbox"]');
+//        input.value = ldx;
+//        if (layer.getVisibility()) {
+//            input.setAttribute('checked', true);
+//        }
+//        input.addEventListener('change', function () {
+//            map.layers[this.value].setVisibility(this.checked);
+//        }, false);
+//        lnode.querySelector('.title').innerHTML = layer.name;
+//        if (layer.options.protocol) {
+//            App.countLayerObjects(layer);
+//        }
+//        else {
+//            layer.lnode.querySelector('.counter').remove();
+//        }
+//        layers.appendChild(lnode);
+//    });
+//    /**
+//     * icons
+//     * layer.styleMap does not exist during window 'DOMContentLoaded' and 'load' events
+//     * so we wait until OSM is loaded
+//     */
+//    map.layers[0].events.register('loadend', map.layers[0], function () {
+//        map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer) {
+//            let lnode = layer.lnode;
+//            let icon = lnode.querySelector('.icon');
+//            if (layer.protocol) {
+//                icon.src = layer.protocol.ICON_PATH;
+//                icon.style.display = 'block';
+//            }
+//            else {
+//                let graphics = App.templates.layerIcon.cloneNode(true);
+//                graphics.setAttribute('class', 'icon');
+//                //if (layer.protocol) {
+//                //    console.log(layer.protocol.featureType);
+//                //}
+//                console.log([layer.name, layer.styleMap]);
+//                if (layer.styleMap) {
+//                    console.log(layer.styleMap.styles.default.defaultStyle.strokeColor);
+//                    graphics.setAttribute('fill', layer.styleMap.styles.default.defaultStyle.strokeColor);
+//                }
+//                lnode.replaceChild(graphics, icon);
+//            }
+//        });
+//    });
+//}, { once: true });
 /*
  * set mapGroups
  */
 window.addEventListener('DOMContentLoaded', function () {
     let maps = document.querySelector('#maps');
+    App.model.Maps.sort(function (a, b) {
+        return (a.Name < b.Name) ? -1 : 1;
+    });
     App.model.MapCategory.push(App.model.MapCategory.shift());
     App.model.MapCategory.forEach(function (mcat) {
         let cat = App.templates.mapGroup.cloneNode(true);
