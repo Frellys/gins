@@ -5,6 +5,39 @@
     }));
     this.menu = new function () {
         this.selectors = document.body.querySelectorAll('#select > div');
+        /**
+         * filter
+         */
+        this.filter = document.body.querySelector('main > #menu > .filter > input');
+        this.filter.reset = function () {
+            this.value = '';
+            document.body.querySelectorAll('#layers > .layer').forEach(el => el.style.display = 'flex');
+            document.body.querySelectorAll('#maps > .mapGroup > .mgCnt').forEach(el => el.style.display = 'block');
+        };
+        this.filter.addEventListener('input', function (e) {
+            if (document.body.querySelector('#layers').style.display === 'block') {
+                map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer) {
+                    layer.lnode.style.display = (layer.name.toLowerCase().includes(e.target.value.toLowerCase())) ? 'flex' : 'none';
+                });
+            }
+            else {
+                document.body.querySelectorAll('#maps > .mapGroup > .mg-cnt > a').forEach(function (a) {
+                    a.style.display = (a.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) ? 'block' : 'none';
+                });
+            }
+        }, false);
+        window.addEventListener('keyup', function (e) {
+            if (e.code === 'Slash') {
+                App.menu.filter.focus();
+                App.menu.filter.reset();
+            }
+            if (e.code === 'Escape') {
+                App.menu.filter.blur();
+            }
+        }, false);
+        /**
+         * sections
+         */
         this.sections = document.body.querySelectorAll('#section > div');
     };
     this.model = false; // check bottom line of Index.cshtml =)
@@ -205,6 +238,7 @@ window.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('DOMContentLoaded', function () {
     App.menu.selectors.forEach(function (sel) {
         sel.addEventListener('click', function () {
+            App.menu.filter.reset();
             App.menu.selectors.forEach(s => s.dataset.selected = false);
             this.dataset.selected = true;
             App.menu.sections.forEach(s => s.style.display = 'none');
@@ -212,59 +246,6 @@ window.addEventListener('DOMContentLoaded', function () {
         }, false);
     });
 }, { once: true });
-/*
- * set layers
- */
-//window.addEventListener('DOMContentLoaded', function () {
-//    let layers = document.querySelector('#layers');
-//    map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer, ldx) {
-//        let lnode = layer.lnode = App.templates.layer.cloneNode(true);
-//        let input = lnode.querySelector('input[type="checkbox"]');
-//        input.value = ldx;
-//        if (layer.getVisibility()) {
-//            input.setAttribute('checked', true);
-//        }
-//        input.addEventListener('change', function () {
-//            map.layers[this.value].setVisibility(this.checked);
-//        }, false);
-//        lnode.querySelector('.title').innerHTML = layer.name;
-//        if (layer.options.protocol) {
-//            App.countLayerObjects(layer);
-//        }
-//        else {
-//            layer.lnode.querySelector('.counter').remove();
-//        }
-//        layers.appendChild(lnode);
-//    });
-//    /**
-//     * icons
-//     * layer.styleMap does not exist during window 'DOMContentLoaded' and 'load' events
-//     * so we wait until OSM is loaded
-//     */
-//    map.layers[0].events.register('loadend', map.layers[0], function () {
-//        map.layers.filter(l => l.displayInLayerSwitcher).forEach(function (layer) {
-//            let lnode = layer.lnode;
-//            let icon = lnode.querySelector('.icon');
-//            if (layer.protocol) {
-//                icon.src = layer.protocol.ICON_PATH;
-//                icon.style.display = 'block';
-//            }
-//            else {
-//                let graphics = App.templates.layerIcon.cloneNode(true);
-//                graphics.setAttribute('class', 'icon');
-//                //if (layer.protocol) {
-//                //    console.log(layer.protocol.featureType);
-//                //}
-//                console.log([layer.name, layer.styleMap]);
-//                if (layer.styleMap) {
-//                    console.log(layer.styleMap.styles.default.defaultStyle.strokeColor);
-//                    graphics.setAttribute('fill', layer.styleMap.styles.default.defaultStyle.strokeColor);
-//                }
-//                lnode.replaceChild(graphics, icon);
-//            }
-//        });
-//    });
-//}, { once: true });
 /*
  * set mapGroups
  */
