@@ -1,13 +1,16 @@
 ﻿let rosreestr_layers = [
-    'Земельные участки (гринфилд)',
-    'Здания (браунфилд)',
-    'Индустриальные парки',
-    'Росреестр рекреация'
+    { name: 'Земельные участки (гринфилд)', marker: '/Scripts/SAS/img/place-marker-64-red.png' },
+    { name: 'Здания (браунфилд)', marker: '/Scripts/SAS/img/place-marker-64-gray.png' },
+    { name: 'Индустриальные парки', marker: '/Scripts/SAS/img/place-marker-64-brown.png' },
+    { name: 'Росреестр рекреация', marker: '/Scripts/SAS/img/place-marker-64-red.png' },
+    //'Здания (браунфилд)',
+    //'Индустриальные парки',
+    //'Росреестр рекреация'
 ];
 window.addEventListener('DOMContentLoaded', function () {
     map.layers.forEach(function (l) {
-        if (rosreestr_layers.includes(l.name)) {
-            l.markers = new OpenLayers.Layer.Markers('markers')
+        if (rosreestr_layers.map(rl => rl.name).includes(l.name)) {
+            l.markers = new OpenLayers.Layer.Markers('markers');
             map.addLayer(l.markers);
             l.markers.setZIndex(1001);
             l.markers.setVisibility(true);
@@ -23,15 +26,21 @@ window.addEventListener('DOMContentLoaded', function () {
                                 return new OpenLayers.Geometry.Polygon(c.map(function (a) {
                                     return new OpenLayers.Geometry.LinearRing(a.map(function (p) {
                                         return new OpenLayers.Geometry.Point(p[0], p[1]).transform(new OpenLayers.Projection('EPSG:4326'), new OpenLayers.Projection('EPSG:900913'));
-                                    }))
+                                    }));
                                 }));
                             }));
                             let feature = new OpenLayers.Feature.Vector(geometry, null, clone(l.styleMap.styles.default.defaultStyle));
                             feature.props = f.properties;
                             l.addFeatures([feature]);
-                            let point = new OpenLayers.LonLat(feature.props.center.x, feature.props.center.y);
-                            let icon = new OpenLayers.Icon('/Content/images/icons/map_icon_marker_gold.png', new OpenLayers.Size(21, 25), new OpenLayers.Pixel(0, 0));
-                            l.markers.addMarker(new OpenLayers.Marker(point, icon), icon);
+                            let point = new OpenLayers.LonLat(feature.props.center.x, feature.props.center.y).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+                            //let icon = new OpenLayers.Icon('/Scripts/SAS/img/place-marker-64.png', new OpenLayers.Size(24, 24), new OpenLayers.Pixel(-12, -12));
+                            let icon = new OpenLayers.Icon(rosreestr_layers.find(rl => rl.name === l.name).marker, new OpenLayers.Size(24, 24), new OpenLayers.Pixel(-12, -12));
+                            let marker = new OpenLayers.Marker(point, icon);
+                            marker.feature = feature;
+                            marker.events.register('click', marker, function (e) {
+                                map.controls.find(c => c.displayClass === 'olControlSelectFeature').select(e.object.feature);
+                            });
+                            l.markers.addMarker(marker, icon);
                         });
                         l.markers.redraw();
                     }
@@ -39,47 +48,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 xhr.send();
             });
         }
-        //if (l.name == 'Россреестр ЗУ для инвесткарт') {
-        //    l.events.register('loadend', l, function () {
-        //        let xhr = new XMLHttpRequest();
-        //        xhr.open('GET', '/Scripts/SAS/pkg/cnl.txt', true);
-        //        xhr.onreadystatechange = function () {
-        //            if (this.readyState === 4 && this.status === 200) {
-        //                let res = JSON.parse(this.response);
-        //                let features = res.features;
-        //                features.forEach(function (f) {
-        //                    let geometry = new OpenLayers.Geometry.MultiPolygon(f.geometry.coordinates.map(function (c) {
-        //                        return new OpenLayers.Geometry.Polygon(c.map(function (a) {
-        //                            return new OpenLayers.Geometry.LinearRing(a.map(function (p) {
-        //                                return new OpenLayers.Geometry.Point(p[0], p[1]).transform(new OpenLayers.Projection('EPSG:4326'), new OpenLayers.Projection('EPSG:900913'));
-        //                            }))
-        //                        }));
-        //                    }));
-        //                    let feature = new OpenLayers.Feature.Vector(geometry, null, clone(l.styleMap.styles.default.defaultStyle));
-        //                    feature.props = f.properties;
-        //                    l.addFeatures([feature]);
-        //                });
-        //            }
-        //        };
-        //        xhr.send();
-        //    });
-        //}
     });
-    //document.querySelector('#map').addEventListener('click', function (e) {
-    //    let p = map.getLonLatFromPixel({ x: e.x, y: e.y });
-    //    let t = new OpenLayers.LonLat(p.lon, p.lat).transform(new OpenLayers.Projection('EPSG:900913'), new OpenLayers.Projection('EPSG:4326'));
-    //    let xhr = new XMLHttpRequest();
-    //    xhr.open('GET', 'https://pkk.rosreestr.ru/api/features/' + `1?text=${[t.lon, t.lat].join(' ')}&tolerance=1&limit=10`, true);
-    //    xhr.onreadystatechange = function () {
-    //        if (this.readyState === 4 && this.status === 200) {
-    //            let ret = JSON.parse(this.response);
-    //            if ('features' in ret) {
-    //                alert(ret['features'][0].attrs.id);
-    //            }
-    //        }
-    //    };
-    //    xhr.send();
-    //}, false);
 }, false);
 let rosreestr_outer = [
     'centerenergy_che.xml',
@@ -93,6 +62,8 @@ rosreestr_outer.forEach(function (fName) {
         if (this.readyState === 4 && this.status === 200) {
             let xml = new DOMParser().parseFromString(this.responseText, 'text/xml');
             console.log(xml);
+            //console.log(xml.querySelectorAll(':scope > GeoObjectCollection > featureMembers > GeoObject'));
+            //xml.querySelectorAll(':scope > GeoObjectCollection > featureMembers > GeoObject').forEach(function (o) { });
         }
     };
     xhr.send();
