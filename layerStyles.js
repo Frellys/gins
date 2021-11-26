@@ -13,6 +13,7 @@
 
 let layerStyles = new function () {
     this.styleMap = new Map([
+        ['default', new LayerStyle({ fillColor: 'red', strokeColor: 'black', strokeOpacity: 1, strokeWidth: 1, strokeDashstyle: 'solid' })],
         ['Aquatoria_polygons', new LayerStyle({ fillColor: '#B0C4DE' })],
         ['OblastSateliteTV_polygons', new LayerStyle({ fillColor: '#FFE4C4', fillOpacity: 0.5 })],
         ['border_munic_polygons', new LayerStyle({ fillColor: 'orange' })],
@@ -139,9 +140,22 @@ let layerStyles = new function () {
         ['invest_objects_polygons', new LayerStyle({ fillColor: '#228b22', fillOpacity: 0.4, strokeColor: '#228b22', strokeOpacity: 1 })],
         ['investment_proposals_polygons', new LayerStyle({ fillColor: '#4682b4', fillOpacity: 0.4, strokeColor: '#4682b4', strokeOpacity: 1 })],
         ['Gos_mun_sobstv_polygons', new LayerStyle({ fillColor: '#f08080', fillOpacity: 0.4, strokeColor: '#f08080', strokeOpacity: 1 })],
-        ['vacant_land_polygons', new LayerStyle({ fillColor: '#8fbc8f', fillOpacity: 0.4, strokeColor: '#8fbc8f', strokeOpacity: 1 })]
+        ['vacant_land_polygons', new LayerStyle({ fillColor: '#8fbc8f', fillOpacity: 0.4, strokeColor: '#8fbc8f', strokeOpacity: 1 })],
+        ['net_chel_go_250x250_polygons', new LayerStyle({ fillColor: '#8fbc8f', fillOpacity: 0.4, strokeColor: '#8fbc8f', strokeOpacity: 0.1 })],
+        ['net_chel_go_250_250_polygons', new LayerStyle({ fillColor: '#8fbc8f', fillOpacity: 0.4, strokeColor: '#8fbc8f', strokeOpacity: 0.1 })],
+        ['noctv_yesatv_2018_polygons', new LayerStyle({ fillColor: '#8fbc8f', fillOpacity: 0.4, strokeColor: '#8fbc8f', strokeOpacity: 0.1 })],
+        ['local_net_chgo_250_250_4326_polygons', new LayerStyle({ fillColor: 'mediumblue', fillOpacity: 0.15, strokeColor: 'mediumblue', strokeOpacity: 0.2 })],
+        ['rosreestr_test_polygons', new LayerStyle({ fillColor: 'blue', fillOpacity: 0.5, strokeColor: 'blue', strokeOpacity: 0.2 })],
+        ['rosreestr_zdanie_polygons', new LayerStyle({ fillColor: 'blue', fillOpacity: 0.5, strokeColor: 'blue', strokeOpacity: 0.2 })],
+        ['borders_mun_2021_polygons', new LayerStyle({ fillColor: 'cadetblue', fillOpacity: 0.7, strokeColor: 'blue', strokeOpacity: 0.2 })],
+        ['border_Chel_obl_polygons', new LayerStyle({ fillColor: 'red', fillOpacity: 0.5, strokeColor: 'red', strokeOpacity: 0.2 })],
+        ['border_TOSER_polygons', new LayerStyle({ fillColor: 'yellow', fillOpacity: 0.25, strokeColor: 'yellow', strokeOpacity: 0.2 })],
+        ['rr_buildings_brown_polygons', new LayerStyle({ fillColor: 'blue', fillOpacity: 0.5, strokeColor: 'blue', strokeOpacity: 0.2 })],
+        ['rr_zu_green_polygons', new LayerStyle({ fillColor: 'blue', fillOpacity: 0.5, strokeColor: 'blue', strokeOpacity: 0.2 })],
+        ['regmun_roads_2021_lines', new LayerStyle({ strokeColor: '#708090' })],
+        ['kategory_road2021_lines', new LayerStyle({ strokeColor: 'orange' })]
     ]);
     this.extract = function (name) {
-        return (this.styleMap.has(name) ? this.styleMap.get(name).style : new Array(6).fill(undefined));
+        return (this.styleMap.has(name) ? this.styleMap.get(name).style : this.styleMap.get('default').style);
     };
 };
