@@ -13,11 +13,14 @@ window.addEventListener('DOMContentLoaded', function () {
                     if (this.readyState === 4 && this.status === 200) {
                         let xml = new DOMParser().parseFromString(this.responseText, 'text/xml');
                         xml.querySelectorAll(':scope > GeoObjectCollection > featureMembers > GeoObject').forEach(function (o) {
-                            //l.addFeatures([point], null, clone(l.styleMap.styles.default.defaultStyle));
                             l.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
                             let coords = o.querySelector(':scope > Point > pos').innerHTML.split(' ');
                             let point = new OpenLayers.LonLat(coords[0], coords[1]).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
                             let obj = l.features[l.features.length - 1];
+                            obj.popupContent = [
+                                `<tr><td>name:</td><td>${o.querySelector(':scope > name').innerHTML}</td></tr>`,
+                                `<tr><td>desc:</td><td>${o.querySelector(':scope > description').innerHTML}</td></tr>`
+                            ].join('');
                             obj.attributes.x = point.lon;
                             obj.attributes.y = point.lat;
                             obj.geometry.x = obj.attributes.x;
