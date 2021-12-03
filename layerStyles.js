@@ -153,7 +153,8 @@ let layerStyles = new function () {
         ['rr_buildings_brown_polygons', new LayerStyle({ fillColor: 'blue', fillOpacity: 0.5, strokeColor: 'blue', strokeOpacity: 0.2 })],
         ['rr_zu_green_polygons', new LayerStyle({ fillColor: 'blue', fillOpacity: 0.5, strokeColor: 'blue', strokeOpacity: 0.2 })],
         ['regmun_roads_2021_lines', new LayerStyle({ strokeColor: '#708090' })],
-        ['kategory_road2021_lines', new LayerStyle({ strokeColor: 'orange' })]
+        ['kategory_road2021_lines', new LayerStyle({ strokeColor: 'orange' })],
+        ['road_fed_4326_lines', new LayerStyle({ strokeWidth: 1.2 })]
     ]);
     this.extract = function (name) {
         return (this.styleMap.has(name) ? this.styleMap.get(name).style : this.styleMap.get('default').style);
