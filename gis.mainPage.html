@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css">
+    <style>
+        html {
+            user-select: none;
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            font-family: 'Open Sans';
+            font-weight: 400;
+        }
+
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #wrap {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(50, 50, 50, 0.15);
+            backdrop-filter: blur(1px) grayscale(0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+            #wrap > header {
+                width: 100vw;
+                height: 3.5rem;
+                background-color: whitesmoke;
+                box-shadow: 0 0 0.25rem #323232;
+                display: flex;
+                flex-direction: row;
+                padding-left: 3ch;
+                align-items: center;
+            }
+
+                #wrap > header > div {
+                    margin: 0;
+                    font-size: 1.5rem;
+                    color: rgba(50, 50, 50, 0.9);
+                }
+
+            #wrap > main {
+                flex: 1;
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+            }
+
+                #wrap > main > .cnt {
+                    width: min(40vw, 60ch);
+                    min-width: 50ch;
+                    max-width: 100vw;
+                    font-size: 1rem;
+                }
+
+                    #wrap > main > .cnt > .set {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 1ch;
+                        background-color: rgba(45, 45, 45, 0.25);
+                        max-height: calc(100vh - 4rem);
+                        overflow: auto;
+                    }
+
+                        #wrap > main > .cnt > .set > a {
+                            margin: 3px;
+                            padding: 0.75ch 1ch;
+                            background-color: whitesmoke;
+                            color: #323232;
+                            cursor: pointer;
+                        }
+
+                            #wrap > main > .cnt > .set > a:hover {
+                                background-color: lightblue;
+                                color: #323232;
+                            }
+    </style>
+</head>
+<body>
+    <div id="map" class="map"></div>
+    <div id="wrap">
+        <header>
+            <div>gis.inf74.ru</div>
+        </header>
+        <main>
+            <div class="cnt">
+                <div class="set">
+                    <a>Главное управление лесами</a>
+                    <a>Главное управление по труду и занятости населения</a>
+                    <a>Государственный комитет по делам ЗАГС</a>
+                    <a>Министерство здравоохранения</a>
+                    <a>Министерство образования и науки</a>
+                    <a>Министерство общественной безопасности</a>
+                    <a>Министерство экологии</a>
+                    <a>Министерство по физической культуре и спорту</a>
+                    <a>Министерство имущества</a>
+                    <a>Министерство сельского хозяйства</a>
+                    <a>Министерство социальных отношений</a>
+                    <a>Министерство строительства и инфраструктуры</a>
+                    <a>Министерство финансов</a>
+                    <a>Министерство экономического развития</a>
+                    <a>Главное управление юстиции</a>
+                    <a>Управление делами Губернатора и Правительства</a>
+                    <a>Министерство культуры</a>
+                    <a>Министерство дорожного хозяйства и транспорта</a>
+                    <a>Министерство промышленности, новых технологий и природных ресурсов</a>
+                    <a>Органы местного самоуправления</a>
+                </div>
+            </div>
+            <div class="cnt">
+                <div class="set">
+                    <a>Инвестиционная карта Челябинской области</a>
+                    <a>Проблем.Net(карта с возможностью добавления проблемных объектов: свалок, стоянок, ям)</a>
+                    <a>Информация операторов сотовой связи</a>
+                    <a>Телевидение</a>
+                    <a>Инвентаризация сетей связи</a>
+                    <a>Видеокамеры</a>
+                    <a>Доступная среда</a>
+                    <a>Космический мониторинг территории</a>
+                    <a>Адресные планы</a>
+                    <a>Инвестиционная привлекательность муниципальных образований</a>
+                    <a>Городской общественный транспорт</a>
+                    <a>Междугородные автобусы</a>
+                    <a>МФЦ (Многофоункциональные центры)</a>
+                    <a>Центры обслуживания пользователей Единого портала госуслуг</a>
+                    <a>Туризм и отдых на Южном Урале</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        let map = new ol.Map({
+            controls: [],
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([61.421972, 55.194794]),
+                zoom: 11
+            })
+        });
+        map.getControls().forEach(function (c) {
+            map.removeControl(c);
+        });
+    </script>
+</body>
+</html>
