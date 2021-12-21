@@ -3,47 +3,45 @@
 }, { once: true });
 
 function setWeather() {
-    map.layers.filter(l => l.name === 'Погода').forEach(function (layer) {
-        layer.events.register('loadend', layer, function () {
-            let weatherLayer = layer;
-            weatherList.forEach(function (wlData) {
-                let xhr = new XMLHttpRequest();
-                xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + wlData.id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
-                xhr.onreadystatechange = function () {
-                    if (this.readyState === 4 && this.status === 200) {
-                        weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
-                        let data = JSON.parse(this.response);
-                        let lon = wlData?.lon || data.coord.lon;
-                        let lat = wlData?.lat || data.coord.lat;
-                        let point = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection('EPSG:4326'), new OpenLayers.Projection('EPSG:900913'));
-                        let obj = weatherLayer.features[weatherLayer.features.length - 1];
-                        obj.attributes.x = point.lon;
-                        obj.attributes.y = point.lat;
-                        obj.geometry.x = obj.attributes.x;
-                        obj.geometry.y = obj.attributes.y;
-                        obj.geometry.bounds.left = obj.geometry.x;
-                        obj.geometry.bounds.right = obj.geometry.x;
-                        obj.geometry.bounds.top = obj.geometry.y;
-                        obj.geometry.bounds.bottom = obj.geometry.y;
-                        obj.data = data;
-                        if (!obj.style) obj.style = clone(weatherLayer.styleMap.styles.default.defaultStyle);
-                        obj.style.externalGraphic = 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
-                        obj.style.graphicHeight = screen.height * 3.9 / 100;
-                        obj.style.label = `${(data.main.temp - 273.15).toFixed(1)}°`;
-                        obj.style.fontSize = screen.height * 1.0 / 100;
-                        obj.style.fontFamily = 'Arial';
-                        obj.style.fontWeight = '700';
-                        weatherLayer.redraw();
-                    }
-                };
-                xhr.send();
-            });
+    const weatherLayer = map.layers.find(l => l.name === 'Погода');
+    weatherLayer?.events.register('loadend', weatherLayer, function () {
+        weatherList.forEach(function (wlData) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?id=' + wlData.id + '&appid=2ac7f1a83e0034573f68011eb359a7f3', true);
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    weatherLayer.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(0, 0))]);
+                    const data = JSON.parse(this.response);
+                    const lon = wlData?.lon || data.coord.lon;
+                    const lat = wlData?.lat || data.coord.lat;
+                    const point = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection('EPSG:4326'), new OpenLayers.Projection('EPSG:900913'));
+                    const obj = weatherLayer.features[weatherLayer.features.length - 1];
+                    obj.attributes.x = point.lon;
+                    obj.attributes.y = point.lat;
+                    obj.geometry.x = obj.attributes.x;
+                    obj.geometry.y = obj.attributes.y;
+                    obj.geometry.bounds.left = obj.geometry.x;
+                    obj.geometry.bounds.right = obj.geometry.x;
+                    obj.geometry.bounds.top = obj.geometry.y;
+                    obj.geometry.bounds.bottom = obj.geometry.y;
+                    obj.data = data;
+                    obj.style = clone(weatherLayer.styleMap.styles.default.defaultStyle);
+                    obj.style.externalGraphic = 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
+                    obj.style.graphicHeight = screen.height * 3.9 / 100;
+                    obj.style.label = `${(data.main.temp - 273.15).toFixed(1)}°`;
+                    obj.style.fontSize = screen.height * 1.0 / 100;
+                    obj.style.fontFamily = 'Arial';
+                    obj.style.fontWeight = '700';
+                    weatherLayer.redraw();
+                }
+            };
+            xhr.send();
         });
     });
 }
 
 // WEATHER CITIES LIST
-let weatherList = [
+const weatherList = [
     { id: 1508291, name_EN: 'Chelyabinsk', lon: 61.429722, lat: 55.154442 },
     { id: 532288, name_EN: 'Magnitogorsk', lon: 59.047218, lat: 53.41861 },
     { id: 462444, name_EN: 'Zlatoust', lon: 59.650829, lat: 55.171108 },
