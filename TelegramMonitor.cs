@@ -10,11 +10,14 @@ using OfficeOpenXml;
 
 namespace TelegramMonitor {
     class Site {
+        public string DB_name;
+        public string ID;
         public string IIS_Name;
         public List<string> Links;
-        public Site(string iis_name, List<string> links)
+        public Site(string iis_name, string id, List<string> links)
         {
             IIS_Name = iis_name;
+            ID = id;
             Links = links;
         }
     }
@@ -63,6 +66,7 @@ namespace TelegramMonitor {
                 {
                     ret.Add(new Site(
                         worksheet.Cells[rNum, 3].Value.ToString(),
+                        worksheet.Cells[rNum, 4].Value.ToString(),
                         worksheet.Cells[rNum, 6].Value.ToString().Split(' ').ToList()));
                 }
             }
