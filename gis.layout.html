@@ -1,364 +1,168 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>gis.layout</title>
+    <title>gis</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <style>
+        :root {
+            --mdc-theme-secondary: plum;
+            --mdc-theme-text-primary-on-background: #323232;
+        }
+
         html {
             user-select: none;
             overflow: hidden;
         }
 
         body {
-            overflow: hidden;
             margin: 0;
             padding: 0;
-            background-color: lavender;
-            display: table-cell;
+            background-color: whitesmoke;
             height: 100vh;
             width: 100vw;
-            vertical-align: middle;
+            display: flex;
+            flex-direction: column;
         }
 
-        .map {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: calc(100vh - 3rem);
-        }
-
-            .map .ol-zoom,
-            .map .ol-rotate,
-            .map .ol-attribution {
+            body[data-fullscreen=true] .fullscreen {
                 display: none;
             }
 
-        footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: 3rem;
-            background-color: #323232;
-        }
-
-            footer > nav {
-                margin: 0 auto;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-                align-items: center;
-                height: 3rem;
+            body[data-fullscreen=true] .fullscreen_exit {
             }
 
-        @media only screen and (orientation: landscape) {
-            footer > nav {
-                width: calc(5rem * 5);
-            }
-        }
-
-        @media only screen and (orientation: portrait) {
-            footer > nav {
-                width: 100%;
-            }
-        }
-
-        footer > nav > svg {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            box-shadow: 0 0 0 transparent;
-            transition: box-shadow 0.1s;
-        }
-
-            footer > nav > svg:active {
-                box-shadow: 0 0 0.25rem rgba(245, 245, 245, 0.1);
+            body[data-fullscreen=false] .fullscreen {
             }
 
-        svg * {
-            pointer-events: none;
+            body[data-fullscreen=false] .fullscreen_exit {
+                display: none;
+            }
+
+        header {
+            box-shadow: 0 0 2px #323232;
         }
 
-        svg .gis-bg {
-            fill: transparent;
-            transition: fill 0.1s;
-        }
+            header .search-input {
+                height: 100%;
+                border-radius: 0 0 0 0;
+            }
 
-        svg:active .gis-bg {
-            fill: rgba(245, 245, 245, 0.1);
-        }
-
-        svg .gis-ug {
-            fill: whitesmoke;
-        }
-
-        aside {
-            position: absolute;
-            top: 0;
+        main {
+            position: relative;
             height: 100%;
-            padding-bottom: 3rem;
-            background-color: gainsboro;
-            box-shadow: 0 0 0.5vmin #000;
-            transition: all 0.5s;
-        }
-
-            aside[isVisible="true"] {
-                opacity: 1.0;
-            }
-
-            aside[isVisible="false"] {
-                opacity: 0.0;
-            }
-
-        @media only screen and (orientation: landscape) {
-            aside {
-                width: 30vw;
-            }
-
-                aside[isVisible="true"] {
-                    right: 0;
-                }
-
-                aside[isVisible="false"] {
-                    right: -30vw;
-                }
-        }
-
-        @media only screen and (orientation: portrait) {
-            aside {
-                width: 80vw;
-            }
-
-                aside[isVisible="true"] {
-                    right: 0;
-                }
-
-                aside[isVisible="false"] {
-                    right: -80vw;
-                }
-        }
-
-        aside > div {
             display: flex;
-            flex-direction: column;
-            height: calc(100vh - 3rem);
+            flex-direction: row;
         }
 
-            aside > div > *:not(:last-child) {
-                border-bottom: 2px solid rgba(50, 50, 50, 0.5);
-            }
-
-            aside > div > .gis-search > input {
-                all: unset;
-                background-color: whitesmoke;
-                width: calc(100% - 2rem);
-                padding: 0.25rem 1rem;
-                font-family: monospace;
-                font-size: 1.8rem;
-                color: rgba(50, 50, 50, 0.75);
-            }
-
-            aside > div > .gis-dateInterval > div {
-                font-family: monospace;
-                padding: 0.25rem 0 0.25rem 1rem;
-            }
-
-            aside > div > .gis-layers {
-                flex: 1;
-                font-family: monospace;
-                color: rgba(50, 50, 50, 0.9);
-            }
-
-                aside > div > .gis-layers > .gis-layer-label {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: 1ch;
-                    padding: 0.1rem 0 0.1rem 1rem;
-                    cursor: pointer;
-                }
-
-                    aside > div > .gis-layers > .gis-layer-label:hover {
-                        background-color: rgba(50, 50, 50, 0.1);
-                    }
-
-            aside > div > .gis-account,
-            aside > div > .gis-settings {
+            main > aside {
+                height: 100%;
+                width: 40ch;
+                border-right: 1px solid rgba(50, 50, 50, 0.25);
                 display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: 1rem;
-                padding-left: 1rem;
-                cursor: pointer;
+                flex-direction: column;
+                transition: all 0.3s linear;
             }
 
-                aside > div > .gis-account:hover,
-                aside > div > .gis-settings:hover {
-                    background-color: rgba(50, 50, 50, 0.1);
+                main > aside[data-display=true] {
+                    display: flex;
                 }
 
-                aside > div > .gis-account > span,
-                aside > div > .gis-settings > span {
-                    font-family: monospace;
-                    font-size: 1.8rem;
-                    color: #323232;
+                main > aside[data-display=false] {
+                    display: none;
                 }
 
-            aside > div > div > svg {
-                width: 2.5rem;
-                height: 2.5rem;
-                border-radius: 50%;
+                main > aside > div:hover {
+                    background-color: rgba(50, 50, 50, 0.05);
+                }
+
+                main > aside > div > label {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+
+            main > .map {
+                flex: 1;
             }
-
-                aside > div > div > svg .gis-bg {
-                    fill: transparent;
-                }
-
-                aside > div > div > svg .gis-ug {
-                    fill: #323232;
-                }
     </style>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
 </head>
 <body>
-    <div id="map" class="map"></div>
-    <aside isVisible="false">
-        <div>
-            <div class="gis-search">
-                <input type="text" placeholder="search">
-            </div>
-            <div class="gis-dateInterval">
-                <div class="gis-dateFrom">
-                    <span>from:</span>
-                    <input id="date-from" type="date" data-date-inline-picker="true">
+    <header class="mdc-top-app-bar mdc-top-app-bar--dense">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button burger">menu</button>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button home" aria-label="Home">home</button>
+                <span class="mdc-top-app-bar__title">gis</span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button search" aria-label="Search">search</button>
+                <div class="mdc-menu-surface--anchor">
+                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button account" aria-label="Account">person</button>
+                    <div class="mdc-menu mdc-menu-surface menu-account">
+                        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                            <li class="mdc-list-item" role="menuitem">
+                                <span class="mdc-list-item__ripple"></span>
+                                <span class="mdc-list-item__text">Войти</span>
+                            </li>
+                            <li class="mdc-list-item" role="menuitem">
+                                <span class="mdc-list-item__ripple"></span>
+                                <span class="mdc-list-item__text">Зарегистрироваться</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="gis-dateTill">
-                    <span>till:</span>
-                    <input id="date-till" type="date" data-date-inline-picker="true">
-                </div>
-            </div>
-            <div class="gis-layers">
-                <label for="layer0" class="gis-layer-label">
-                    <input id="layer0" type="checkbox">
-                    <span>layer0</span>
-                </label>
-                <label for="layer1" class="gis-layer-label">
-                    <input id="layer1" type="checkbox">
-                    <span>layer1</span>
-                </label>
-                <label for="layer2" class="gis-layer-label">
-                    <input id="layer2" type="checkbox">
-                    <span>layer2</span>
-                </label>
-                <label for="layer3" class="gis-layer-label">
-                    <input id="layer3" type="checkbox">
-                    <span>layer3</span>
-                </label>
-                <label for="layer4" class="gis-layer-label">
-                    <input id="layer4" type="checkbox">
-                    <span>layer4</span>
-                </label>
-                <label for="layer5" class="gis-layer-label">
-                    <input id="layer5" type="checkbox">
-                    <span>layer5</span>
-                </label>
-                <label for="layer6" class="gis-layer-label">
-                    <input id="layer6" type="checkbox">
-                    <span>layer6</span>
-                </label>
-                <label for="layer7" class="gis-layer-label">
-                    <input id="layer7" type="checkbox">
-                    <span>layer7</span>
-                </label>
-                <label for="layer8" class="gis-layer-label">
-                    <input id="layer8" type="checkbox">
-                    <span>layer8</span>
-                </label>
-                <label for="layer9" class="gis-layer-label">
-                    <input id="layer9" type="checkbox">
-                    <span>layer9</span>
-                </label>
-                <label for="layer10" class="gis-layer-label">
-                    <input id="layer10" type="checkbox">
-                    <span>layer10</span>
-                </label>
-            </div>
-            <div class="gis-account">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path class="gis-bg" d="M0 0h24v24H0z" />
-                    <path class="gis-ug" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                </svg>
-                <span>account</span>
-            </div>
-            <div class="gis-settings">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path class="gis-bg" d="M0,0h24v24H0V0z" />
-                    <path class="gis-ug" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
-                </svg>
-                <span>settings</span>
-            </div>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button export" aria-label="Export">save_alt</button>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button print" aria-label="Print">print</button>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button fullscreen" aria-label="Fullscreen">fullscreen</button>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button fullscreen_exit" aria-label="Fullscreen Exit">fullscreen_exit</button>
+                <!--<div class="mdc-menu-surface--anchor">
+                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button more" aria-label="Open menu">more_vert</button>
+                    <div class="mdc-menu mdc-menu-surface menu-more">
+                        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                            <li class="mdc-list-item" role="menuitem">
+                                <span class="mdc-list-item__ripple"></span>
+                                <span class="mdc-list-item__text">A Menu Item</span>
+                            </li>
+                            <li class="mdc-list-item" role="menuitem">
+                                <span class="mdc-list-item__ripple"></span>
+                                <span class="mdc-list-item__text">Another Menu Item</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>-->
+            </section>
         </div>
-    </aside>
-    <footer>
-        <nav>
-            <!--HOME-->
-            <svg class="gis-home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path class="gis-bg" d="M0 0h24v24H0z" />
-                <path class="gis-ug" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
-            <script>
-                document.querySelector('svg.gis-home-icon').addEventListener('click', function () {
-                    window.location.href = '';
-                }, false);
-            </script>
-            <!--RULER-->
-            <svg class="gis-ruler-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path class="gis-bg" d="M0 0h24v24H0z" />
-                <path class="gis-ug" d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 10H3V8h2v4h2V8h2v4h2V8h2v4h2V8h2v4h2V8h2v8z" />
-            </svg>
-            <!--ADD-->
-            <svg class="gis-add-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path class="gis-bg" d="M0 0h24v24H0z" />
-                <path class="gis-ug" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-            <!--SEARCH-->
-            <svg class="gis-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path class="gis-bg" d="M0 0h24v24H0z" />
-                <path class="gis-ug" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-            </svg>
-            <script>
-                let gisSearch = document.querySelector('.gis-search > input');
-                document.querySelector('.gis-search-icon').addEventListener('click', function () {
-                    aside.setAttribute('isVisible', 'true');
-                    //gisSearch.focus();
-                    window.setTimeout(function () {
-                        gisSearch.focus();
-                    }, 550);
-                }, false);
-            </script>
-            <!--MENU-->
-            <svg class="gis-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path class="gis-bg" d="M0 0h24v24H0z" />
-                <path class="gis-ug" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-            </svg>
-            <script>
-                let aside = document.querySelector('aside');
-                window.addEventListener('keyup', function (e) {
-                    if (e.code == 'Escape') {
-                        aside.setAttribute('isVisible', (aside.getAttribute('isVisible') == 'false').toString());
-                    }
-                }, false);
-                document.querySelector('svg.gis-menu-icon').addEventListener('click', function () {
-                    aside.setAttribute('isVisible', (aside.getAttribute('isVisible') == 'false').toString());
-                }, false);
-            </script>
-        </nav>
-    </footer>
+    </header>
+    <main class="mdc-top-app-bar--dense-fixed-adjust">
+        <aside data-display="true"></aside>
+        <div id="map" class="map"></div>
+    </main>
+    <template class="layer">
+        <div class="mdc-form-field">
+            <div class="mdc-checkbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="layer-id" />
+                <div class="mdc-checkbox__background">
+                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                    </svg>
+                    <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div class="mdc-checkbox__ripple"></div>
+            </div>
+            <label for="layer-id">{layer name}</label>
+        </div>
+    </template>
     <script>
-        var map = new ol.Map({
+        //document.querySelector('.mdc-top-app-bar__title').innerHTML = window.location.host.toString();
+        const map = new ol.Map({
             target: 'map',
+            controls: [],
             layers: [
                 new ol.layer.Tile({
                     source: new ol.source.OSM()
@@ -369,6 +173,49 @@
                 zoom: 11
             })
         });
+        for (let i = 0; i < 10; i++) {
+            const id = `label-${i}`;
+            const layer = document.querySelector('template.layer').content.cloneNode(true);
+            layer.querySelector('input').id = id;
+            layer.querySelector('label').setAttribute('for', id);
+            layer.querySelector('label').innerHTML = `label-${i}`;
+            document.querySelector('main > aside').appendChild(layer);
+        }
+        const aside = document.body.querySelector('aside');
+        aside.setVisibility = function () {
+            this.dataset.display = !(this.dataset.display === 'true');
+            map.updateSize();
+        };
+        document.body.querySelector('button.burger').addEventListener('click', function () {
+            aside.setVisibility();
+        }, false);
+        document.body.querySelector('button.home').addEventListener('click', function () {
+            window.location.reload();
+        }, false);
+        document.body.querySelector('button.print').addEventListener('click', function () {
+            window.print();
+        }, false);
+        window.addEventListener('DOMContentLoaded', function () {
+            document.body.dataset.fullscreen = (window.innerWidth == screen.width && window.innerHeight == screen.height);
+        }, { once: true });
+        window.addEventListener('resize', function (e) {
+            console.log(e.type);
+        }, false);
+        const MDCMenu = mdc.menu.MDCMenu;
+        const menu_account = new MDCMenu(document.querySelector('.menu-account'));
+        menu_account.setAnchorCorner(mdc.menuSurface.Corner.BOTTOM_START);
+        menu_account.root.addEventListener('mouseleave', function () {
+            menu_account.open = false;
+        }, false);
+        document.body.querySelector('.account').addEventListener('mouseup', function () {
+            menu_account.open = !menu_account.open;
+        }, false);
+        //const menu_more = new MDCMenu(document.querySelector('.menu-more'));
+        //document.body.querySelector('.more').addEventListener('click', function () {
+        //    menu_more.open = !menu_more.open;
+        //}, false);
+        const MDCTextField = mdc.textField.MDCTextField;
+        //const textField = new MDCTextField(document.querySelector('.mdc-text-field'));
     </script>
 </body>
 </html>
