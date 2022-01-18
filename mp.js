@@ -1,35 +1,43 @@
-﻿/**
- * mp states:
- * mp0 - DD°MM'SS.s
- * mp1 - DD.dddddd°
- * mp2 - DD°MM.mmm
- */
-let mpState = 'mp0';
-window.addEventListener('DOMContentLoaded', function () {
-    // default styles
-    document.querySelectorAll('#coords_display > div').forEach(function (div) {
-        div.style.display = 'none';
-    });
-    // display container on first mousemove
-    document.querySelector('#map_container').addEventListener('mousemove', function () {
-        document.querySelector('#mp_wrap').style.display = 'block';
-    }, { once: true });
-    // set .select display onclick
-    document.querySelector('#mp_wrap > .switch').addEventListener('click', function () {
-        let sel = document.querySelector('#mp_wrap > .select');
-        sel.style.display = (sel.style.display == 'block') ? 'none' : 'block';
+﻿window.addEventListener('DOMContentLoaded', function () {
+    const mp = document.querySelector('template.mp').content.cloneNode(true).querySelector(':scope > :first-child');
+    mp.converse = {
+        '0': function (val) {
+            return val.toFixed(10);
+        },
+        '1': function (val) {
+            let degrees = Math.floor(val);
+            let minutesRaw = (val - degrees) * 60;
+            let minutes = Math.floor(minutesRaw);
+            let seconds = Math.floor((minutesRaw - minutes) * 6000) / 100.00;
+            return (degrees.toString().padStart(4, ' ') + '\u00B0' + (Math.round((minutes * 1.0 + seconds / 60.0) * 1000.0) / 1000.0).toFixed(3).padStart(6, '0') + '\u0027');
+        },
+        '2': function (val) {
+            let degrees = Math.floor(val);
+            let minutesRaw = (val - degrees) * 60;
+            let minutes = Math.floor(minutesRaw);
+            let seconds = Math.floor((minutesRaw - minutes) * 6000) / 100.00;
+            return (degrees.toString().padStart(4, ' ') + '\u00B0' + minutes.toString().padStart(2, '0') + '\u0027' + seconds.toFixed(2).padStart(5, '0') + '\u0022');
+        }
+    };
+    mp.setState = function (state) {
+        this.dataset.state = state;
+    };
+    mp.addEventListener('dblclick', (e) => { e.stopPropagation(); }, false);
+    mp.addEventListener('mousedown', (e) => { e.stopPropagation(); }, false);
+    map.viewPortDiv.appendChild(map.mp = mp);
+    map.div.addEventListener('mousemove', function (e) {
+        const ll = map.getLonLatFromPixel(e).transform(new OpenLayers.Projection('EPSG:900913'), new OpenLayers.Projection('EPSG:4326'));
+        Object.keys(ll).forEach(function (c) {
+            mp.querySelector(`.${c}`).innerHTML = `${c}: ${mp.converse[mp.dataset.state](ll[c])}`;
+        });
     }, false);
-    // set .select input change handlers
-    document.querySelectorAll('#mp_wrap > .select > .row > input').forEach(function (inp) {
-        inp.addEventListener('change', function (e) {
-            mpState = e.target.id;
-            // reformat current coords
-            let mp = map.controls.find(function (el) { return el.displayClass == 'olControlMousePosition'; });
-            if (mp) {
-                let p = map.getLonLatFromPixel(mp.lastXy);
-                let t = new OpenLayers.LonLat(p.lon, p.lat).transform(new OpenLayers.Projection('EPSG:900913'), new OpenLayers.Projection('EPSG:4326'));
-                document.querySelector('#mp_wrap > .coords').innerHTML = mp.formatOutput(t);
-            }
-        }, false);
-    });
+    // menu
+    const menu_mp = new MDCMenu(document.querySelector('.menu-mp'));
+    menu_mp.setAnchorCorner(mdc.menuSurface.Corner.BOTTOM_START);
+    menu_mp.root.addEventListener('mouseleave', function () {
+        menu_mp.open = false;
+    }, false);
+    mp.addEventListener('mouseup', function () {
+        menu_mp.open = !menu_mp.open;
+    }, false);
 }, { once: true });
