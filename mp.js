@@ -25,19 +25,30 @@
     mp.addEventListener('dblclick', (e) => { e.stopPropagation(); }, false);
     mp.addEventListener('mousedown', (e) => { e.stopPropagation(); }, false);
     map.viewPortDiv.appendChild(map.mp = mp);
-    map.div.addEventListener('mousemove', function (e) {
+    //map.div.addEventListener('mousemove', function (e) {
+    //    const ll = map.getLonLatFromPixel(e).transform(new OpenLayers.Projection('EPSG:900913'), new OpenLayers.Projection('EPSG:4326'));
+    //    Object.keys(ll).forEach(function (c) {
+    //        mp.querySelector(`.${c}`).innerHTML = `${c}: ${mp.converse[mp.dataset.state](ll[c])}`;
+    //    });
+    //}, false);
+    mp.redraw = function (e) {
         const ll = map.getLonLatFromPixel(e).transform(new OpenLayers.Projection('EPSG:900913'), new OpenLayers.Projection('EPSG:4326'));
         Object.keys(ll).forEach(function (c) {
             mp.querySelector(`.${c}`).innerHTML = `${c}: ${mp.converse[mp.dataset.state](ll[c])}`;
         });
+    };
+    mp.addEventListener('click', function () {
+        mp.dataset.state = (parseInt(mp.dataset.state) + 1) % 3;
+        mp.redraw(Mouse.pos);
     }, false);
+    map.div.addEventListener('mousemove', mp.redraw, false);
     // menu
-    const menu_mp = new MDCMenu(document.querySelector('.menu-mp'));
-    menu_mp.setAnchorCorner(mdc.menuSurface.Corner.BOTTOM_START);
-    menu_mp.root.addEventListener('mouseleave', function () {
-        menu_mp.open = false;
-    }, false);
-    mp.addEventListener('mouseup', function () {
-        menu_mp.open = !menu_mp.open;
-    }, false);
+    //const menu_mp = new MDCMenu(document.querySelector('.menu-mp'));
+    //menu_mp.setAnchorCorner(mdc.menuSurface.Corner.BOTTOM_START);
+    //menu_mp.root.addEventListener('mouseleave', function () {
+    //    menu_mp.open = false;
+    //}, false);
+    //mp.addEventListener('mouseup', function () {
+    //    menu_mp.open = !menu_mp.open;
+    //}, false);
 }, { once: true });
