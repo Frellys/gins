@@ -8,13 +8,6 @@
     document.querySelectorAll('div.content table').forEach(function (table) {
         table.style.width = 'auto';
     });
-    // remove static size from images
-    /*
-    document.querySelectorAll('div.content img').forEach(function (img) {
-        img.style.width = 'auto';
-        img.style.height = 'auto';
-    });
-    */
     // set horizontal bottom banners
     if (window.location.hostname == 'kurchatov74.ru') {
         document.querySelectorAll('div.page > div.cnt-wrp.bannersnet').forEach(function (wrap) {
@@ -42,6 +35,16 @@
     if (window.localStorage.getItem('notification') !== 'true') {
         window.localStorage.removeItem('notification');
     }
+    // set IRRequest styles
+    let irrs = [
+        'minsocpriem.gov74.ru'
+    ];
+    if (irrs.some(u => u.includes(window.location.host.split('.').shift()))) {
+        if (window.location.pathname === '/InternetReception') {
+            document.querySelectorAll('aside, footer, header > nav, header > .options').forEach(el => el.style.display = 'none');
+            document.querySelector('.content').style.width = 'auto';
+        }
+    }
     if (false) {
         if (window.localStorage.getItem('notification') !== 'true') {
             let xhr = new XMLHttpRequest();
@@ -67,27 +70,46 @@
 /*
  * IRRequest print styling
  */
-if (window.location.pathname.startsWith('/cms/InternetReceptionRequest/Edit')) {
-    window.onbeforeprint = window.onafterprint = function (e) {
-        document.querySelector('#header').style.display = (e.type === 'beforeprint') ? 'none' : '';
-        document.querySelectorAll('.action_submit, .action_cancel').forEach(b => b.style.display = (e.type === 'beforeprint') ? 'none' : '');
-        document.querySelectorAll('table.gridform > tbody > tr').forEach(function (tr, trx) {
-            if (trx < 9) {
-                let inp = tr.querySelector('td:last-child > *:last-child');
-                if (inp.tagName === 'DIV') {
-                    inp.remove();
-                    tr.querySelector('td:last-child > *:last-child').style.display = '';
+if (window.location.host.includes('kurchatov74')) {
+    if (window.location.pathname.startsWith('/cms/InternetReceptionRequest/Edit')) {
+        window.onbeforeprint = window.onafterprint = function (e) {
+            document.querySelector('#header').style.display = (e.type === 'beforeprint') ? 'none' : '';
+            document.querySelectorAll('.action_submit, .action_cancel').forEach(b => b.style.display = (e.type === 'beforeprint') ? 'none' : '');
+            document.querySelectorAll('table.gridform > tbody > tr').forEach(function (tr, trx) {
+                if (trx < 9) {
+                    let inp = tr.querySelector('td:last-child > *:last-child');
+                    if (inp.tagName === 'DIV') {
+                        inp.remove();
+                        tr.querySelector('td:last-child > *:last-child').style.display = '';
+                    }
+                    else {
+                        inp.style.display = 'none';
+                        let cnt = document.createElement('div');
+                        cnt.innerHTML = (inp.tagName === 'SELECT') ? inp.querySelector('option[selected="selected"]').innerHTML : inp.value;
+                        tr.querySelector('td:last-child').appendChild(cnt);
+                    }
                 }
                 else {
-                    inp.style.display = 'none';
-                    let cnt = document.createElement('div');
-                    cnt.innerHTML = (inp.tagName === 'SELECT') ? inp.querySelector('option[selected="selected"]').innerHTML : inp.value;
-                    tr.querySelector('td:last-child').appendChild(cnt);
+                    tr.style.display = (e.type === 'beforeprint') ? 'none' : '';
                 }
-            }
-            else {
-                tr.style.display = (e.type === 'beforeprint') ? 'none' : '';
-            }
-        });
-    };
+            });
+        };
+    }
+}
+
+/*style for ombudsman174*/
+window.addEventListener('DOMContentLoaded', function () {
+    if (window.location.host.includes('ombudsman174.pravmin74.ru')) {
+        document.querySelector('div.cnt-wrp > aside.rt > div.clearfix>div>img').style.height = 'auto';
+    }
+})
+
+// gzhi
+if (window.location.host === 'old.gzhi.gov74.ru') {
+    if (window.location.pathname !== '/InternetReception') {
+        window.location.pathname = '/InternetReception';
+    }
+    if (window.location.protocol !== 'http:') {
+        window.location.protocol = 'http:';
+    }
 }
