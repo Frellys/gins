@@ -35,20 +35,11 @@
     if (window.localStorage.getItem('notification') !== 'true') {
         window.localStorage.removeItem('notification');
     }
-    // set IRRequest styles
-    let irrs = [
-        'minsocpriem.gov74.ru'
-    ];
-    if (irrs.some(u => u.includes(window.location.host.split('.').shift()))) {
-        if (window.location.pathname === '/InternetReception') {
-            document.querySelectorAll('aside, footer, header > nav, header > .options').forEach(el => el.style.display = 'none');
-            document.querySelector('.content').style.width = 'auto';
-        }
-    }
     if (false) {
         if (window.localStorage.getItem('notification') !== 'true') {
             let xhr = new XMLHttpRequest();
-            xhr.addEventListener('readystatechange', function () {
+            xhr.open('GET', 'https://mitis74.eps74.ru/override/notification.html', true);
+            xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     let notification = new DOMParser().parseFromString(this.responseText, 'text/html').querySelector('.maintenance-wrap');
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -61,12 +52,25 @@
                         window.localStorage.setItem('notification', 'true');
                     }, false);
                 }
-            }, false);
-            xhr.open('GET', 'https://mitis74.eps74.ru/override/notification.html', true);
+            };
             xhr.send();
         }
     }
 }, { once: true });
+// set IRRequest styles
+let irrs = [
+    'minsocpriem.gov74.ru',
+    'old.gzhi.gov74.ru/'
+];
+if (irrs.some(u => u.includes(window.location.host.split('.').shift()))) {
+    if (window.location.pathname === '/InternetReception') {
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.appendChild(document.createTextNode('aside, footer, header > nav, header > .options { display: none !important; }'));
+        style.appendChild(document.createTextNode('.cnt-wrp.bannersnet { display: none; }'));
+        document.head.appendChild(style);
+    }
+}
 /*
  * IRRequest print styling
  */
