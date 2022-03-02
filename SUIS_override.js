@@ -117,3 +117,7 @@ if (window.location.host === 'old.gzhi.gov74.ru') {
         window.location.protocol = 'http:';
     }
 }
+
+window.addEventListener('DOMContentLoaded', function () {
+	//document.querySelectorAll('iframe[src*="https://pos.gosuslugi.ru/"]').forEach(w => w.remove());
+}, { once: true });
