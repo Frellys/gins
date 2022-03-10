@@ -7,7 +7,6 @@
     <style>
         html {
             font-family: monospace;
-            /*color: rgba(50, 50, 50, 0.9);*/
             color: #323232;
         }
 
@@ -28,7 +27,7 @@
         let prefix = '!@$%^&*_+='.split('');
         document.body.innerHTML = new Array(50).fill(0).map(p => {
             let head = prefix[Math.floor(Math.random() * prefix.length)];
-            let body = new Array(9).fill(0).map(c => alphabet[window.crypto.getRandomValues(new Uint32Array(1))[0] % alphabet.length]).join('');
+            let body = Array.from(window.crypto.getRandomValues(new Uint32Array(9))).map(n => alphabet[n % alphabet.length]).join('');
             return (head + body);
         }).join('\r\n');
     </script>
