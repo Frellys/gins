@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>genpasito</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            font-family: monospace;
+            /*color: rgba(50, 50, 50, 0.9);*/
+            color: #323232;
+        }
+
+        body {
+            white-space: pre-line;
+            margin: 0;
+            padding: 0;
+            background-color: #edeef0;
+            width: 100%;
+            padding: 1ch;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        let prefix = '!@$%^&*_+='.split('');
+        document.body.innerHTML = new Array(50).fill(0).map(p => {
+            let head = prefix[Math.floor(Math.random() * prefix.length)];
+            let body = new Array(9).fill(0).map(c => alphabet[window.crypto.getRandomValues(new Uint32Array(1))[0] % alphabet.length]).join('');
+            return (head + body);
+        }).join('\r\n');
+    </script>
+</body>
+</html>
