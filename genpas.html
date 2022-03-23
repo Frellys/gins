@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>genpasito</title>
     <meta charset="UTF-8">
@@ -21,15 +22,39 @@
         }
     </style>
 </head>
+
 <body>
     <script>
-        let alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-        let prefix = '!@$%^&*_+='.split('');
-        document.body.innerHTML = new Array(50).fill(0).map(p => {
-            let head = prefix[Math.floor(Math.random() * prefix.length)];
-            let body = Array.from(window.crypto.getRandomValues(new Uint32Array(9))).map(n => alphabet[n % alphabet.length]).join('');
+        const prefix = '!@$%^&*_+='.split('');
+        const nums = '0123456789'.split('');
+        const cl = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        const cu = cl.map(c => c.toUpperCase());
+        const alphabet = cl.concat(nums, cu);
+        const link = { nums, cl, cu };
+        const checkPassword = function (str) {
+            const seen = Object.fromEntries(Object.keys(link).map(k => [k, []]));
+            str.split('').forEach(function (c, cdx) {
+                Object.keys(link).forEach(function (k) {
+                    if (link[k].includes(c)) {
+                        seen[k].push(cdx);
+                    }
+                });
+            });
+            return Object.values(seen).every(v => (v.length > 1) && (v.pop() - v.shift() > 1));
+        };
+        const generatePassword = function (len) {
+            const head = prefix[Math.floor(Math.random() * prefix.length)];
+            const body = Array.from(window.crypto.getRandomValues(new Uint32Array(len - 1))).map(n => alphabet[n % alphabet.length]).join('');
             return (head + body);
+        };
+        document.body.innerHTML = new Array(50).fill(false).map(p => {
+            let tmp = '';
+            while (!checkPassword(tmp)) {
+                tmp = generatePassword(10);
+            }
+            return tmp;
         }).join('\r\n');
     </script>
 </body>
+
 </html>
